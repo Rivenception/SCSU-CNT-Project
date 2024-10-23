@@ -1,0 +1,82 @@
+[
+    {
+        "name": "Andrew Groover",
+        "employee_id": "agroover",
+        "dept": "Engineering",
+        "title": "Engineer",
+        "status": "Active",
+        "salary": 0
+    },
+    {
+        "name": "Bhaumik Patel",
+        "employee_id": "bpatel",
+        "dept": "Engineering",
+        "title": "Engineering Manager",
+        "status": "Active",
+        "salary": 0
+    },
+    {
+        "name": "Fernando Lucena",
+        "employee_id": "flucena",
+        "dept": "Engineering",
+        "title": "Engineer",
+        "status": "Active",
+        "salary": 0
+    },
+    {
+        "name": "Janet Mathes",
+        "employee_id": "jmathes",
+        "dept": "Program Management",
+        "title": "Program Manager",
+        "status": "Active",
+        "salary": 0
+    },
+    {
+        "name": "John Bartlet",
+        "employee_id": "jbartlet",
+        "dept": "Engineering",
+        "title": "Sr. Engineer",
+        "status": "Active",
+        "salary": 0
+    },
+    {
+        "name": "Joseph Patnoe",
+        "employee_id": "jpatnoe",
+        "dept": "Engineering",
+        "title": "R&D Engineer",
+        "status": "Active",
+        "salary": 0
+    },
+    {
+        "name": "Katie Christiana",
+        "employee_id": "kchristiana",
+        "dept": "Manufacturing",
+        "title": "Manufacturing Manager",
+        "status": "Active",
+        "salary": 70000
+    },
+    {
+        "name": "Lily Pham",
+        "employee_id": "lpham",
+        "dept": "Engineering",
+        "title": "Program Manager",
+        "status": "Active",
+        "salary": 0
+    },
+    {
+        "name": "Nikki Martins",
+        "employee_id": "nmartins",
+        "dept": "Engineering",
+        "title": "Engineer",
+        "status": "Active",
+        "salary": 0
+    },
+    {
+        "name": "Rick Mingione",
+        "employee_id": "rmingione",
+        "dept": "Program Management",
+        "title": "Sr. Program Manager",
+        "status": "Active",
+        "salary": 0
+    }
+]

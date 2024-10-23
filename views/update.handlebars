@@ -1,0 +1,83 @@
+<div class="jumbotron jumbotron-fluid">
+  <class class="container">
+    <h1 class="header">Update Entry</h1>
+    <h2 class="subheader" id="dept">{{this.dept}}</h2>
+    <h2 class="subheader">{{this.employeeName}}</h2>
+    <h2 class="subheader" id="logId">Log# {{this.logId}}</h2>
+    <h2 class="hidden" id="hidden-logId">{{this.logId}}</h2>
+    <h2 class="hidden" id="hidden-employeeId">{{this.user}}</h2>
+</div>
+<div class="table-container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Log#</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Task</th>
+        <th>Time Spent</th>
+        <th>Program</th>
+        <th>ECR</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="form-row">
+        <td colspan="12">
+          <br>
+          <label for="task">Company:</label>
+          <select class="custom-select" id="inputGroupCompany">
+          </select>
+          <br>
+          <br>
+          <label for="auth">Date:</label>
+          <input placeholder="Enter the date" id="date" value="" type="date" />
+          <br>
+          <p style="font-size: x-small;">*Required: Please use 9999 for Admin</p>
+          <label for="program">Program:</label>
+          <input placeholder="  Enter an RFB#" id="inputGroupProgram" type="number" />
+          <br>
+          <br>
+          <label for="ecr">ECR:</label>
+          <input placeholder="  Enter an ECR#" id="inputGroupEcr" type="number" />
+          <br>
+          <label for="name">Name:</label>
+          <select placeholder="Select Employee" class="custom-select" id="inputGroupEmployee">
+          </select>
+          <label for="category">Category:</label>
+          <select placeholder="Enter the Category" class="custom-select" id="inputGroupCategory">
+          </select>
+          <br>
+          <label for="task">Task:</label>
+          <select placeholder="Enter a task" class="custom-select" id="inputGroupTask">
+          </select>
+          <br>
+          <label for="task type">Task Type:</label>
+          <select class="custom-select" id="inputGroupType" value="">
+          </select>
+          <br>
+          <label for="time">Time:</label>
+          <select placeholder="Enter time" class="custom-select" id="inputGroupTime">
+          </select>
+          <br>
+          <br>
+          <label for="notes">Notes:</label>
+          <input placeholder="Enter Notes" id="inputGroupNotes" type="text"
+            style="width: -webkit-fill-available; height: 100px;" />
+          <br>
+          <div style="display: flex; justify-content: center; align-tiems: center;">
+            <button type="submit" class="btn btn-success" id="timeSubmit">Update Entry</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<footer class="footer mt-auto py-3">
+  <div class="container">
+  {{> api-data}}
+  </div>
+</footer>
+<!-- Custom Script -->
+<script src="assets/js/update.js" type="text/javascript"></script>

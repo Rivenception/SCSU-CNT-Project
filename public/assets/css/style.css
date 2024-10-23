@@ -1,0 +1,190 @@
+body {
+    background: linear-gradient(to right, #0f253e, #3d4f62, #3d4f62, #5c6871,	#617084, #8794ac);
+      margin: 0 auto;
+      width: 80%;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      background-size: cover;
+      -o-background-size: cover;
+    }
+      @media (max-width: 500px) {
+        p {
+          font-size: 0.75em; 
+        }
+        .lead {
+          font-size:0.75em;
+        }
+      }
+      @media (orientation: landscape) {
+    
+      }
+      @media(orientation: portrait) {
+    
+      }
+      @media (min-width: 800px) {
+        p { font-size: 1.5rem;
+            line-height: 1.5;
+        }
+      }
+
+      @media (min-width: 1200px) {
+        .container { 
+          max-width: 1600px;
+        }
+      }
+      
+a     {
+        color: #ebecee;
+        font-size: 16px;
+        font-family: 'Ubuntu', sans-serif;
+      }
+h1 {
+        color: #ebecee;
+        font-size: 55px;
+        text-align: center;
+        font-family: 'Ubuntu', sans-serif;
+        
+      }
+h2 {
+        color: #ebecee;
+        font-size: 40px;
+        text-align: center;
+        font-family: 'Ubuntu', sans-serif;
+      }
+h2 {
+        color: #ebecee;
+        font-size: 40px;
+        text-align: center;
+        font-family: 'Ubuntu', sans-serif;
+      }
+ #includethis{
+        color: #0f253e;
+        font-family: 'Ubuntu', sans-serif;
+      }
+h3 {
+        color: #ebecee;
+        font-size: 30px;
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+        
+      }
+h4 {
+        color: #ebecee;
+        font-size: 25px;
+        font-family: 'Ubuntu', sans-serif;
+      }
+h5 {
+  font-size: 18px;
+  font-family: 'Ubuntu', sans-serif;
+}
+h5:hover {
+  font-style: italic;
+  opacity: 1.0;
+}
+
+label {
+        color: #ebecee;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+        
+      }
+#maincontainer {
+       background-color: #3d4f62;
+       margin-bottom: 10px;
+      }
+
+      
+.container input {
+        width: 100%;
+        clear: both;
+      }
+.card{
+        margin-bottom: 10px;
+    }
+.logo-image{
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-top: -6px;
+}
+.jumbotron{
+        background-image: url(../background.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+       }
+p {
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        color: #ebecee;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    }
+    .responsive {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .btn{
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: normal;
+      font-size: 20px;
+      border-radius: 20px;
+     text-align: center;
+     width: 30%;
+     margin: 10px;
+     padding: 10px;
+     background-color: #a72b32;;
+    }
+    .btn:hover {
+      background-color: #ebecee;
+      opacity: 1.0;
+  }
+
+    
+.indexbtn{
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: normal;
+      font-size: 20px;
+      border-radius: 20px;
+     text-align: center;
+     width: 150px;
+     margin: 5px;
+     padding: 5px;
+     background-color: #a72b32;
+     float: right;
+    }
+    .indexbtn:hover {
+      background-color: #ebecee;
+  }
+
+li {
+  padding: 5px;
+  margin: 5px;
+  background: #0c223f;
+}
+
+.label {
+  font-weight: bold;
+}
+
+#employeeID li{
+  list-style-type: none;
+}
+td{
+  color: #ebecee;
+  ;
+}
+tr{
+  color: #ebecee;
+}
+
+.hidden {
+  display: none;
+}
+/* #container-fullwidth */
