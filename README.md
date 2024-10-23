@@ -1,39 +1,39 @@
- # SCSU CNT Time Manager
- ## Rick Mingione
+# SCSU CNT Time Manager
+## Rick Mingione
 
- ## Description 
+## Description 
  This is application serves graduate and undergraduate students as a repository for tracking daily progress within the Center for Nanotechnology.
 
  This is block formatted webpage that manages an student database, where students can log their work hours and productivity, as well as access their last 10 entries of time logged to keep track of previous activities.
 
  This interface allows students to adjust their logs, upload relavant documents, and add notes for their various activities and experiements. Additionally, this tool can provide department heads and faculty to track the progress of active projects and tasks completed in real time.
 
- ## Features: 
+## Features: 
   
- * uses Node and Express server
+  * uses Node and Express server
 ​
- * Handlebars.js as the template engine, designed for Southern Connecticut State University using Bootstrap
+  * Handlebars.js as the template engine, designed for Southern Connecticut State University using Bootstrap
 ​
- * data is housed in MySQL database with a Sequelize ORM
+  * data is housed in MySQL database with a Sequelize ORM
 ​
- * uses GET, POST, and PUT routes for retrieving and adding new data to database
+  * uses GET, POST, and PUT routes for retrieving and adding new data to database
 ​
- * deployed to Heroku
+  * deployment to Heroku
 ​
- * uses Mocha & Chai for testing
+  * uses Mocha & Chai for testing
 ​
-* MVC standard file structure
+  * MVC standard file structure
 
 
 
-  ## Installation:
-    You can 'git clone' this application onto your local machine, be sure to change the database password to your own in the config.json file. Otherwise, the deployed app can be accessed on heroku through this link:
+## Installation:
+  You can 'git clone' this application onto your local machine, be sure to change the database password to your own in the config.json file. Otherwise, the deployed app can be accessed on heroku through this link:
 
-  ## License:
+## License:
   ISC
   
 
-  ## Contributing:
+## Contributing:
 Not currently open source, but visit the contact section to get a hold of the developers for suggestions and editing. 
 
  ## Tests:
@@ -41,10 +41,10 @@ Not currently open source, but visit the contact section to get a hold of the de
   Chai - BDD / TDD assertion library for NodeJS
   'npm run test'
 
- ## How To Use
+## How To Use
  Run as a user on the deployed app
 
- ## Set Up Cloned Repo for testing
+## Set Up Cloned Repo for testing
  Revise the config.json file development "password" for your local machine.
  Run node server.js on cloned repository
  Use the seeds.sql file to upload some initial data using MySql Workbench (Note that this is necessary for certain routes to function properly)
@@ -69,12 +69,12 @@ mysql2@3.11.3
 path@0.12.7
 sequelize@6.37.4
 
- ## Questions: 
+## Questions: 
 If you have any questions, you can contact the creators of this repo here: 
 [lootz.dev@gmail.com](lootz.dev@gmail.com)
 GitHub: https://github.com/rivenception
 
-## Screenshots 
+<!-- ## Screenshots 
 
 <img width="1177" alt="Screen Shot 2020-11-21 at 9 53 02 PM" src="https://user-images.githubusercontent.com/68867054/99892581-27ad5000-2c44-11eb-8e60-3af39a719361.png">
 
@@ -82,8 +82,8 @@ GitHub: https://github.com/rivenception
 <img width="1179" alt="Screen Shot 2020-11-21 at 9 53 27 PM" src="https://user-images.githubusercontent.com/68867054/99892594-50cde080-2c44-11eb-8fe9-9992573e1340.png">
 
 
-<img width="1044" alt="Screen Shot 2020-11-21 at 9 59 08 PM" src="https://user-images.githubusercontent.com/68867054/99892637-d782bd80-2c44-11eb-8a02-5cbeb8e7e0ec.png">
+<img width="1044" alt="Screen Shot 2020-11-21 at 9 59 08 PM" src="https://user-images.githubusercontent.com/68867054/99892637-d782bd80-2c44-11eb-8a02-5cbeb8e7e0ec.png"> -->
 
-## Submission on BCS 
+<!-- ## Submission on BCS 
 
-Heroku Deployed Link: https://intense-badlands-45869.herokuapp.com/ 
+Heroku Deployed Link: https://intense-badlands-45869.herokuapp.com/  -->
