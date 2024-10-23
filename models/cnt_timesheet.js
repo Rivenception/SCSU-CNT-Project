@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    var Timesheet = sequelize.define("cntTimesheet", {
+    var cntTimesheet = sequelize.define("cntTimesheet", {
         student_id: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -67,10 +67,10 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    Timesheet.associate = function (models) {
+    cntTimesheet.associate = function (models) {
         // We're saying that a Timesheet should belong to an Employee
         // A Timesheet can't be created without an Employee due to the foreign key constraint
-        Timesheet.belongsTo(models.Student, {
+        cntTimesheet.belongsTo(models.Student, {
             foreignKey: {
                 name: 'FKstudent_id',
                 allowNull: false,
