@@ -34,6 +34,10 @@ module.exports = function (app) {
     res.render("prj");
   });
 
+  app.get("/stu", function (req, res) {
+    res.render("stu");
+  });
+
 // Department Pages
 
   app.get("/eng", function (req, res) {

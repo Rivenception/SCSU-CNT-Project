@@ -6,37 +6,30 @@ global.$ = require('jquery')(window);
 global.document = document;
 
 module.exports = function (sequelize, DataTypes) {
-    var Student = sequelize.define("Student", {
-        student_id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-            allowNull: false,
-        },
-        studentName: {
+    var Student = sequelize.define("Faculty", {
+        facultyName: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [1]
+        },
+        faculty_id: {
+            type: DataTypes.STRING,
+            primaryKey: true,
+            allowNull: false,
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [1]
         },
-        position: {
+        dept: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [1]
         },
-        supervisor: {
+        title: {
             type: DataTypes.STRING,
             allowNull: false,
-            len: [1]
-        },
-        status: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            defaultValue: "Active",
             len: [1]
         },
         createdAt: {

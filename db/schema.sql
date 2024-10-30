@@ -19,7 +19,7 @@ CREATE TABLE students (
   project VARCHAR(45) NULL,
   weeklyGoal VARCHAR(200) NULL,
   dailyProg VARCHAR(200) NULL,
-  PRIMARY KEY (id),
+  PRIMARY KEY (id)
   FOREIGN KEY (name) REFERENCES students(name)
 );
 
@@ -28,7 +28,7 @@ CREATE TABLE students (
   name VARCHAR(45) NOT NULL,
   timeIn DATETIME DEFAULT NULL,
   timeOut DATETIME DEFAULT NULL,
-  PRIMARY KEY (id),
+  PRIMARY KEY (id)
   FOREIGN KEY (name) REFERENCES students(name)
 );
 
