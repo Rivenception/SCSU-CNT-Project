@@ -45,11 +45,11 @@ Not currently open source, but visit the contact section to get a hold of the de
  Run as a user on the deployed app
 
 ## Set Up Cloned Repo for testing
- Revise the config.json file development "password" for your local machine.
- Run node server.js on cloned repository
- Use the seeds.sql file to upload some initial data using MySql Workbench (Note that this is necessary for certain routes to function properly)
- Use npm start in terminal to launch the application
- Navigate to https:/localhost:8080 in browser
+ * Revise the config.json file development "password" for your local machine.
+ * Run node server.js on cloned repository
+ * Use the seeds.sql file to upload some initial data using MySql Workbench (Note that this is necessary for certain routes to function properly)
+ * Use npm start in terminal to launch the application
+ * Navigate to https:/localhost:8080 in browser
  
 ## Dependencies
  * chai@5.1.1
@@ -72,6 +72,7 @@ Not currently open source, but visit the contact section to get a hold of the de
 ## Questions: 
 If you have any questions, you can contact the creators of this repo here: 
 [lootz.dev@gmail.com](lootz.dev@gmail.com)
+
 GitHub: https://github.com/rivenception
 
 <!-- ## Screenshots 
