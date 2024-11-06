@@ -12,6 +12,10 @@ module.exports = function (app) {
     res.render("admin");
   });
 
+  app.get("/stu_admin", function (req, res) {
+    res.render("stu_admin");
+  });
+
   app.get("/dept", function (req, res) {
     res.render("dept");
   });
@@ -36,12 +40,12 @@ module.exports = function (app) {
   app.get("/stu/:user", function (req, res) {
     db.Student.findOne({
       where: {
-        studentId: req.params.user
+        student_id: req.params.user
       }
     }).then(function (dbStudent) {
-      console.log(dbStudent.studentId);
+      console.log(dbStudent.student_id);
       res.render("stu", {
-        cntUser: dbStudent.studentId,
+        cntUser: dbStudent.student_id,
         studentName: dbStudent.studentName,
         // dept: dbStudent.dept,
       });

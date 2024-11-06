@@ -7,7 +7,7 @@ global.document = document;
 
 module.exports = function (sequelize, DataTypes) {
     var Student = sequelize.define("Student", {
-        studentId: {
+        student_id: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [1]

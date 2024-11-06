@@ -20,7 +20,7 @@ module.exports = function (app) {
             include: [{
             model: db.Student,
             where: {
-                studentId: req.params.user
+                student_id: req.params.user
             }}],
             order: [
                 ['id', 'DESC']
@@ -80,7 +80,7 @@ module.exports = function (app) {
             include: [{
                 model: db.Student,
                 where: {
-                    studentId: req.params.user
+                    student_id: req.params.user
                 }}],
             order: [
                 ['id', 'DESC']

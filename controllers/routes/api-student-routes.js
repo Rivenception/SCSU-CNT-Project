@@ -95,7 +95,7 @@ module.exports = function (app) {
             where: {
                 student_id: req.params.user
             },
-            include: [db.Timesheet]
+            include: [db.cntTimesheet]
         }).then(function (dbStudent) {
             res.json(dbStudent);
         });
