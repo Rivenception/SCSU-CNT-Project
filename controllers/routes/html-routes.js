@@ -28,48 +28,48 @@ module.exports = function (app) {
     res.render("category");
   });
 
-// SCSU Projects
+  app.get("/stu", function (req, res) {
+    res.render("stu");
+  });
 
-app.get("/cnt", function (req, res) {
-  db.cntTimesheet.findAll({
-  }).then(function (dbcntTimesheet) {
-    res.render("cnt", {
-      projectName: dbcntTimesheet.projectName,
-      studentName: dbcntTimesheet.studentName,
+// SCSU Projects
+  app.get("/stu/:user", function (req, res) {
+    db.Student.findOne({
+      where: {
+        studentId: req.params.user
+      }
+    }).then(function (dbStudent) {
+      console.log(dbStudent.studentId);
+      res.render("stu", {
+        cntUser: dbStudent.studentId,
+        studentName: dbStudent.studentName,
+        // dept: dbStudent.dept,
+      });
     });
   });
-});
 
-  app.get("/cnt/prj", function (req, res) {
-    db.cntTimesheet.findOne({
-      where: {
-        projectName: 'Batteries and Chips'
-      }
+  app.get("/cnt", function (req, res) {
+    db.cntTimesheet.findAll({
     }).then(function (dbcntTimesheet) {
-      res.render("stu", {
+      res.render("cnt", {
         projectName: dbcntTimesheet.projectName,
         studentName: dbcntTimesheet.studentName,
       });
     });
   });
-
-  app.get("/cnt/stu/:user", function (req, res) {
-    db.cntTimesheets.findOne({
-      include: [db.Student],
-      where: {
-        studentId: req.params.user
-      }
-    }).then(function (dbcntTimesheets) {
-      res.render("stu", {
-        studentName: dbcntTimesheet.studentName,
-        studentId: dbcntTimesheet.studentId,
+  
+    app.get("/cnt/prj", function (req, res) {
+      db.cntTimesheet.findOne({
+        where: {
+          projectName: 'Batteries and Chips'
+        }
+      }).then(function (dbcntTimesheet) {
+        res.render("stu", {
+          projectName: dbcntTimesheet.projectName,
+          studentName: dbcntTimesheet.studentName,
+        });
       });
     });
-  });
-
-  app.get("/stu", function (req, res) {
-    res.render("stu");
-  });
 
 // Department Pages
 
