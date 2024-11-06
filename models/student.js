@@ -7,16 +7,16 @@ global.document = document;
 
 module.exports = function (sequelize, DataTypes) {
     var Student = sequelize.define("Student", {
-        student_id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-            allowNull: false,
-        },
-        studentName: {
+        studentId: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [1]
+        },
+        studentName: {
+            type: DataTypes.STRING,
+            primaryKey: true,
+            validate: {
+                len: [1, 255]}
         },
         email: {
             type: DataTypes.STRING,
@@ -55,15 +55,15 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Student.associate = function (models) {
-        // We're saying that a Timesheet should belong to an Employee
-        // A Timesheet can't be created without an Employee due to the foreign key constraint
+        // We're saying that a cntTimesheet should belong to an Student
+        // A cntTimesheet can't be created without an Student due to the foreign key constraint
         Student.hasMany(models.cntTimesheet, {
             foreignKey: {
-                name: 'FKstudent_id',
+                name: 'studentName',
                 allowNull: false,
             },
-            // foreignKeyConstraint: true,
-            // sourceKey: 'employee_id'
+            foreignKeyConstraint: true,
+            sourceKey: 'studentName'
         });
     };
 

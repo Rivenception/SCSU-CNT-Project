@@ -30,8 +30,41 @@ module.exports = function (app) {
 
 // SCSU Projects
 
-  app.get("/prj", function (req, res) {
-    res.render("prj");
+app.get("/cnt", function (req, res) {
+  db.cntTimesheet.findAll({
+  }).then(function (dbcntTimesheet) {
+    res.render("cnt", {
+      projectName: dbcntTimesheet.projectName,
+      studentName: dbcntTimesheet.studentName,
+    });
+  });
+});
+
+  app.get("/cnt/prj", function (req, res) {
+    db.cntTimesheet.findOne({
+      where: {
+        projectName: 'Batteries and Chips'
+      }
+    }).then(function (dbcntTimesheet) {
+      res.render("stu", {
+        projectName: dbcntTimesheet.projectName,
+        studentName: dbcntTimesheet.studentName,
+      });
+    });
+  });
+
+  app.get("/cnt/stu/:user", function (req, res) {
+    db.cntTimesheets.findOne({
+      include: [db.Student],
+      where: {
+        studentId: req.params.user
+      }
+    }).then(function (dbcntTimesheets) {
+      res.render("stu", {
+        studentName: dbcntTimesheet.studentName,
+        studentId: dbcntTimesheet.studentId,
+      });
+    });
   });
 
   app.get("/stu", function (req, res) {

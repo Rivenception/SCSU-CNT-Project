@@ -90,6 +90,7 @@ label {
 #maincontainer {
        background-color: #3d4f62;
        margin-bottom: 10px;
+       position: relative;
       }
 
       
@@ -108,7 +109,7 @@ label {
   margin-top: -6px;
 }
 .jumbotron{
-        background-image: url(../background.png);
+        background-image: url(../SCSU_recoloredv2.jpg);
         background-size: cover;
         background-repeat: no-repeat;
         width: 100%;
@@ -187,4 +188,77 @@ tr{
 .hidden {
   display: none;
 }
-/* #container-fullwidth */
+
+.footer {
+  // use #0046ae for SCSU blue
+  background-color: #0b213f;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+.footer-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.footer-contact {
+  color: #B0B0B0;
+  font-size: 14px;
+}
+
+//Gallery CSS
+.gallery-container {
+  position: relative;
+  display: flex; /* Use flexbox to center the gallery */
+  justify-content: center; /* Horizontally center the gallery */
+  align-items: center; /* Vertically center the gallery */
+  height: 100vh;
+}
+
+.gallery {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border-radius: 50%;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}

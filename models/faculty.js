@@ -6,7 +6,7 @@ global.$ = require('jquery')(window);
 global.document = document;
 
 module.exports = function (sequelize, DataTypes) {
-    var Student = sequelize.define("Faculty", {
+    var Faculty = sequelize.define("Faculty", {
         facultyName: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -47,18 +47,20 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    Student.associate = function (models) {
+    Faculty.associate = function (models) {
         // We're saying that a Timesheet should belong to an Employee
         // A Timesheet can't be created without an Employee due to the foreign key constraint
-        Student.hasMany(models.cntTimesheet, {
-            foreignKey: {
-                name: 'FKstudent_id',
-                allowNull: false,
-            },
+        Faculty.hasMany(models.Student)
+        
+        // Faculty.hasMany(models.cntTimesheet, {
+        //     foreignKey: {
+        //         name: 'FKstudent_id',
+        //         allowNull: false,
+        //     },
             // foreignKeyConstraint: true,
             // sourceKey: 'employee_id'
-        });
+        // });
     };
 
-    return Student;
+    return Faculty;
 };

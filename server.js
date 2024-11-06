@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const express = require("express");
 
 const PORT = process.env.PORT || 8080;
@@ -14,6 +16,21 @@ app.use(express.json());
 
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
+
+// For the gallery
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
+// Get images for gallery
+app.get('/public/assets/img/slides', (req, res) => {
+    const slidesPath = path.join(__dirname, '/public/assets/img/slides');
+
+    fs.readdir(slidesPath, (err, files) => {
+        if (err) {
+            return res.status(500).json({ error: "Could not list files" });
+        }
+        res.json(files);
+    });
+});
 
 // Set Handlebars.
 const exphbs = require("express-handlebars");
@@ -37,6 +54,8 @@ app.set("view engine", "handlebars");
 // app.use(routes);
 
 //Routes
+require("./controllers/routes/api-cnt_timesheet-routes.js")(app);
+require("./controllers/routes/api-student-routes.js")(app);
 require("./controllers/routes/api-employee-routes.js")(app);
 require("./controllers/routes/api-timesheet-routes.js")(app);
 require("./controllers/routes/html-routes.js")(app);
