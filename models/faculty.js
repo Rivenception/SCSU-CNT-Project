@@ -9,12 +9,11 @@ module.exports = function (sequelize, DataTypes) {
     var Faculty = sequelize.define("Faculty", {
         facultyName: {
             type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
+            primaryKey: true,
+            allowNull: false
         },
         faculty_id: {
             type: DataTypes.STRING,
-            primaryKey: true,
             allowNull: false,
         },
         email: {
@@ -30,6 +29,11 @@ module.exports = function (sequelize, DataTypes) {
         title: {
             type: DataTypes.STRING,
             allowNull: false,
+            len: [1]
+        },
+        manager: {
+            type: DataTypes.STRING,
+            allowNull: true,
             len: [1]
         },
         createdAt: {
@@ -49,17 +53,15 @@ module.exports = function (sequelize, DataTypes) {
 
     Faculty.associate = function (models) {
         // We're saying that a Timesheet should belong to an Employee
-        // A Timesheet can't be created without an Employee due to the foreign key constraint
-        Faculty.hasMany(models.Student)
-        
-        // Faculty.hasMany(models.cntTimesheet, {
-        //     foreignKey: {
-        //         name: 'FKstudent_id',
-        //         allowNull: false,
-        //     },
-            // foreignKeyConstraint: true,
-            // sourceKey: 'employee_id'
-        // });
+        // A Timesheet can't be created without an Employee due to the foreign key constraint 
+        Faculty.hasMany(models.Student, {
+            foreignKey: {
+                name: 'supervisor',
+                allowNull: false,
+            },
+            foreignKeyConstraint: true,
+            sourceKey: 'facultyName'
+        });
     };
 
     return Faculty;

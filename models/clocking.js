@@ -6,36 +6,35 @@ global.$ = require('jquery')(window);
 global.document = document;
 
 module.exports = function (sequelize, DataTypes) {
-    var Student = sequelize.define("Student", {
-        student_id: {
+    var Clocking = sequelize.define("Clocking", {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [1]
         },
-        studentName: {
+        employee_id: {
             type: DataTypes.STRING,
             primaryKey: true,
-            validate: {
-                len: [1, 255]}
+            allowNull: false,
         },
-        email: {
+        dept: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [1]
         },
-        position: {
+        title: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [1]
-        },
-        supervisor: {
-            type: DataTypes.STRING,
-            index: true               // Add this line to create an index
         },
         status: {
             type: DataTypes.STRING,
             allowNull: false,
             defaultValue: "Active",
+            len: [1]
+        },
+        salary: {
+            type: DataTypes.INTEGER,
             len: [1]
         },
         createdAt: {
@@ -53,30 +52,18 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    Student.associate = function (models) {
-        // We're saying that a cntTimesheet should belong to an Student
-        // A cntTimesheet can't be created without an Student due to the foreign key constraint
-        Student.hasMany(models.cntTimesheet, {
+    Clocking.associate = function (models) {
+        // We're saying that a Timesheet should belong to an Employee
+        // A Timesheet can't be created without an Employee due to the foreign key constraint
+        Clocking.hasMany(models.Timesheet, {
             foreignKey: {
-                name: 'studentName',
+                name: 'FKemployee_id',
                 allowNull: false,
             },
-            foreignKeyConstraint: true,
-            sourceKey: 'studentName'
+            // foreignKeyConstraint: true,
+            // sourceKey: 'employee_id'
         });
     };
 
-    Student.associate = function (models) {
-        // This establishes that each Student belongs to a Faculty
-        Student.hasOne(models.Faculty, {
-            foreignKey: {
-                name: 'facultyName',
-                allowNull: false,
-            },
-            foreignKeyConstraint: true,
-            targetKey: 'facultyName'         // Ensures this references Faculty's primary key
-        });
-    };
-
-    return Student;
+    return Clocking;
 };
