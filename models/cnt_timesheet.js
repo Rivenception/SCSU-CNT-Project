@@ -1,57 +1,29 @@
 module.exports = function (sequelize, DataTypes) {
-    var Timesheet = sequelize.define("cntTimesheet", {
+    var cntTimesheet = sequelize.define("cntTimesheet", {
         student_id: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            type: DataTypes.INTEGER,
         },
-        name: {
+        studentName: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [1]
         },
         date: {
-            type: DataTypes.STRING,
+            type: DataTypes.DATE,
             allowNull: false,
-            len: [1]
         },
-        timeIn: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            len: [1]
-        },
-        timeOut: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            len: [1]
-        },
-        project: {
+        projectName: {
             type: DataTypes.STRING,
             defaultValue: "",
             allowNull: false,
             validate: {
-                len: [30]
+                len: [1]
             },
         },
-        weeklyGoal: {
-            type: DataTypes.INTEGER,
+        dailyNotes: {
+            type: DataTypes.TEXT,
             allowNull: false,
-            len: [1]
         },
-        dailyProg: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        // company: {
-        //     type: DataTypes.STRING,
-        //     allowNull: false,
-        //     len: [1]
-        // },
-        // task_type: {
-        //     type: DataTypes.STRING,
-        //     allowNull: false,
-        //     len: [1]
-        // },
         createdAt: {
             type: DataTypes.DATE,
             timestamps: true,
@@ -67,13 +39,13 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    Timesheet.associate = function (models) {
-        // We're saying that a Timesheet should belong to an Employee
-        // A Timesheet can't be created without an Employee due to the foreign key constraint
-        Timesheet.belongsTo(models.Student, {
+    cntTimesheet.associate = function (models) {
+        // We're saying that a Timesheet should belong to an Student
+        // A Timesheet can't be created without an Student due to the foreign key constraint
+        cntTimesheet.belongsTo(models.Student, {
             foreignKey: {
                 name: 'FKstudent_id',
-                allowNull: false,
+                // allowNull: false,
             },
             // foreignKeyConstraint: true,
             // targetKey: 'employee_id',

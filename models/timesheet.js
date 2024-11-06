@@ -47,16 +47,6 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             len: [1]
         },
-        // company: {
-        //     type: DataTypes.STRING,
-        //     allowNull: false,
-        //     len: [1]
-        // },
-        // task_type: {
-        //     type: DataTypes.STRING,
-        //     allowNull: false,
-        //     len: [1]
-        // },
         createdAt: {
             type: DataTypes.DATE,
             timestamps: true,
