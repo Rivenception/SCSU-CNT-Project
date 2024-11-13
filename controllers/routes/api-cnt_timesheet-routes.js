@@ -69,15 +69,12 @@ module.exports = function (app) {
         });
     });
 
-    // not in use atm.
-    app.get("/api/cntTimesheets/limit=50/pm", function (req, res) {
+    // SELECT * FROM cntTimesheets WHERE projectName = 'Batteries & Chips' ORDER BY date AND id;
+    app.get("/api/cntTimesheets/limit=50/battery", function (req, res) {
         db.cntTimesheet.findAll({
-            include: {
-                model: db.Student,
                 where: {
-                    dept: 'Program Management'
+                    projectName: 'Batteries & Chips'
                 },
-            },
             order: [
                 ['date', 'DESC'],
                 ['id', 'DESC']
