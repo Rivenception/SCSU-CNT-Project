@@ -81,9 +81,10 @@ $(document).ready(function () {
             var newTr = $("<tr>");
             newTr.data("tableRow", newEntry[i].id);
             newTr.append("<td id='logId#"  + newEntry[i].id + "'>" + newEntry[i].id + "</td>");
-            newTr.append("<td id='tableName'><a href='/" + deptURL + "/" + newEntry[i].employee_id + "'>" + newEntry[i].name + "</td>");
+            newTr.append("<td id='tableName'><a href='/stu/" + newEntry[i].student_id + "'>" + newEntry[i].name + "</td>");
             newTr.append("<td id='tableDate'>" + newEntry[i].date + "</td>");
-            newTr.append("<td id='tableProject'><a href='/rfb/" + newEntry[i].project + "'>" + newEntry[i].project + "</td>");
+            newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project_id + "'>" + newEntry[i].project + "</td>");
+            newTr.append("<td id='tableCategy'><a href='/cat/" + newEntry[i].category + "'>" + newEntry[i].category + "</td>");
             newTr.append("<td id='tableNotes'>" + newEntry[i].notes + "</td>");
             newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
             newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
@@ -103,10 +104,13 @@ $(document).ready(function () {
             for (var i = 0; i < data.length; i++) {
                 var newEntry = {
                     id: data[i].id,
+                    student_id: data[i].Student.student_id,
+                    project_id: data[i].Project.project_id,
                     name: data[i].studentName,
                     date: data[i].date,
                     project: data[i].projectName,
-                    notes: data[i].dailyNotes,
+                    category: data[i].category,
+                    notes: data[i].logNotes,
                 }
                 // console.log(newEntry);
                 rowsToAdd.push(newEntry);
@@ -182,11 +186,8 @@ $(document).ready(function () {
             date: today,
             category: $(this).parent("td").parent("tr").children("#tableCategory").text(),
             task: $(this).parent("td").parent("tr").children("#tableTask").text(),
-            timespent: $(this).parent("td").parent("tr").children("#tableTime").text(),
             program: $(this).parent("td").parent("tr").children("#tableProgram").text(),
-            ecr: $(this).parent("td").parent("tr").children("#tableECR").text(),
             notes: $(this).parent("td").parent("tr").children("#tableNotes").text(),
-            FKemployee_id: userName,
         }
         console.log(duplicateEntry.ecr);
         submitTableRow(duplicateEntry);

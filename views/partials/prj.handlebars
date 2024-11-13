@@ -15,9 +15,12 @@
             <label for="name">Name:</label>
             <select placeholder="Select Employee" class="custom-select" id="inputGroupEmployee">
             </select>
-            {{!-- <label for="category">Category:</label>
+            <label for="category">Category:</label>
             <select placeholder="Enter the Category" class="custom-select" id="inputGroupCategory">
-            </select> --}}
+                <option value="Manufacturing">Daily Log</option>
+                <option value="Engineering">Weekly Goal</option>
+                <option value="Program Management">Meeting Minutes</option>          
+            </select>
 
             <div style="display: flex; justify-content: center; align-tiems: center;">
                 <button type="submit" class="btn btn-success" id="Search">Search</button>
@@ -29,5 +32,9 @@
     <th>Name</th>
     <th>Date</th>
     <th>Project</th>
+    <th>Category</th>
     <th>Notes</th>
+    {{!-- <th>Duplicate</th>
+    <th>Update</th>
+    <th>Delete</th> --}}
 </tr>

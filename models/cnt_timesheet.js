@@ -14,13 +14,15 @@ module.exports = function (sequelize, DataTypes) {
         },
         projectName: {
             type: DataTypes.STRING,
-            defaultValue: "",
+            defaultValue: "Admin",
             allowNull: false,
-            validate: {
-                len: [1]
-            },
         },
-        dailyNotes: {
+        category: {
+            type: DataTypes.STRING,
+            defaultValue: "Daily Log",
+            allowNull: false,
+        },
+        logNotes: {
             type: DataTypes.TEXT,
             allowNull: false,
         },
@@ -47,11 +49,16 @@ module.exports = function (sequelize, DataTypes) {
                 name: 'studentName',
                 allowNull: false,
             },
-            foreignKeyConstraint: true,
-            targetKey: 'studentName',
-            constraints: false
+        });
+
+        cntTimesheet.belongsTo(models.Project, {
+            foreignKey: {
+                name: 'projectName',
+                allowNull: false,
+            },
         });
     };
+    
 
     return cntTimesheet;
 };

@@ -6,34 +6,23 @@ global.$ = require('jquery')(window);
 global.document = document;
 
 module.exports = function (sequelize, DataTypes) {
-    var Faculty = sequelize.define("Faculty", {
-        facultyName: {
-            type: DataTypes.STRING,
+    var AffiliateContact = sequelize.define("AffiliateContact", {
+        person_id: {
+            type: DataTypes.INTEGER,
             primaryKey: true,
-            allowNull: false
+            autoIncrement: true,
         },
-        faculty_id: {
+        personName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        affiliateName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
-            len: [1]
-        },
-        dept: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        manager: {
-            type: DataTypes.STRING,
-            allowNull: true,
             len: [1]
         },
         createdAt: {
@@ -51,16 +40,14 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    Faculty.associate = function (models) {
-        // We're saying that a Timesheet should belong to an Employee
-        // A Timesheet can't be created without an Employee due to the foreign key constraint 
-        Faculty.hasMany(models.Student, {
+    AffiliateContact.associate = function (models) {
+        AffiliateContact.belongsTo(models.Affiliate, {
             foreignKey: {
-                name: 'supervisor',
+                name: 'affiliateName',
                 allowNull: false,
             },
         });
     };
 
-    return Faculty;
+    return AffiliateContact;
 };

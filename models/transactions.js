@@ -6,35 +6,37 @@ global.$ = require('jquery')(window);
 global.document = document;
 
 module.exports = function (sequelize, DataTypes) {
-    var Faculty = sequelize.define("Faculty", {
-        facultyName: {
-            type: DataTypes.STRING,
+    var Transaction = sequelize.define("Transaction", {
+        transaction_id: {
+            type: DataTypes.INTEGER,
             primaryKey: true,
-            allowNull: false
+            autoIncrement: true,
         },
-        faculty_id: {
+        affiliateName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        dept: {
+        projectAffiliation: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [1]
         },
-        title: {
+        paymentStatus: {
             type: DataTypes.STRING,
+            allowNull: false,
+        },
+        paymentAmount: {
+            type: DataTypes.INTEGER,
             allowNull: false,
             len: [1]
         },
-        manager: {
-            type: DataTypes.STRING,
+        lastPayment: {
+            type: DataTypes.DATEONLY,
             allowNull: true,
-            len: [1]
+        },
+        nextPayment: {
+            type: DataTypes.DATEONLY,
+            allowNull: true,
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -51,16 +53,14 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    Faculty.associate = function (models) {
-        // We're saying that a Timesheet should belong to an Employee
-        // A Timesheet can't be created without an Employee due to the foreign key constraint 
-        Faculty.hasMany(models.Student, {
+    Transaction.associate = function (models) {
+        Transaction.belongsTo(models.Affiliate, {
             foreignKey: {
-                name: 'supervisor',
+                name: 'affiliateName',
                 allowNull: false,
             },
         });
     };
 
-    return Faculty;
+    return Transaction;
 };

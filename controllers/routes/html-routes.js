@@ -44,6 +44,7 @@ module.exports = function (app) {
       }
     }).then(function (dbStudent) {
       console.log(dbStudent.student_id);
+      console.log(dbStudent.studentName);
       res.render("stu", {
         cntUser: dbStudent.student_id,
         studentName: dbStudent.studentName,

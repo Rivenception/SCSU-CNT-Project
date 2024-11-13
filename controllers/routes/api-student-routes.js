@@ -38,6 +38,29 @@ module.exports = function (app) {
         });
     });
 
+    app.get("/api/students/:user", function (req, res) {
+        console.log('Received request for students'); //Check api being called
+        db.Student.findAll({
+            where: {
+                student_id: req.params.user
+            },
+            order: [
+                ['status', 'ASC'],
+                ['studentName', 'ASC']
+            ],
+        })
+        .then(function (dbStudent) {
+            // Check if any students were found
+            if (!dbEmptyCheck(res, dbStudent)) {
+                return; // Exit if the check indicates no students were found
+            }
+            res.json(dbStudent); // Send the retrieved students as a JSON response
+        })
+        .catch(function (error) {
+            handleError(res, error); // Call the error handling function
+        });
+    });
+
     app.get("/api/students/eng", function (req, res) {
         db.Student.findAll({
             where: {

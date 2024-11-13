@@ -6,34 +6,16 @@ global.$ = require('jquery')(window);
 global.document = document;
 
 module.exports = function (sequelize, DataTypes) {
-    var Faculty = sequelize.define("Faculty", {
-        facultyName: {
+    var Affiliate = sequelize.define("Affiliate", {
+        affiliateName: {
             type: DataTypes.STRING,
             primaryKey: true,
-            allowNull: false
-        },
-        faculty_id: {
-            type: DataTypes.STRING,
+            unique: true,
             allowNull: false,
         },
-        email: {
+        projectAffiliation: {
             type: DataTypes.STRING,
             allowNull: false,
-            len: [1]
-        },
-        dept: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        manager: {
-            type: DataTypes.STRING,
-            allowNull: true,
             len: [1]
         },
         createdAt: {
@@ -51,16 +33,29 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    Faculty.associate = function (models) {
-        // We're saying that a Timesheet should belong to an Employee
-        // A Timesheet can't be created without an Employee due to the foreign key constraint 
-        Faculty.hasMany(models.Student, {
+    Affiliate.associate = function (models) {
+        // Affiliate has many Projects through the ProjectAffiliate join table
+        Affiliate.belongsToMany(models.Project, {
+            through: models.ProjectAffiliate, // This specifies the junction table
+            foreignKey: 'affiliateName',      // Foreign key in the junction table
+            otherKey: 'projectSponsor',       // Other key in the junction table
+            as: 'projects',                   // Alias for the association
+        });
+
+        Affiliate.hasMany(models.Transaction, {
             foreignKey: {
-                name: 'supervisor',
+                name: 'affiliateName',
+                allowNull: false,
+            },
+        });
+
+        Affiliate.hasMany(models.AffiliateContact, {
+            foreignKey: {
+                name: 'affiliateName',
                 allowNull: false,
             },
         });
     };
 
-    return Faculty;
+    return Affiliate;
 };

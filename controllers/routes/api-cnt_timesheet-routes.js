@@ -17,11 +17,17 @@ module.exports = function (app) {
 
     app.get("/api/cntTimesheets/users/:user", function (req, res) {
         db.cntTimesheet.findAll({
-            include: [{
+            include: [
+            {
             model: db.Student,
             where: {
                 student_id: req.params.user
-            }}],
+                }
+            },
+            {
+            model: db.Project, // Include the Project model
+            required: true  // Optional: You can set to `true` if you want to only return rows where the Timesheet has a Project associated
+            }],
             order: [
                 ['id', 'DESC']
             ],
@@ -46,7 +52,14 @@ module.exports = function (app) {
 
     app.get("/api/cntTimesheets/limit=50", function (req, res) {
         db.cntTimesheet.findAll({
-            include: [db.Student],
+            include: [
+                {
+                model: db.Student,
+                },
+                {
+                model: db.Project, // Include the Project model
+                required: true  // Optional: You can set to `true` if you want to only return rows where the Timesheet has a Project associated
+                }],
             order: [
                 ['id', 'DESC']
             ],

@@ -7,36 +7,33 @@ global.document = document;
 
 module.exports = function (sequelize, DataTypes) {
     var Clocking = sequelize.define("Clocking", {
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        employee_id: {
-            type: DataTypes.STRING,
-            primaryKey: true,
-            allowNull: false,
-        },
-        dept: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        status: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            defaultValue: "Active",
-            len: [1]
-        },
-        salary: {
+        clock_id: {
             type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        studentName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        date: {
+            type: DataTypes.DATEONLY,
+            allowNull: false,
             len: [1]
         },
+        timeType: {
+            type: DataTypes.ENUM('Time In', 'Time Out'),
+            allowNull: false
+        },
+        timeEntry: {
+            type: DataTypes.TIME, // This stores the time in HH:MM:SS format
+            allowNull: false
+        },
+        // student_id: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false,
+        //     len: [1]
+        // },
         createdAt: {
             type: DataTypes.DATE,
             timestamps: true,
@@ -53,15 +50,11 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Clocking.associate = function (models) {
-        // We're saying that a Timesheet should belong to an Employee
-        // A Timesheet can't be created without an Employee due to the foreign key constraint
-        Clocking.hasMany(models.Timesheet, {
+        Clocking.belongsTo(models.Student, {
             foreignKey: {
-                name: 'FKemployee_id',
+                name: 'studentName',
                 allowNull: false,
             },
-            // foreignKeyConstraint: true,
-            // sourceKey: 'employee_id'
         });
     };
 

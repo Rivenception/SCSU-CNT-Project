@@ -10,6 +10,7 @@ module.exports = function (sequelize, DataTypes) {
         student_id: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true, // This makes student_id unique
             len: [1]
         },
         studentName: {
@@ -54,27 +55,32 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Student.associate = function (models) {
-        // We're saying that a cntTimesheet should belong to an Student
-        // A cntTimesheet can't be created without an Student due to the foreign key constraint
         Student.hasMany(models.cntTimesheet, {
             foreignKey: {
                 name: 'studentName',
                 allowNull: false,
             },
-            foreignKeyConstraint: true,
-            sourceKey: 'studentName'
         });
-    };
 
-    Student.associate = function (models) {
-        // This establishes that each Student belongs to a Faculty
         Student.hasOne(models.Faculty, {
             foreignKey: {
                 name: 'facultyName',
                 allowNull: false,
             },
-            foreignKeyConstraint: true,
-            targetKey: 'facultyName'         // Ensures this references Faculty's primary key
+        });
+
+        Student.hasOne(models.Faculty, {
+            foreignKey: {
+                name: 'facultyName',
+                allowNull: false,
+            },
+        });
+
+        Student.hasMany(models.Clocking, {
+            foreignKey: {
+                name: 'studentName',
+                allowNull: false,
+            },
         });
     };
 
