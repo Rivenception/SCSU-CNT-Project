@@ -8,15 +8,16 @@ global.document = document;
 module.exports = function (sequelize, DataTypes) {
     var Student = sequelize.define("Student", {
         student_id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
+            type: DataTypes.STRING,
             allowNull: false,
+            unique: true, // This makes student_id unique
+            len: [1]
         },
         studentName: {
             type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
+            primaryKey: true,
+            validate: {
+                len: [1, 255]}
         },
         email: {
             type: DataTypes.STRING,
@@ -30,8 +31,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         supervisor: {
             type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
+            index: true               // Add this line to create an index
         },
         status: {
             type: DataTypes.STRING,
@@ -55,15 +55,32 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Student.associate = function (models) {
-        // We're saying that a Timesheet should belong to an Employee
-        // A Timesheet can't be created without an Employee due to the foreign key constraint
         Student.hasMany(models.cntTimesheet, {
             foreignKey: {
-                name: 'FKstudent_id',
+                name: 'studentName',
                 allowNull: false,
             },
-            // foreignKeyConstraint: true,
-            // sourceKey: 'employee_id'
+        });
+
+        Student.hasOne(models.Faculty, {
+            foreignKey: {
+                name: 'facultyName',
+                allowNull: false,
+            },
+        });
+
+        Student.hasOne(models.Faculty, {
+            foreignKey: {
+                name: 'facultyName',
+                allowNull: false,
+            },
+        });
+
+        Student.hasMany(models.Clocking, {
+            foreignKey: {
+                name: 'studentName',
+                allowNull: false,
+            },
         });
     };
 

@@ -12,6 +12,10 @@ module.exports = function (app) {
     res.render("admin");
   });
 
+  app.get("/stu_admin", function (req, res) {
+    res.render("stu_admin");
+  });
+
   app.get("/dept", function (req, res) {
     res.render("dept");
   });
@@ -28,15 +32,49 @@ module.exports = function (app) {
     res.render("category");
   });
 
-// SCSU Projects
-
-  app.get("/prj", function (req, res) {
-    res.render("prj");
-  });
-
   app.get("/stu", function (req, res) {
     res.render("stu");
   });
+
+// SCSU Projects
+  app.get("/stu/:user", function (req, res) {
+    db.Student.findOne({
+      where: {
+        student_id: req.params.user
+      }
+    }).then(function (dbStudent) {
+      console.log(dbStudent.student_id);
+      console.log(dbStudent.studentName);
+      res.render("stu", {
+        cntUser: dbStudent.student_id,
+        studentName: dbStudent.studentName,
+        // dept: dbStudent.dept,
+      });
+    });
+  });
+
+  app.get("/cnt", function (req, res) {
+    db.cntTimesheet.findAll({
+    }).then(function (dbcntTimesheet) {
+      res.render("cnt", {
+        projectName: dbcntTimesheet.projectName,
+        studentName: dbcntTimesheet.studentName,
+      });
+    });
+  });
+  
+    app.get("/cnt/prj", function (req, res) {
+      db.cntTimesheet.findOne({
+        where: {
+          projectName: 'Batteries and Chips'
+        }
+      }).then(function (dbcntTimesheet) {
+        res.render("stu", {
+          projectName: dbcntTimesheet.projectName,
+          studentName: dbcntTimesheet.studentName,
+        });
+      });
+    });
 
 // Department Pages
 

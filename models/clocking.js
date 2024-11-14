@@ -6,36 +6,34 @@ global.$ = require('jquery')(window);
 global.document = document;
 
 module.exports = function (sequelize, DataTypes) {
-    var Faculty = sequelize.define("Faculty", {
-        facultyName: {
-            type: DataTypes.STRING,
+    var Clocking = sequelize.define("Clocking", {
+        clock_id: {
+            type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
+        },
+        studentName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        date: {
+            type: DataTypes.DATEONLY,
+            allowNull: false,
+            len: [1]
+        },
+        timeType: {
+            type: DataTypes.ENUM('Time In', 'Time Out'),
             allowNull: false
         },
-        faculty_id: {
-            type: DataTypes.STRING,
-            allowNull: false,
+        timeEntry: {
+            type: DataTypes.TIME, // This stores the time in HH:MM:SS format
+            allowNull: false
         },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        dept: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        manager: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            len: [1]
-        },
+        // student_id: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false,
+        //     len: [1]
+        // },
         createdAt: {
             type: DataTypes.DATE,
             timestamps: true,
@@ -51,16 +49,14 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    Faculty.associate = function (models) {
-        // We're saying that a Timesheet should belong to an Employee
-        // A Timesheet can't be created without an Employee due to the foreign key constraint 
-        Faculty.hasMany(models.Student, {
+    Clocking.associate = function (models) {
+        Clocking.belongsTo(models.Student, {
             foreignKey: {
-                name: 'supervisor',
+                name: 'studentName',
                 allowNull: false,
             },
         });
     };
 
-    return Faculty;
+    return Clocking;
 };

@@ -6,32 +6,45 @@ global.$ = require('jquery')(window);
 global.document = document;
 
 module.exports = function (sequelize, DataTypes) {
-    var Faculty = sequelize.define("Faculty", {
-        facultyName: {
+    var Task = sequelize.define("Task", {
+        // task_id: {
+        //     type: DataTypes.INTEGER,
+        //     primarykey: true,
+        //     autoIncrement: true,
+        // },
+        projectName: {
             type: DataTypes.STRING,
-            primaryKey: true,
+            allowNull: false,
+            len: [1]
+        },
+        task: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        taskNotes: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            len: [1]
+        },
+        assignedTo: {
+            type: DataTypes.STRING,
             allowNull: false
         },
-        faculty_id: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        email: {
+        priority: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [1]
         },
-        dept: {
+        requestor: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        dueDate: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [1]
         },
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            len: [1]
-        },
-        manager: {
+        status: {
             type: DataTypes.STRING,
             allowNull: true,
             len: [1]
@@ -51,16 +64,14 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    Faculty.associate = function (models) {
-        // We're saying that a Timesheet should belong to an Employee
-        // A Timesheet can't be created without an Employee due to the foreign key constraint 
-        Faculty.hasMany(models.Student, {
+    Task.associate = function (models) {
+        Task.hasOne(models.Project, {
             foreignKey: {
-                name: 'supervisor',
+                name: 'projectName',
                 allowNull: false,
             },
         });
     };
 
-    return Faculty;
+    return Task;
 };
