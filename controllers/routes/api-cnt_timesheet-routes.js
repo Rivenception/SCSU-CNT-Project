@@ -70,11 +70,17 @@ module.exports = function (app) {
     });
 
     // SELECT * FROM cntTimesheets WHERE projectName = 'Batteries & Chips' ORDER BY date AND id;
-    app.get("/api/cntTimesheets/limit=50/battery", function (req, res) {
+    app.get("/api/cntTimesheets/limit=50/:id", function (req, res) {
         db.cntTimesheet.findAll({
-                where: {
-                    projectName: 'Batteries & Chips'
+            include: [
+                {
+                    model: db.Student,
                 },
+                {
+                model: db.Project,
+                where: {
+                    project_id: req.params.id
+                }}],
             order: [
                 ['date', 'DESC'],
                 ['id', 'DESC']

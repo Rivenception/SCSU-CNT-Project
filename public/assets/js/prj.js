@@ -2,7 +2,7 @@ $(document).ready(function () {
     var tableBody = $("tbody");
     var tableContainer = $(".table-container");
 
-    var dept = $('#dept').text();
+    var proj = $('#project').text();
     var userName = $('#hidden-employeeId').text();
     var nameSelect = $('#inputGroupEmployee');
     var dateSelect = $('#date');
@@ -12,43 +12,57 @@ $(document).ready(function () {
     var programId = $('#inputGroupProgram');
     var inputEcr = $('#inputGroupEcr');
     var inputNotes = $('#inputGroupNotes');
-    var deptURL = '';
+    var projURL = '';
 
     $(document).on("click", "#timeSubmit", handleFormSubmit);
     $(document).on("click", ".delete-entry", handleDeleteButtonPress);
 
     // Getting the initial list of Time Entries
+    checkProj();
     getLastEntries();
-    checkDept();
 
     // Function that checks html to confirm department called from routes
-    function checkDept() {
-        deptURL = '';
-        if (dept === 'Engineering') {
-            deptURL = "eng";
-            $("#deptSelect > option").each(function() {
-                if (this.value === dept) {
+    function checkProj() {
+        projURL = '';
+        if (proj === 'Admin') {
+            projURL = "1";
+            $("#projSelect > option").each(function() {
+                if (this.value === proj) {
                     this.selected = true
                 }
             });
-        } else if (dept === 'Manufacturing') {
-            deptURL = "mfg";
-            $("#deptSelect > option").each(function() {
-                if (this.value === dept) {
+        } else if (proj === 'Batteries & Chips') {
+            projURL = "2";
+            $("#projSelect > option").each(function() {
+                if (this.value === proj) {
                     this.selected = true
                 }
             });
-        } else if (dept === 'Program Management') {
-            deptURL = "pm";
-            $("#deptSelect > option").each(function() {
-                if (this.value === dept) {
+        } else if (proj === 'Super Capacitors') {
+            projURL = "3";
+            $("#projSelect > option").each(function() {
+                if (this.value === proj) {
                     this.selected = true
                 }
             });
-        } else if (dept === 'Certification') {
-            deptURL = "certs";
-            $("#deptSelect > option").each(function() {
-                if (this.value === dept) {
+        } else if (proj === 'Quantum') {
+            projURL = "4";
+            $("#projSelect > option").each(function() {
+                if (this.value === proj) {
+                    this.selected = true
+                }
+            });
+        } else if (proj === 'Direct Air Capture') {
+            projURL = "5";
+            $("#projSelect > option").each(function() {
+                if (this.value === proj) {
+                    this.selected = true
+                }
+            });
+        } else if (proj === 'Fuel Cells') {
+            projURL = "6";
+            $("#projSelect > option").each(function() {
+                if (this.value === proj) {
                     this.selected = true
                 }
             });
@@ -94,7 +108,7 @@ $(document).ready(function () {
             newTr.append("<td id='tableName'><a href='/stu/" + newEntry[i].student_id + "'>" + newEntry[i].name + "</td>");
             newTr.append("<td id='tableDate'>" + newEntry[i].date + "</td>");
             newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project_id + "'>" + newEntry[i].project + "</td>");
-            newTr.append("<td id='tableCategy'><a href='/cat/" + newEntry[i].category + "'>" + newEntry[i].category + "</td>");
+            newTr.append("<td id='tableCategory'><a href='/cat/" + newEntry[i].category + "'>" + newEntry[i].category + "</td>");
             newTr.append("<td id='tableNotes'>" + newEntry[i].notes + "</td>");
             // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
             // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
@@ -106,9 +120,9 @@ $(document).ready(function () {
 
     // Function for retrieving tableRows and getting them ready to be rendered to the page
     function getLastEntries() {
-        checkDept();
+        checkProj();
         var rowsToAdd = [];
-        var route = "/api/cntTimesheets/limit=50/" + deptURL;
+        var route = "/api/cntTimesheets/limit=50/" + projURL;
         console.log(route);
         $.get(route, function (data) {
             for (var i = 0; i < data.length; i++) {
