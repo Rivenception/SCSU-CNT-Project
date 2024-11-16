@@ -1,0 +1,39 @@
+{{#if hasprojectName}}
+<tr id="form-row">
+    <td colspan="12">
+        <br>
+        <label for="auth">Date:</label>
+        <input placeholder="Enter the date" id="date" value="" type="date" />
+        <br>
+        <p style="font-size: x-small;">*Required field: Please use Admin as a catch-all for non-project items</p>
+        <label for="task">Project:</label>
+        <select class="custom-select" id="inputGroupProject">
+        </select>
+        <br>
+        <label for="category">Category:</label>
+        <select placeholder="Enter the Category" class="custom-select" id="inputGroupCategory">
+        </select>
+        <br>
+        <label for="notes">Notes:</label>
+        <input placeholder="Enter Notes" id="inputGroupNotes" type="text"
+            style="width: -webkit-fill-available; height: 100px;" />
+        <br>
+        <div style="display: flex; justify-content: center; align-tiems: center;">
+            <button type="submit" class="btn btn-success" id="timeSubmit">Add Entry</button>
+        </div>
+    </td>
+</tr>
+{{/if}}
+<tr>
+    <th>Log#</th>
+    <th>Name</th>
+    <th>Date</th>
+    <th>Project</th>
+    <th>Category</th>
+    <th>Notes</th>
+    {{#if hasstudentName}}
+    <th>Duplicate</th>
+    <th>Update</th>
+    <th>Delete</th>
+    {{/if}}
+</tr>

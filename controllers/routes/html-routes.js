@@ -63,15 +63,18 @@ module.exports = function (app) {
     });
   });
   
-    app.get("/cnt/prj", function (req, res) {
+    app.get("/prj/:id", function (req, res) {
       db.cntTimesheet.findOne({
-        where: {
-          projectName: 'Batteries and Chips'
-        }
+        include: [
+          {
+          model: db.Project,
+          where: {
+            project_id: req.params.id
+        }}],
       }).then(function (dbcntTimesheet) {
-        res.render("stu", {
+        res.render("prj", {
           projectName: dbcntTimesheet.projectName,
-          studentName: dbcntTimesheet.studentName,
+          project_id: dbcntTimesheet.Project.project_id,
         });
       });
     });
