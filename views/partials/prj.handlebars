@@ -2,24 +2,25 @@
     <td colspan="12">
         <br>
         <form class="index-form">
-            <label for="deptSelect">Project:</label>
+            <label for="deptSelect">Dept:</label>
             <select class="custom-select" id="deptSelect" name="deptSelect">
 
                 <!--tried to get handlebars to handle if statement to change the order of the options-->
 
-                <option value="Engineering">Engineering</option>
-                <option value="Manufacturing">Manufacturing</option>
-                <option value="Program Management">Program Management</option>
-                <option value="Certification">Certification</option>
+                <option value="cnt">CNT</option>
+                <option value="iHub">iHUB</option>
             </select>
             <label for="name">Name:</label>
-            <select placeholder="Select Employee" class="custom-select" id="inputGroupEmployee">
+            <select placeholder="Select Student" class="custom-select" id="inputGroupStudent">
+            </select>
+            <label for="task">Project:</label>
+            <select class="custom-select" id="inputGroupProject">
             </select>
             <label for="category">Category:</label>
             <select placeholder="Enter the Category" class="custom-select" id="inputGroupCategory">
-                <option value="Manufacturing">Daily Log</option>
-                <option value="Engineering">Weekly Goal</option>
-                <option value="Program Management">Meeting Minutes</option>          
+                <option value="Daily Log">Daily Log</option>
+                <option value="Weekly Goal">Weekly Goal</option>
+                <option value="Meeting Minutes">Meeting Minutes</option>          
             </select>
 
             <div style="display: flex; justify-content: center; align-tiems: center;">

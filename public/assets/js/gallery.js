@@ -26,7 +26,8 @@ $(document).ready(function () {
         "/public/assets/img/slides/Slide24.jpg"
     ];
     let currentIndex = 0;
-    console.log(images);  // Logs the images array to the console
+    // Logs the images array to the console
+    // console.log(images);
     
     function showImage(index) {
         const galleryImage = document.getElementById("gallery-image");

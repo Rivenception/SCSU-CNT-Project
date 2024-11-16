@@ -1,6 +1,5 @@
+const db = require("../../models");
 const moment = require("moment");
-const { sequelize } = require("../../models");
-var db = require("../../models");
 const { Op } = require('sequelize');
 
 module.exports = function (app) {
@@ -212,28 +211,6 @@ module.exports = function (app) {
             where: {
                 createdAt: {
                     [Op.gte]: moment().subtract(30, 'days').toDate()
-                }
-            },
-            order: [
-                ['date', 'DESC']
-            ]
-        }).then(function (dbTimesheet) {
-            res.json(dbTimesheet);
-        });
-    });
-
-    // Data based on last Xn of days - Quarterly
-    app.get("/api/cntTimesheets/tasks/eng/quarterly", function (req, res) {
-        db.Timesheet.findAll({
-            include: [{
-                model: db.Student,
-                where: {
-                    dept: "Engineering"
-                }
-            }],
-            where: {
-                createdAt: {
-                    [Op.gte]: moment().subtract(90, 'days').toDate()
                 }
             },
             order: [

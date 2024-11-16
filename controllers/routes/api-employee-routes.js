@@ -1,5 +1,4 @@
-var db = require("../../models");
-const { Op } = require('sequelize');
+const db = require("../../models");
 
 module.exports = function (app) {
     app.get("/api/employees", function (req, res) {

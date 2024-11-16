@@ -1,5 +1,4 @@
-var db = require("../../models");
-const { Op } = require('sequelize');
+const db = require("../../models");
 
 // errorHandler.js
 function handleError(res, error) {
