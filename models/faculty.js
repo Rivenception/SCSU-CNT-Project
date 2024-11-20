@@ -52,8 +52,6 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Faculty.associate = function (models) {
-        // We're saying that a Timesheet should belong to an Employee
-        // A Timesheet can't be created without an Employee due to the foreign key constraint 
         Faculty.hasMany(models.Student, {
             foreignKey: {
                 name: 'supervisor',
