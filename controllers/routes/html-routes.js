@@ -56,12 +56,12 @@ module.exports = function (app) {
     });
   });
 
-  app.get("/cnt", function (req, res) {
-    db.cntTimesheet.findAll({
-    }).then(function (dbcntTimesheet) {
-      res.render("cnt", {
-        projectName: dbcntTimesheet.projectName,
-        studentName: dbcntTimesheet.studentName,
+  app.get("/prj", function (req, res) {
+    db.Project.findAll({
+    }).then(function (dbProject) {
+      res.render("prj", {
+        projectName: dbProject.projectName,
+        status: dbProject.status,
       });
     });
   });
