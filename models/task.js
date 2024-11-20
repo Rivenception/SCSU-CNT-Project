@@ -9,8 +9,8 @@ module.exports = function (sequelize, DataTypes) {
     var Task = sequelize.define("Task", {
         task_id: {
             type: DataTypes.INTEGER,
-            primarykey: true,
-            // autoIncrement: true,
+            primaryKey: true,
+            autoIncrement: true,
         },
         projectName: {
             type: DataTypes.STRING,
@@ -70,6 +70,16 @@ module.exports = function (sequelize, DataTypes) {
                 name: 'projectName',
                 allowNull: false,
             },
+        });
+    };
+
+    Task.associate = function (models) {
+        Task.belongsTo(models.Student, {
+            foreignKey: {
+                name: 'assignedTo',
+                allowNull: false,
+            },
+            targetKey: 'studentName'
         });
     };
 

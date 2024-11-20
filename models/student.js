@@ -82,6 +82,14 @@ module.exports = function (sequelize, DataTypes) {
                 allowNull: false,
             },
         });
+
+        Student.hasMany(models.Task, {
+            foreignKey: {
+                name: 'assignedTo',
+                allowNull: false,
+            },
+            sourceKey: 'studentName',
+        });
     };
 
     return Student;
