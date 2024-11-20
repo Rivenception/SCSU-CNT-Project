@@ -57,6 +57,7 @@ app.set("view engine", "handlebars");
 require("./controllers/routes/api-cnt_timesheet-routes.js")(app);
 require("./controllers/routes/api-student-routes.js")(app);
 require("./controllers/routes/api-project-routes.js")(app);
+require("./controllers/routes/api-task-routes.js")(app);
 require("./controllers/routes/api-dropdown-routes.js")(app);
 require("./controllers/routes/html-routes.js")(app);
 

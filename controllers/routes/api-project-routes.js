@@ -1,6 +1,17 @@
 const db = require("../../models");
 
 module.exports = function (app) {
+    app.get("/api/prj", function (req, res) {
+        console.log('Received request for projects');
+        db.Project.findAll({
+            order: [
+                ['projectName', 'ASC']
+            ],
+        }).then(function (dbProject) {
+            res.json(dbProject);
+        });
+    });
+    
     app.post("/api/projects", function (req, res) {
         db.Timesheet.create(req.body,
             {
