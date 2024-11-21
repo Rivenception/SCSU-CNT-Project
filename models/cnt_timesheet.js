@@ -1,8 +1,10 @@
 module.exports = function (sequelize, DataTypes) {
     var cntTimesheet = sequelize.define("cntTimesheet", {
-        // student_id: {
-        //     type: DataTypes.INTEGER,
-        // },
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
         studentName: {
             type: DataTypes.STRING,
             allowNull: false,

@@ -34,7 +34,7 @@ module.exports = function (sequelize, DataTypes) {
             index: true               // Add this line to create an index
         },
         status: {
-            type: DataTypes.STRING,
+            type: DataTypes.ENUM('Active', 'Inactive'),
             allowNull: false,
             defaultValue: "Active",
             len: [1]
@@ -81,6 +81,14 @@ module.exports = function (sequelize, DataTypes) {
                 name: 'studentName',
                 allowNull: false,
             },
+        });
+
+        Student.hasMany(models.Task, {
+            foreignKey: {
+                name: 'assignedTo',
+                allowNull: false,
+            },
+            sourceKey: 'studentName',
         });
     };
 

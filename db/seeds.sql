@@ -1,18 +1,184 @@
--- Insert this data first
-INSERT INTO employees (name, employee_id, dept, title, salary) VALUES ('Rick Mingione', 'rmingione', 'Program Management', 'Sr. Program Manager', 70000);
-INSERT INTO employees (name, employee_id, dept, title, salary) VALUES ('Fernando Lucena', 'flucena', 'Engineering', 'Engineer', 70000);
-INSERT INTO employees (name, employee_id, dept, title, salary) VALUES ('Bhaumik Patel', 'bpatel', 'Engineering', 'Engineering Manager', 70000);
-INSERT INTO employees (name, employee_id, dept, title, status, salary) VALUES ('Andrew Groover', 'agroover', 'Engineering', 'Engineer', 'Inactive', 70000);
-INSERT INTO employees (name, employee_id, dept, title, status, salary) VALUES ('Katie Christiana', 'kchristiana', 'Manufacturing', 'Manufacturing Manager', 'Active', 70000);
+-- Insert in order top to bottom. If you try to insert anything out of order the DB will have referential issues.
 
--- Insert this data second
-INSERT INTO timesheets (employee_id, name, date, category, task, timeSpent, program, ecr, notes, FKemployee_id) VALUES ('rmingione', 'Rick Mingione', '2024/11/07', 'Program Management', 'Admin', 30, "5924", null, 'test note', 'rmingione');
-INSERT INTO timesheets (employee_id, name, date, category, task, timeSpent, program, ecr, notes, FKemployee_id) VALUES ('rmingione', 'Rick Mingione', '2024/11/04', 'Program Management', 'Meeting', 30, "99999", "19562", 'test note', 'rmingione');
-INSERT INTO timesheets (employee_id, name, date, category, task, timeSpent, program, ecr, notes, FKemployee_id) VALUES ('rmingione', 'Rick Mingione', '2024/11/05', 'Program Management', 'Planning', 30, "99999", null, 'test note', 'rmingione');
-INSERT INTO timesheets (employee_id, name, date, category, task, timeSpent, program, ecr, notes, FKemployee_id) VALUES ('rmingione', 'Rick Mingione', '2024/11/02', 'Program Management', 'Emails', 30, "5924", null, 'test note', 'rmingione');
-INSERT INTO timesheets (employee_id, name, date, category, task, timeSpent, program, ecr, notes, FKemployee_id) VALUES ('flucena', 'Fernando Lucena', '2024/11/06', 'ECR', 'Admin', 30, "99999", null, 'test note', 'flucena');
-INSERT INTO timesheets (employee_id, name, date, category, task, timeSpent, program, ecr, notes, FKemployee_id) VALUES ('flucena', 'Fernando Lucena', '2024/11/06', 'Development', 'Meeting', 30, "99999", "19562", 'test note', 'flucena');
-INSERT INTO timesheets (employee_id, name, date, category, task, timeSpent, program, ecr, notes, FKemployee_id) VALUES ('flucena', 'Fernando Lucena', '2024/11/04', 'Non-Development', 'Planning', 30, "5924", null, 'test note', 'flucena');
-INSERT INTO timesheets (employee_id, name, date, category, task, timeSpent, program, ecr, notes, FKemployee_id) VALUES ('flucena', 'Fernando Lucena', '2024/11/04', 'Non-Development', 'Emails', 30, "99999", "19542", 'test note', 'flucena');
-INSERT INTO timesheets (employee_id, name, date, category, task, timeSpent, program, ecr, notes, FKemployee_id) VALUES ('bpatel', 'Bhaumik Patel', '2024/11/02', 'Non-Development', 'Admin', 30, "5924", null, 'test note', 'bpatel');
-INSERT INTO timesheets (employee_id, name, date, category, task, timeSpent, program, ecr, notes, FKemployee_id) VALUES ('bpatel', 'Bhaumik Patel', '2024/11/01', 'Non-Development', 'Meeting', 30, "99999", "19999", 'test note', 'bpatel');
+-- Insert into faculty table
+INSERT INTO faculties (facultyName, faculty_id, email, dept, title, manager) VALUES
+('Christine Broadbridge', 'cbroadbridge', 'broadbridgc1@southernct.edu', 'Department of Research & Innovation', 'Executive Director', NULL),
+('Helen Keegan', 'hkeegan', 'dri@southernct.edu', 'Department of Research & Innovation', 'Secretary II', 'Christine Broadbridge'),
+('Heather Stearns', 'hstearns', 'stearnsh1@southernct.edu', 'Department of Research & Innovation', 'Support', 'Christine Broadbridge'),
+('Peter Dimoulas', 'pdimoulas', 'dimoulasp1@southernct.edu', 'Innovation Hub', 'Grant Program Administrator', 'Christine Broadbridge'),
+('Arianna Ruiz', 'aruiz', 'ruiza12@southernct.edu', 'Innovation Hub', 'Coordinator', 'Peter Dimoulas'),
+('Derek Faulkner', 'dfaulkner', 'faulknerd4@southernct.edu', 'Innovation Hub', 'Coordinator', 'Peter Dimoulas'),
+('Rich Pellegrino', 'rpellegrino', 'pellegrinor2@southernct.edu', 'Center for Nanotechnology', 'Lab Technician', 'Christine Broadbridge'),
+('Thomas Sadowski', 'tsadowski', 'sadowskit1@southernct.edu', 'Center for Nanotechnology', 'Adjunct Instructor', 'Christine Broadbridge'),
+('Suzanne Huminski', 'shuminski', 'huminskis1@southernct.edu', 'Office of STEM Research & Innovation', 'Associate Director of Sustainability', 'Christine Broadbridge');
+
+-- Insert into students table
+INSERT INTO students (student_id, studentName, email, position, supervisor, status) VALUES
+('ismith', 'Imani Smith', 'smithi9@southernct.edu', 'Graduate Assistant', 'Peter Dimoulas', 'Active'),
+('akross', 'Allison Kross', 'krossa2@southernct.edu', 'Graduate Assistant', 'Peter Dimoulas', 'Active'),
+('smuneer', 'Sana Muneer', 'muneerb1@southernct.edu', 'Undergraduate Assistant', 'Peter Dimoulas', 'Active'),
+('sswirsky', 'Steve Swirsky', 'swirskys1@southernct.edu', 'Graduate Assistant', 'Christine Broadbridge', 'Active'),
+('rmingione', 'Rick Mingione', 'mingioner1@southernct.edu', 'Graduate Assistant', 'Christine Broadbridge', 'Active'),
+('mmartone', 'Max Martone', 'martonem5@southernct.edu', 'Graduate Assistant', 'Christine Broadbridge', 'Active'),
+('amansfield', 'Andrew Mansfield', 'mansfielda4@southernct.edu', 'Graduate Assistant', 'Christine Broadbridge', 'Active'),
+('vadamski', 'Vanessa Adamski', 'adamskiv1@southernct.edu', 'Undergraduate Assistant', 'Christine Broadbridge', 'Active'),
+('ipomaquiza', 'Ingrid Pomaquiza', 'pomaquizai1@southernct.edu', 'Undergraduate Assistant', 'Christine Broadbridge', 'Active'),
+('jturpin', 'Jeremy Turpin', 'turpinj1@southernct.edu', 'Graduate Assistant', 'Christine Broadbridge', 'Active'),
+('jrnuemansegue', 'Jose Ramon Nguema Nsegue', 'nguemansegj1@southernct.edu', 'Graduate Assistant', 'Christine Broadbridge', 'Active'),
+('tmasi', 'Tessa Masi', '', 'Graduate Assistant', 'Christine Broadbridge', 'Active');
+
+INSERT INTO projects (projectName, projectSponsor, status) VALUES
+('Admin', NULL, 'Active'),
+('Batteries & Chips', 'Cool Amps', 'Active'),
+('Super Capacitors', NULL, 'Active'),
+('Quantum', NULL, 'Active'),
+('Direct Air Capture', NULL, 'Active'),
+('Fuel Cells', 'Bloom', 'Active');
+
+INSERT INTO cntTimesheets (studentName, date, projectName, category, logNotes) VALUES
+('Rick Mingione', '2024-08-29', 'Batteries & Chips', 'Daily Log', 'Worked on Project Charter for Cool Amps and started to test a daily activity logger'),
+('Rick Mingione', '2024-08-30', 'Admin', 'Daily Log', 'Continued testing on and learning the Team Forms application. Promising use for daily log activity and organization of project tracking at a granular level.'),
+('Rick Mingione', '2024-09-03', 'Batteries & Chips', 'Daily Log', 'Reviewed with Steve his actions from last week. Summary: - Tried to dissolve MNO2 in the fizz/no fizz solution. Intent: - To build a calibration curve to quantify how much MNO2 is in our LiB samples/experiments Observations: - The MNO2 didn\'t dissolve fully in the solution. Original testing was a short period of time. Left over the weekend and it still didn\'t dissolve. - Sample might be contaminated. The fizz/no fizz solutions didn\'t change color. Conclusions: - We should retest. - Run elemental analysis on the sample.'),
+('Rick Mingione', '2024-09-03', 'Batteries & Chips', 'Daily Log', 'truncated'),
+('Rick Mingione', '2024-09-09', 'Admin', 'Daily Log', 'Testing date functionality. Trying to get the date to auto-populate on opening the form.'),
+('Rick Mingione', '2024-09-04', 'Quantum', 'Meeting Minutes', 'Meeting Minutes: - Discussion about 3 topics of research for Max to investigate and complete 2 page write ups of the current work accomplished within the department. See white board photo attached.'),
+('Rick Mingione', '2024-09-05', 'Batteries & Chips', 'Daily Log', 'Running multiple UV viz tests on 6 samples brought in by Tom to validate whether the samples are LFP in material composition. Based on visual eye test it is unlikely the samples are LFP.'),
+('Rick Mingione', '2024-09-06', 'Batteries & Chips', 'Daily Log', 'Reviewed with Steve the org flow for experiments requested by Cool Amps. We are consolidating the test data to the specific experiments they belong to within teams to better structure the information for upper management. Next week I will attempt to organize the experiments within the PMP and within Latek and include the charts Steve had output. We will request Ingrid and JR to write a short excerpt on the observations we obtained through each experiment to summarize the work.'),
+('Rick Mingione', '2024-09-06', 'Batteries & Chips', 'Daily Log', 'Observations: - Polaris sent LFP scrap. Dr. Nick thinks we may not be extracting metals well with LFP at the current solution. Action items: - Perform an evaporation test on samples and then do EDS. - Run EDS on yellow solution that Dr. Madden provided to SCSU. - EDS the bag of "burnt" material that Dr. Madden brought to SCSU. - Nick needs to run an extraction on known LFP and see how it work with and without the fizz solution.'),
+('Rick Mingione', '2024-09-10', 'Batteries & Chips', 'Daily Log', 'Started to bucket the experiments performed over the summer into categories. - Requested Ingrid to assist in writing short set of observations for each experiment - Intending to include these experiments in the work activities of the PMP for the Battery Project with the goal in increasing speeding up the onboarding process for new students due to churn and have a presentable document for leadership within and outside SCSU.'),
+('Rick Mingione', '2024-09-11', 'Admin', 'Daily Log', 'Testing to turn off email automation'),
+('Rick Mingione', '2024-09-16', 'Admin', 'Daily Log', 'Supported the DIR for the Biopath event Friday by creating name tags and printing them out. Touched base with the team reminding everyone to log their time and daily activity.'),
+('Rick Mingione', '2024-09-12', 'Admin', 'Daily Log', 'Released the TImesheet and Daily Log to Batteries and SuperCapacitor groups. Reviewed with each team the functionality and location. Initial production will be consolidated to just these two teams as an experiment to see how often the application is used with/without a project manager lead. Looking for feedback between the two teams after a 2week period and 4week period on if they find these tools useful.'),
+('Tessa Masi', '2024-08-30', 'Super Capacitors', 'Daily Log', 'Friday, 8/30/24, electrode #1 25mg MnO2 Biochar, 4.9 mg was tested at a frequency range of 0.001-100,000Hz at voltage = 0V and alternating voltage at 5 mV rms. The experiment started at 10:05 am and concluded at 2:55 pm. As for the results, the lower end of the frequency was not a great fit for the K-K transform, but the plot overall had the correct shape and gave more information about the electrode at lower frequencies. The bode plot begins to curve upwards at around 1mHz. Since the K-K transform doesnâ€™t quite align with the final points, as shown in the attached file, I need to run the test again on Friday if the long test overnight on Thursday does not give good results.'),
+('Tessa Masi', '2024-09-05', 'Super Capacitors', 'Daily Log', 'Thursday, 9/5/24, electrode #1 25mg MnO2 Biochar, 4.9 mg was tested at a frequency range of 0.0001-100,000Hz at voltage = 0V and alternating voltage at 5 mV rms. The experiment started at 2:00 pm and continued overnight. I met with the supercapacitor group to discuss goals for the semester and what needs to be refined/looked into more.'),
+('Tessa Masi', '2024-09-06', 'Super Capacitors', 'Daily Log', 'Friday, 9/6/24, electrode #1 25mg MnO2 Biochar, 4.9 mg was tested at a frequency range of 0.0001-100,000Hz at voltage = 0V and alternating voltage at 5 mV rms. The experiment started at 2:00 pm on 9/5/24 and concluded at 1:45 pm 9/6/24. I had to leave for another event I had scheduled in the afternoon, and the results looked like they had a lot of noise on the low end of the frequency spectrum, so I concluded the test at 0.001995 Hz. As for the results, the lower end of the frequency was not a great fit for the K-K transform, but the plot overall had the correct shape and gave more information about the electrode at lower frequencies. The bode plot begins to curve upwards at around 1 mHz but at a lower value than the previous test. Since the K-K transform doesnâ€™t align with the final points due to noise, I need to determine how to lower the environmental noise or change the sensitivity.'),
+('Tessa Masi', '2024-09-12', 'Super Capacitors', 'Daily Log', 'truncated'),
+('Tessa Masi', '2024-09-13', 'Super Capacitors', 'Daily Log', 'truncated'),
+('Steve Swirsky', '2024-09-12', 'Admin', 'Daily Log', 'class tour Bio Class 430'),
+('Steve Swirsky', '2024-09-19', 'Batteries & Chips', 'Daily Log', 'started 2 phase raised temperature soak. 60 degrees no fizz CAM+Cu 2 beakers, after multi hour extraction, will transfer material to beakers with fresh solution to see if selective reaction still occurs worked well as expected, UVVis results to be done next week on generated samples, but appeared to work well by eye'),
+('Rick Mingione', '2024-09-20', 'Admin', 'Daily Log', 'Supporting the iHUB event with the Bioscience Forum'),
+('Rick Mingione', '2024-09-17', 'Admin', 'Daily Log', 'Supported the DIR in creating nametag for the BCF event this Friday. Also, stopped the Graduate office to ask about funding for Team Forms subscription for the CNT teams. This would be an experiment to test to application and value stream of logging daily activities against projects. I also visited IT and requested a meeting with the networking group to discuss building a custom application for the CNT.'),
+('Steve Swirsky', '2024-09-20', 'Batteries & Chips', 'Daily Log', 'Ran second phase of experiement where we put the extracted battery material in fizz solution trying to make it blue, and as a control we put the materal from beaker 2 into a new beaker of no-fizz to see it stay clear. the expected blue and clear behavior occurred correctly. we will UVVis the result samples Monday or Tuesday'),
+('Steve Swirsky', '2024-09-23', 'Batteries & Chips', 'Daily Log', 'Suzie class Demo, start UV-Vis of 2 step experiment samples'),
+('Steve Swirsky', '2024-09-24', 'Batteries & Chips', 'Daily Log', 'finish UV-Vis results on 2 step experiment samples, CoolAmps meeting at 2pm'),
+('Rick Mingione', '2024-09-24', 'Batteries & Chips', 'Daily Log', 'Caught up with Steve on last week of experiments'),
+('Steve Swirsky', '2024-09-25', 'Batteries & Chips', 'Daily Log', 'started re-verification run of 2 step experiment where we will run nofizz at 60degC and then put the extracted material in a beaker of Fizz solution to turn it blue simulating dissolving the copper to expose the graphite material, as desired. This is an important experiment for CoolAmps so they would like us to perform it a few times to make sure it is working repeatably'),
+('Steve Swirsky', '2024-09-30', 'Batteries & Chips', 'Daily Log', 'finished EDS on samples from 2 step experiment validation run. Found interesting results in the control beaker 2, went slower than beaker 1 even though they should have been mostly identical. Leads to thinking that elevated temperature, even a few degrees has an extremely significant effect on reaction kinetics.'),
+('Steve Swirsky', '2024-10-07', 'Batteries & Chips', 'Daily Log', 'step 1 of 2 step experiment with new No Tears solution, will UV-Vis results tomorrow because it doesnt look like it worked as well as the No Fizz solution'),
+('Steve Swirsky', '2024-10-17', 'Quantum', 'Daily Log', 'This doesnt count as quantum or batteries really, but Prof Sadowski did DFT seminar 3:30 - 5:00pm, for my PHY580'),
+('Steve Swirsky', '2024-10-10', 'Quantum', 'Daily Log', 'DFT lecture with Prof Sadowski 3pm - 4:30pm'),
+('Steve Swirsky', '2024-10-21', 'Batteries & Chips', 'Daily Log', 'Did SEM/EDS on hitatchi for polaris NMC532 material, and the EDS did show extremely good 5:3:2 ratio, so that implies a good validation of the material. it also looks extremely similar to the pristince NMC532 so hopefully the 2 step experiment will work correctly tomorrow'),
+('Steve Swirsky', '2024-10-22', 'Batteries & Chips', 'Daily Log', 'EDS of more polaris samples had CoolAmps meeting'),
+('Steve Swirsky', '2024-10-10', 'Batteries & Chips', 'Daily Log', 'coolamps meeting'),
+('Steve Swirsky', '2024-10-08', 'Batteries & Chips', 'Daily Log', 'coolamps meeting'),
+('Steve Swirsky', '2024-10-24', 'Batteries & Chips', 'Daily Log', '2 step experiment with polaris NMC532 and no tears solution at 60degC'),
+('Rick Mingione', '2024-09-25', 'Batteries & Chips', 'Daily Log', 'Caught up with Steve on last week of experiments'),
+('Rick Mingione', '2024-09-13', 'Admin', 'Daily Log', 'Set up Teamviewer on CNT computer in 13 for Tessa to be able to remote login and track her experiments from home'),
+('Rick Mingione', '2024-09-14', 'Batteries & Chips', 'Daily Log', 'Worked on overleaf latek doc for program management form of this project'),
+('Rick Mingione', '2024-09-18', 'Admin', 'Daily Log', 'Supported the DIR in creating nametag for the BCF event this Friday'),
+('Rick Mingione', '2024-09-19', 'Admin', 'Daily Log', 'Followed up with SCSU IT department on building custom applications'),
+('Rick Mingione', '2024-09-20', 'Admin', 'Daily Log', 'Attended BioPath event and helped set up and organize'),
+('Rick Mingione', '2024-09-23', 'Batteries & Chips', 'Daily Log', 'Requested Ingrid to write a one paragraph observation for each experiment to define what we learned from each through the summer'),
+('Rick Mingione', '2024-09-26', 'Batteries & Chips', 'Daily Log', 'Worked on overleaf latek doc for program management form of this project'),
+('Rick Mingione', '2024-09-27', 'Batteries & Chips', 'Daily Log', 'Worked on overleaf latek doc for program management form of this project'),
+('Rick Mingione', '2024-09-30', 'Admin', 'Daily Log', 'Talked to Dr. Sadowski about re-installing Ubuntu OS on Linux computers in the CNT'),
+('Rick Mingione', '2024-10-01', 'Batteries & Chips', 'Daily Log', 'Followed up with Ingrid for requested write ups'),
+('Rick Mingione', '2024-10-02', 'Admin', 'Daily Log', 'Worked on overleaf latek doc for program management form of this project'),
+('Rick Mingione', '2024-10-03', 'Super Capacitors', 'Daily Log', 'Met with Vanessa who shared her thesis on Super Capacitors to try to get a bit of background on the topic'),
+('Rick Mingione', '2024-10-04', 'Admin', 'Daily Log', 'Attended First Friday GA meeting for funding to ask about funding for my application in the CNT. Currently no movement on that end.'),
+('Rick Mingione', '2024-10-07', 'Super Capacitors', 'Daily Log', 'Started to read Vanessa\'s paper on Super Capacitors'),
+('Rick Mingione', '2024-10-08', 'Batteries & Chips', 'Daily Log', 'Reviewed CoolAmps experiments with JR and build spreadsheet to map out the results and observations'),
+('Rick Mingione', '2024-10-09', 'Admin', 'Daily Log', 'Helped Rich and Dr. B move in a donated machine to the CNT'),
+('Rick Mingione', '2024-10-10', 'Batteries & Chips', 'Daily Log', 'Followed up with Ingrid on write ups previously requested'),
+('Rick Mingione', '2024-10-11', 'Batteries & Chips', 'Daily Log', 'Reviewed the CoolAmps experiments with Steve requesting tables of the experiments ran to create a one-page summary of the summer'),
+('Rick Mingione', '2024-10-14', 'Batteries & Chips', 'Daily Log', 'Steve was able to put together one of the tables I requested. We reviewed it and wrote a brief conclusion and explanation'),
+('Rick Mingione', '2024-10-15', 'Batteries & Chips', 'Daily Log', 'Worked in overleaf trying to set up one-page templates for CoolAmps and adding notes and table from Steve'),
+('Rick Mingione', '2024-10-16', 'Admin', 'Daily Log', 'Decided to just build my own application for timekeeper since I am not receiving support for IT or SCSU GA budget to use the Teams forms. Spent the day setting up my Github account again and accessing a previous application I built as a base to start.'),
+('Rick Mingione', '2024-10-17', 'Admin', 'Daily Log', 'Pulled previous timekeeper to vs code. Refreshed knowledge working with Node.js to deploy the application.'),
+('Rick Mingione', '2024-10-18', 'Batteries & Chips', 'Daily Log', 'Followed up with Steve on tables to support one-page updates on CoolAmps. Re-explained what we were looking for and why.'),
+('Rick Mingione', '2024-10-21', 'Admin', 'Daily Log', 'Dealing with deprecated dependencies and updating to get the dev environment established to work on'),
+('Rick Mingione', '2024-10-22', 'Admin', 'Daily Log', 'Dealing with deprecated dependencies and updating to get the dev environment established to work on'),
+('Rick Mingione', '2024-10-23', 'Admin', 'Daily Log', 'Spending time reacclimating to the code and stack to figure out what I need to do to refactor'),
+('Rick Mingione', '2024-10-24', 'Admin', 'Daily Log', 'Working on the database tables and mapped out the dbms infrastructure'),
+('Rick Mingione', '2024-10-25', 'Admin', 'Daily Log', 'Working on the database tables and mapped out the dbms infrastructure'),
+('Rick Mingione', '2024-10-28', 'Admin', 'Daily Log', 'Testing routing for timekeeper on first new database table'),
+('Rick Mingione', '2024-10-29', 'Admin', 'Daily Log', 'Worked on application of the Timekeeper for the CNT'),
+('Rick Mingione', '2024-10-30', 'Admin', 'Daily Log', 'Reviewed with Derek in iHUB about a video about the CNT to support an event'),
+('Rick Mingione', '2024-10-31', 'Admin', 'Daily Log', 'Found previous video on YouTube of the CNT building to see if it could support the event'),
+('Rick Mingione', '2024-11-01', 'Admin', 'Daily Log', 'Working to integrate the tables into mysql and establish correct relationships'),
+('Rick Mingione', '2024-11-04', 'Admin', 'Daily Log', 'Working to integrate the tables into mysql and establish correct relationships'),
+('Rick Mingione', '2024-11-05', 'Admin', 'Daily Log', 'Completed Powerpoint at Dr. B request for event coming up on the 9th'),
+('Rick Mingione', '2024-11-06', 'Admin', 'Daily Log', 'Meeting with iHUB about Data Analysis of Industry Needs'),
+('Rick Mingione', '2024-11-07', 'Admin', 'Daily Log', 'Worked on organizing the data from iHUB in excel and team meeting with Rich'),
+('Rick Mingione', '2024-11-08', 'Admin', 'Daily Log', 'Added the powerpoint into a gallery on the timekeeper (not really a value add for minimum viable product but seemed like a good way to use the request made from Dr. B earlier in the week with the project)'),
+('Rick Mingione', '2024-11-11', 'Admin', 'Daily Log', 'Got access to Qualtrics data from IT to see if there\'s better way to export data to work with'),
+('Rick Mingione', '2024-11-12', 'Admin', 'Daily Log', 'Worked on organizing the data from iHUB in excel into a visualization that is clearer to the naked eye.'),
+('Rick Mingione', '2024-11-13', 'Admin', 'Daily Log', 'Added a Tasks table to the timekeeper based on Rich\'s personal task list. The intent of the task table will be to offer student GA and faculty the ability to apply tasks to project and assign tasks as needed.'),
+('Rick Mingione', '2024-11-14', 'Admin', 'Daily Log', 'Re-downloaded Tableau public to see if I can use that as a data visualization tool for iHUB data.');
+
+
+-- Insert into clocking table
+INSERT INTO clockings (studentName, date, timeType, timeEntry) VALUES
+('Rick Mingione', '2024-09-05', 'Time In', '15:46:00'),
+('Rick Mingione', '2024-09-05', 'Time Out', '15:46:00'),
+('Rick Mingione', '2024-09-06', 'Time In', '11:12:00'),
+('Rick Mingione', '2024-09-06', 'Time Out', '13:00:00'),
+('Rick Mingione', '2024-09-09', 'Time In', '09:56:00'),
+('Rick Mingione', '2024-09-09', 'Time Out', '16:08:00'),
+('Rick Mingione', '2024-09-10', 'Time In', '10:07:00'),
+('Rick Mingione', '2024-09-10', 'Time Out', '16:03:00'),
+('Rick Mingione', '2024-09-11', 'Time In', '10:02:00'),
+('Rick Mingione', '2024-09-12', 'Time In', '10:08:00'),
+('Rick Mingione', '2024-09-12', 'Time Out', '16:07:00'),
+('Rick Mingione', '2024-09-13', 'Time In', '10:03:00'),
+('Tessa Masi', '2024-08-30', 'Time In', '09:10:00'),
+('Tessa Masi', '2024-08-30', 'Time Out', '15:10:00'),
+('Tessa Masi', '2024-09-05', 'Time In', '14:00:00'),
+('Tessa Masi', '2024-09-05', 'Time Out', '15:00:00'),
+('Tessa Masi', '2024-09-06', 'Time In', '09:00:00'),
+('Tessa Masi', '2024-09-06', 'Time Out', '13:50:00'),
+('Tessa Masi', '2024-09-12', 'Time In', '14:30:00'),
+('Tessa Masi', '2024-09-12', 'Time Out', '16:30:00'),
+('Tessa Masi', '2024-09-13', 'Time In', '13:30:00'),
+('Rick Mingione', '2024-09-13', 'Time Out', '15:52:00'),
+('Tessa Masi', '2024-09-13', 'Time Out', '16:40:00'),
+('Rick Mingione', '2024-09-16', 'Time In', '10:17:00'),
+('Steve Swirsky', '2024-09-16', 'Time In', '13:10:00'),
+('Rick Mingione', '2024-09-16', 'Time Out', '16:08:00'),
+('Rick Mingione', '2024-09-17', 'Time In', '10:04:00'),
+('Rick Mingione', '2024-09-17', 'Time Out', '15:52:00'),
+('Tessa Masi', '2024-09-20', 'Time In', '09:30:00'),
+('Tessa Masi', '2024-09-20', 'Time Out', '15:33:00'),
+('Steve Swirsky', '2024-09-23', 'Time In', '12:30:00'),
+('Steve Swirsky', '2024-09-24', 'Time In', '10:45:00'),
+('Rick Mingione', '2024-09-24', 'Time In', '10:10:00'),
+('Rick Mingione', '2024-09-24', 'Time Out', '16:02:00'),
+('Rick Mingione', '2024-09-25', 'Time In', '10:10:00'),
+('Rick Mingione', '2024-09-20', 'Time In', '08:05:00'),
+('Rick Mingione', '2024-09-20', 'Time Out', '16:11:00'),
+('Steve Swirsky', '2024-09-25', 'Time In', '13:00:00'),
+('Rick Mingione', '2024-09-25', 'Time Out', '15:35:00'),
+('Rick Mingione', '2024-09-26', 'Time In', '10:26:00'),
+('Tessa Masi', '2024-09-27', 'Time In', '09:30:00'),
+('Tessa Masi', '2024-09-27', 'Time Out', '15:00:00'),
+('Rick Mingione', '2024-09-26', 'Time Out', '15:24:00'),
+('Rick Mingione', '2024-10-01', 'Time In', '10:15:00'),
+('Rick Mingione', '2024-09-30', 'Time In', '11:15:00'),
+('Rick Mingione', '2024-09-30', 'Time Out', '15:26:00'),
+('Steve Swirsky', '2024-10-01', 'Time In', '12:45:00');
+
+-- Insert into affiliate table
+INSERT INTO affiliates (affiliateName, projectAffiliation) VALUES
+('Bloom', 'Fuel Cells'),
+('CoolAmps', 'Batteries & Chips');
+
+-- Insert into affiliateContact table
+INSERT INTO affiliatecontacts (personName, affiliateName, email) VALUES
+('Tom Madden', 'CoolAmps', 'tom@coolamps.tech'),
+('Nick Anderson', 'CoolAmps', 'nick@coolamps.tech');
+
+INSERT INTO transactions (affiliateName, projectAffiliation, paymentStatus, paymentAmount, lastPayment, nextPayment) VALUES
+('CoolAmps', 'Batteries & Cells', 'Paid', 1500.00, NULL, '2025-01-15');
+
+INSERT INTO tasks (projectName, task, taskNotes, assignedTo, priority, requestor, dueDate, status) VALUES
+('Admin', 'Work on Timekeeper', 'update tables', 'Rick Mingione', 'High', 'Rich Pellegrino', '2024-12-12', 'Active'); 

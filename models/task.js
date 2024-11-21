@@ -7,11 +7,11 @@ global.document = document;
 
 module.exports = function (sequelize, DataTypes) {
     var Task = sequelize.define("Task", {
-        // task_id: {
-        //     type: DataTypes.INTEGER,
-        //     primarykey: true,
-        //     autoIncrement: true,
-        // },
+        task_id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
         projectName: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -40,7 +40,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         dueDate: {
-            type: DataTypes.STRING,
+            type: DataTypes.DATE,
             allowNull: false,
             len: [1]
         },
@@ -70,6 +70,16 @@ module.exports = function (sequelize, DataTypes) {
                 name: 'projectName',
                 allowNull: false,
             },
+        });
+    };
+
+    Task.associate = function (models) {
+        Task.belongsTo(models.Student, {
+            foreignKey: {
+                name: 'assignedTo',
+                allowNull: false,
+            },
+            targetKey: 'studentName'
         });
     };
 
