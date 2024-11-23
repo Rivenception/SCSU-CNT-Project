@@ -108,7 +108,7 @@ $(document).ready(function () {
             newTr.append("<td id='tableName'><a href='/stu/" + newEntry[i].student_id + "'>" + newEntry[i].name + "</td>");
             newTr.append("<td id='tableDate'>" + newEntry[i].date + "</td>");
             newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project_id + "'>" + newEntry[i].project + "</td>");
-            newTr.append("<td id='tableCategory'><a href='/cat/" + newEntry[i].category + "'>" + newEntry[i].category + "</td>");
+            newTr.append("<td id='tableCategory'><a href='/api/category/" + newEntry[i].category + "'>" + newEntry[i].category + "</td>");
             newTr.append("<td id='tableNotes'>" + newEntry[i].notes + "</td>");
             // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
             // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");

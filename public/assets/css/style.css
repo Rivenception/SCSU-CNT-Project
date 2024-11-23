@@ -190,7 +190,7 @@ tr{
 }
 
 .footer {
-  // use #0046ae for SCSU blue
+  /* use #0046ae for SCSU blue */
   background-color: #0b213f;
   color: white;
   padding: 20px;
@@ -219,7 +219,7 @@ tr{
   font-size: 14px;
 }
 
-//Gallery CSS
+/* Gallery CSS */
 .gallery-container {
   position: relative;
   display: flex; /* Use flexbox to center the gallery */
