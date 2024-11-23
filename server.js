@@ -8,7 +8,7 @@ const app = express();
 app.set("port", PORT);
 
 // Requiring our models for syncing
-const db = require("./models");
+const dbSequelize = require("./models");
 
 // Parse application body
 app.use(express.urlencoded({ extended: true }));
@@ -59,6 +59,7 @@ require("./controllers/routes/api-student-routes.js")(app);
 require("./controllers/routes/api-project-routes.js")(app);
 require("./controllers/routes/api-task-routes.js")(app);
 require("./controllers/routes/api-dropdown-routes.js")(app);
+require("./controllers/routes/login-routes.js")(app);
 require("./controllers/routes/html-routes.js")(app);
 
 // Partials functions
@@ -74,7 +75,7 @@ app.use((err, req, res, next) => {
 // =============================================================
 // { force: true }
 
-db.sequelize.sync().then(function () {
+dbSequelize.sequelize.sync().then(function () {
     app.listen(PORT, function () {
         console.log("Server listening on: http://localhost:" + PORT);
     });

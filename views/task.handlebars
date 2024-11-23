@@ -2,7 +2,9 @@
   <class class="container">
     <h1 class="header">Project Task Summary</h1>
     <h2 class="subheader" id="project">{{this.projectName}}</h2>
+    <h2 class="subheader" id="student">{{this.studentName}}</h2>
     <h2 class="hidden" id="project-id">{{this.project_id}}</h2>
+    <h2 class="hidden" id="student-id">{{this.student_id}}</h2>
     <h2 class="subheader" id="time-log" style="font-size: large;"></h2>
     <h2 class="hidden" id="hidden-id">{{this.project_id}}</h2>
     {{#unless this.cntPrj}}
@@ -16,6 +18,8 @@
     <thead>
       {{#if this.projectName.length}}
         {{> task}}
+      {{else if this.studentName.length}}
+        {{> task}}
       {{else}}
         {{> task_list}}
       {{/if}}
@@ -27,6 +31,8 @@
 
 {{#if this.projectName.length}}
 <!-- Custom Script -->
+<script src="assets/js/task.js" type="text/javascript"></script>
+{{else if this.studentName.length}}
 <script src="assets/js/task.js" type="text/javascript"></script>
 {{else}}
 <!-- Custom Script -->

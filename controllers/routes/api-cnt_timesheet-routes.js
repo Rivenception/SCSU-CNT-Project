@@ -68,7 +68,7 @@ module.exports = function (app) {
         });
     });
 
-    // SELECT * FROM cntTimesheets WHERE projectName = 'Batteries & Chips' ORDER BY date AND id;
+    // SELECT * FROM cntTimesheets... JOIN students JOIN project.... WHERE project_id = '1' ORDER BY date AND id;
     app.get("/api/cntTimesheets/limit=50/:id", function (req, res) {
         db.cntTimesheet.findAll({
             include: [
@@ -150,6 +150,29 @@ module.exports = function (app) {
                 ['id', 'DESC']
             ],
             limit: 50
+        }).then(function (dbTimesheet) {
+            res.json(dbTimesheet);
+        });
+    });
+
+    // SELECT id, studentName, date, projectName, category, logNotes, createdAt, createdAt, updatedAt FROM cntTimesheet WHERE category = category
+    app.get("/api/cntTimesheets/category/:category", function (req, res) {
+        console.log('Received request for categories from the cntTimesheets table');
+        db.cntTimesheet.findAll({
+            include: [
+                {
+                model: db.Student,
+                },
+                {
+                model: db.Project, // Include the Project model
+                required: true  // Optional: You can set to `true` if you want to only return rows where the Timesheet has a Project associated
+                }],
+            where: {
+                category: req.params.category,
+            },
+            order: [
+                ['category', 'ASC']
+            ],
         }).then(function (dbTimesheet) {
             res.json(dbTimesheet);
         });

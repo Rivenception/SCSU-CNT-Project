@@ -7,38 +7,69 @@ module.exports = function (app) {
             order: [
                 ['task_id', 'ASC']
             ],
-        }).then(function (dbProject) {
-            res.json(dbProject);
-        });
-    });
-    
-    app.get("/api/task/:project", function (req, res) {
-        console.log('Received request for project tasks');
-        db.Task.findAll({
-            include: [db.Student],
-            where: {
-                project_id: req.params.project
-            },
-            order: [
-                ['task_id', 'ASC']
-            ],
-        }).then(function (dbProject) {
-            res.json(dbProject);
+        }).then(function (dbTask) {
+            res.json(dbTask);
         });
     });
 
-    app.get("/api/task/:student", function (req, res) {
+    app.get("/api/task/stu/:student", function (req, res) {
         console.log('Received request for project tasks');
         db.Task.findAll({
-            include: [db.Student],
-            where: {
-                studentName: req.params.student
-            },
+            include: [
+                {
+                    model: db.Project,
+                },
+                {
+                model: db.Student,
+                where: {
+                    student_id: req.params.student
+                    }
+                }],
+                order: [
+                    ['task_id', 'ASC']
+                ],
+        }).then(function (dbTask) {
+            res.json(dbTask);
+        });
+    });
+    
+    app.get("/api/task/prj", function (req, res) {
+        console.log('Received request for project tasks');
+        db.Task.findAll({
+            include: [
+                {
+                model: db.Student,
+                },
+                {
+                model: db.Project,
+                }],
+            order: [
+                ['priority', 'ASC'],
+                ['dueDate', 'ASC']
+            ],
+        }).then(function (dbTask) {
+            res.json(dbTask);
+        });
+    });
+
+    app.get("/api/task/prj/:project_id", function (req, res) {
+        console.log('Received request for project tasks');
+        db.Task.findAll({
+            include: [
+                {
+                    model: db.Student,
+                },
+                {
+                model: db.Project,
+                where: {
+                    project_id: req.params.project_id
+                    }
+                }],
             order: [
                 ['task_id', 'ASC']
             ],
-        }).then(function (dbProject) {
-            res.json(dbProject);
+        }).then(function (dbTask) {
+            res.json(dbTask);
         });
     });
 
