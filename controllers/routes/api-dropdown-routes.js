@@ -12,14 +12,11 @@ module.exports = function (app) {
             res.json(dbProject);
         });
     });
-    // SELECT id, studentName, date, projectName, category, logNotes, createdAt, createdAt, updatedAt FROM cntTimesheet WHERE category = category
-    app.get("/api/category/:category", function (req, res) {
+
+    app.get("/api/category", function (req, res) {
         console.log('Received request for categories from the cntTimesheets table');
         db.cntTimesheet.findAll({
-            attributes: ['id','studentName','date','projectName','category','logNotes','createdAt','updatedAt'],
-            where: {
-                category: req.params.category,
-            },
+            attributes: ['category'],
             order: [
                 ['category', 'ASC']
             ],
