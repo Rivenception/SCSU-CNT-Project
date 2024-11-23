@@ -358,10 +358,10 @@ $(document).ready(function () {
     tasksDropdown();
     timesDropdown();
     typeDropdown();
-    capacityEng();
-    getDailyCapacity()
-    getWeeklyCapacity()
-    getMonthlyCapacity()
+    // capacityEng();
+    // getDailyCapacity()
+    // getWeeklyCapacity()
+    // getMonthlyCapacity()
 
     // Section 4: On Change Functions
 

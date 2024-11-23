@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "root",
-    "password": "Deathnote88*",
+    "username": "testuser",
+    "password": "testuser!",
     "database": "time_monitorDB",
     "host": "localhost",
     "port": 3306,

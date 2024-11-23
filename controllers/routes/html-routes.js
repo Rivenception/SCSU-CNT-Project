@@ -39,6 +39,10 @@ module.exports = function (app) {
     res.render("stu");
   });
 
+  app.get("/task", function (req, res) {
+    res.render("task");
+  });
+
 // SCSU Projects
   app.get("/stu/:user", function (req, res) {
     db.Student.findOne({
@@ -81,6 +85,83 @@ module.exports = function (app) {
         });
       });
     });
+
+// SCSU Task Routes
+    app.get("/task", function (req, res) {
+      db.Task.findAll({
+      }).then(function (dbTask) {
+        res.render("task", {
+          project_id: dbTask.task_id,
+          status: dbTask.status,
+        });
+      });
+    });
+
+    app.get("/task/prj", function (req, res) {
+      db.Task.findOne({
+        include: [
+          {
+          model: db.Project,
+          where: {
+            project_id: req.params.id
+        }}],
+      }).then(function (dbTask) {
+        res.render("task", {
+          projectName: dbTask.projectName,
+          project_id: dbTask.Project.project_id,
+        });
+      });
+    });
+
+    app.get("/task/prj/:id", function (req, res) {
+      db.Task.findOne({
+        include: [
+          {
+          model: db.Project,
+          where: {
+            project_id: req.params.id
+        }}],
+      }).then(function (dbTask) {
+        res.render("task", {
+          projectName: dbTask.projectName,
+          project_id: dbTask.Project.project_id,
+        });
+      });
+    });
+
+    app.get("/task/stu/:id", function (req, res) {
+      db.Task.findOne({
+        include: [
+          {
+          model: db.Student,
+          where: {
+            student_id: req.params.id
+        }}],
+      }).then(function (dbTask) {
+        res.render("task", {
+          studentName: dbTask.studentName,
+          student_id: dbTask.Student.student_id,
+        });
+      });
+    });
+
+  // SCSU Category
+  app.get("/stu/cat/:category", function (req, res) {
+    console.log("This is executing");
+    const category = decodeURIComponent(req.params.category);
+    console.log("This is the category" + category);
+    db.cntTimesheet.findOne({
+      where: {
+        category: category
+      }   
+    }).then(function (dbcntTimesheet) {
+      res.render("category", {
+        // cntUser: dbcntTimesheet.student_id,
+        // studentName: dbcntTimesheet.studentName,
+        category: dbcntTimesheet.category,
+      });
+    });
+  });
 
 // Department Pages ***Need to refactor or remove***
 

@@ -58,7 +58,7 @@ module.exports = function (sequelize, DataTypes) {
             as: 'affiliates',                 // Alias for the association
         });
 
-        Project.belongsTo(models.Task, {
+        Project.hasMany(models.Task, {
             foreignKey: {
                 name: 'projectName',
                 allowNull: false,

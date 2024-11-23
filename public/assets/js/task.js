@@ -2,8 +2,8 @@ $(document).ready(function () {
     var tableBody = $("tbody");
     var tableContainer = $(".table-container");
 
-    var category = $('#category').text();
-    var userName = $('#hidden-employeeId').text();
+    var proj = $('#project').text();
+    var userName = $('#student-id').text();
     var nameSelect = $('#inputGroupEmployee');
     var dateSelect = $('#date');
     var categorySelect = $("#inputGroupCategory");
@@ -12,36 +12,57 @@ $(document).ready(function () {
     var programId = $('#inputGroupProgram');
     var inputEcr = $('#inputGroupEcr');
     var inputNotes = $('#inputGroupNotes');
-    var categoryURL = '';
+    var projURL = '';
 
     $(document).on("click", "#timeSubmit", handleFormSubmit);
     $(document).on("click", ".delete-entry", handleDeleteButtonPress);
 
     // Getting the initial list of Time Entries
+    checkProj();
     getLastEntries();
-    checkCategory();
 
-    // Function that checks html to confirm category called from routes
-    function checkCategory() {
-        categoryURL = '';
-        if (category === 'Engineering') {
-            categoryURL = "eng";
-            $("#categorySelect > option").each(function() {
-                if (this.value === category) {
+    // Function that checks html to confirm department called from routes
+    function checkProj() {
+        projURL = '';
+        if (proj === 'Admin') {
+            projURL = "1";
+            $("#projSelect > option").each(function() {
+                if (this.value === proj) {
                     this.selected = true
                 }
             });
-        } else if (category === 'Manufacturing') {
-            categoryURL = "mfg";
-            $("#categorySelect > option").each(function() {
-                if (this.value === category) {
+        } else if (proj === 'Batteries & Chips') {
+            projURL = "2";
+            $("#projSelect > option").each(function() {
+                if (this.value === proj) {
                     this.selected = true
                 }
             });
-        } else if (category === 'Program Management') {
-            categoryURL = "pm";
-            $("#categorySelect > option").each(function() {
-                if (this.value === category) {
+        } else if (proj === 'Super Capacitors') {
+            projURL = "3";
+            $("#projSelect > option").each(function() {
+                if (this.value === proj) {
+                    this.selected = true
+                }
+            });
+        } else if (proj === 'Quantum') {
+            projURL = "4";
+            $("#projSelect > option").each(function() {
+                if (this.value === proj) {
+                    this.selected = true
+                }
+            });
+        } else if (proj === 'Direct Air Capture') {
+            projURL = "5";
+            $("#projSelect > option").each(function() {
+                if (this.value === proj) {
+                    this.selected = true
+                }
+            });
+        } else if (proj === 'Fuel Cells') {
+            projURL = "6";
+            $("#projSelect > option").each(function() {
+                if (this.value === proj) {
                     this.selected = true
                 }
             });
@@ -83,15 +104,17 @@ $(document).ready(function () {
         for (var i = 0; i < newEntry.length; i++) {
             var newTr = $("<tr>");
             newTr.data("tableRow", newEntry[i].id);
-            newTr.append("<td id='logId#"  + newEntry[i].id + "'>" + newEntry[i].id + "</td>");
-            newTr.append("<td id='tableName'><a href='/stu/" + newEntry[i].student_id + "'>" + newEntry[i].name + "</td>");
-            newTr.append("<td id='tableDate'>" + newEntry[i].date + "</td>");
-            newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project_id + "'>" + newEntry[i].project + "</td>");
-            newTr.append("<td id='tableCategory'><a href='/stu/cat/" + newEntry[i].category + "'>" + newEntry[i].category + "</td>");
+            newTr.append("<td id='priority"  + newEntry[i].priority + "'>" + newEntry[i].priority + "</td>");
+            newTr.append("<td id='dueDate"  + newEntry[i].due + "'>" + newEntry[i].due + "</td>");
+            newTr.append("<td id='tableProject'><a href='/task/prj/" + newEntry[i].project_id + "'>" + newEntry[i].project + "</td>");
+            newTr.append("<td id='tableTask'>" + newEntry[i].task + "</td>");
+            newTr.append("<td id='tableAssignment'><a href='task/stu/" + newEntry[i].student_id + "'>" + newEntry[i].assigned + "</td>");
+            newTr.append("<td id='tableRequestor'>" + newEntry[i].requestor + "</td>");
+            newTr.append("<td id='tableStatus'>" + newEntry[i].status + "</td>");
             newTr.append("<td id='tableNotes'>" + newEntry[i].notes + "</td>");
-            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
-            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
-            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='delete-entry fa fa-trash-o'></i></td>");
+            // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
+            // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
+            // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='delete-entry fa fa-trash-o'></i></td>");
             allEntries.push(newTr)
         }
         return allEntries;
@@ -99,21 +122,30 @@ $(document).ready(function () {
 
     // Function for retrieving tableRows and getting them ready to be rendered to the page
     function getLastEntries() {
-        checkCategory();
+        checkProj();
         var rowsToAdd = [];
-        var route = "/api/cntTimesheets/category/" + category;
+        if (userName.trim()) {
+            var route = "/api/task/stu/" + userName;
+        } else if (proj.trim()) {
+            var route = "/api/task/prj/" + projURL;
+        } else {
+            var route = "/api/task";
+        };
         console.log(route);
         $.get(route, function (data) {
             for (var i = 0; i < data.length; i++) {
                 var newEntry = {
-                    id: data[i].id,
-                    student_id: data[i].Student.student_id,
+                    task_id: data[i].task_id,
+                    priority: data[i].priority,
+                    due: data[i].dueDate,
                     project_id: data[i].Project.project_id,
-                    name: data[i].studentName,
-                    date: data[i].date,
                     project: data[i].projectName,
-                    category: data[i].category,
-                    notes: data[i].logNotes,
+                    task: data[i].task,
+                    assigned: data[i].assignedTo,
+                    student_id: data[i].Student.student_id,
+                    requestor: data[i].requestor,
+                    status: data[i].status,
+                    notes: data[i].taskNotes,
                 }
                 // console.log(newEntry);
                 rowsToAdd.push(newEntry);

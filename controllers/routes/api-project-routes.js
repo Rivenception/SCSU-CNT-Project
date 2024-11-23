@@ -22,12 +22,12 @@ module.exports = function (app) {
     });
 
     app.delete("/api/projects/entries/:id", function (req, res) {
-        db.Timesheet.destroy({
+        db.Project.destroy({
             where: {
-                id: req.params.id
+                project_id: req.params.id
             }
-        }).then(function (dbTimesheet) {
-            res.json(dbTimesheet);
+        }).then(function (dbProject) {
+            res.json(dbProject);
         });
     });
 
