@@ -60,58 +60,6 @@ module.exports = function (app) {
         });
     });
 
-    app.get("/api/students/eng", function (req, res) {
-        db.Student.findAll({
-            where: {
-                dept: 'Engineering'
-            },
-            order: [
-                ['name', 'ASC']
-            ],
-        }).then(function (dbStudent) {
-            res.json(dbStudent);
-        });
-    });
-
-    app.get("/api/students/mfg", function (req, res) {
-        db.Student.findAll({
-            where: {
-                dept: 'Manufacturing'
-            },
-            order: [
-                ['name', 'ASC']
-            ],
-        }).then(function (dbStudent) {
-            res.json(dbStudent);
-        });
-    });
-
-    app.get("/api/students/pm", function (req, res) {
-        db.Student.findAll({
-            where: {
-                dept: 'Program Management'
-            },
-            order: [
-                ['name', 'ASC']
-            ],
-        }).then(function (dbStudent) {
-            res.json(dbStudent);
-        });
-    });
-
-    app.get("/api/students/certs", function (req, res) {
-        db.Student.findAll({
-            where: {
-                dept: 'Certification'
-            },
-            order: [
-                ['name', 'ASC']
-            ],
-        }).then(function (dbStudent) {
-            res.json(dbStudent);
-        });
-    });
-
     app.get("/api/students/:user", function (req, res) {
         db.Student.findOne({
             where: {
