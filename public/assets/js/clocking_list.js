@@ -4,6 +4,7 @@ $(document).ready(function () {
 
     var dept = $('#dept').text();
     var userName = $('#hidden-studentName').text();
+    var user_id = $('#hidden-student-id').text();
     var nameSelect = $('#inputGroupEmployee');
     var dateSelect = $('#date');
     var categorySelect = $("#inputGroupCategory");
@@ -19,21 +20,6 @@ $(document).ready(function () {
 
     // Getting the initial list of Time Entries
     getLastEntries();
-    checkDept();
-
-    // Function that checks html to confirm department called from routes
-    function checkDept() {
-        deptURL = '';
-        if (dept === 'Engineering') {
-            deptURL = "eng";
-        } else if (dept === 'Manufacturing') {
-            deptURL = "mfg";
-        } else if (dept === 'Program Management') {
-            deptURL = "pm";
-        } else if (dept === 'Certification') {
-            deptURL = "certs";
-        };
-    };
 
     // A function for handling what happens when the form to create a new post is submitted
     function handleFormSubmit() {
@@ -69,7 +55,7 @@ $(document).ready(function () {
     // Submits a new tableRow entry
     function submitTableRow(data) {
         console.log("Posting new entry...")
-        $.post("/api/timesheets", data)
+        $.post("/api/clocking", data)
             .then(getLastEntries);
     }
 
@@ -81,14 +67,13 @@ $(document).ready(function () {
             var newTr = $("<tr>");
             newTr.data("tableRow", newEntry[i].id);
             newTr.append("<td id='logId#"  + newEntry[i].id + "'>" + newEntry[i].id + "</td>");
-            newTr.append("<td id='tableName'><a href='/stu/" + newEntry[i].student_id + "'>" + newEntry[i].name + "</td>");
+            newTr.append("<td id='tableName'><a href='/clocking/stu/" + newEntry[i].student_id + "'>" + newEntry[i].name + "</td>");
             newTr.append("<td id='tableDate'>" + newEntry[i].date + "</td>");
-            newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project_id + "'>" + newEntry[i].project + "</td>");
-            newTr.append("<td id='tableCategory'><a href='/stu/cat/" + newEntry[i].category + "'>" + newEntry[i].category + "</td>");
-            newTr.append("<td id='tableNotes'>" + newEntry[i].notes + "</td>");
-            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
-            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
-            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='delete-entry fa fa-trash-o'></i></td>");
+            newTr.append("<td id='tableType'>" + newEntry[i].type + "</td>");
+            newTr.append("<td id='tableTimeEntry'>" + newEntry[i].time + "</td>");
+            // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
+            // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
+            // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='delete-entry fa fa-trash-o'></i></td>");
             allEntries.push(newTr)
         }
         return allEntries;
@@ -96,21 +81,18 @@ $(document).ready(function () {
 
     // Function for retrieving tableRows and getting them ready to be rendered to the page
     function getLastEntries() {
-        checkDept();
-        console.log("Getting latest entries for " + userName);
+        console.log("Getting latest entries for ");
         var rowsToAdd = [];
-        var route = "/api/cnttimesheets/users/"  + userName;
+        var route = "/api/clocking/entries/";
         $.get(route, function (data) {
             for (var i = 0; i < data.length; i++) {
                 var newEntry = {
-                    id: data[i].id,
+                    id: data[i].clock_id,
                     student_id: data[i].Student.student_id,
-                    project_id: data[i].Project.project_id,
                     name: data[i].studentName,
                     date: data[i].date,
-                    project: data[i].projectName,
-                    category: data[i].category,
-                    notes: data[i].logNotes,
+                    type: data[i].timeType,
+                    time: data[i].timeEntry,
                 }
                 // console.log(newEntry);
                 rowsToAdd.push(newEntry);
@@ -148,7 +130,7 @@ $(document).ready(function () {
         console.log(id);
         $.ajax({
             method: "DELETE",
-            url: "api/timesheets/entries/" + id
+            url: "api/clocking/entries/" + id
         })
             .then(getLastEntries);
     }

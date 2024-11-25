@@ -475,25 +475,20 @@ $(document).ready(function () {
         };
     }
 
-    $(document).on("click", "#Search", searchEmployee);
+    $(document).on("click", "#Search", search);
 
-    function searchEmployee(event) {
+    function search(event) {
         event.preventDefault();
-        var employeeSelect = $("#inputGroupEmployee").val();
+        var studentSelect = $("#inputGroupStudent").val();
+        var projectSelect = $("#inputGroupProject").val();
         var categorySelect = $("#inputGroupCategory").val();
         var deptInput = $("#deptSelect").val();
-        console.log(employeeSelect);
-        if (deptInput === 'Engineering') {
-            window.location.href = "/eng/" + employeeSelect;
-            console.log(window.location.href);
-        } else if (deptInput === 'Manufacturing') {
-            window.location.href = "/mfg/" + employeeSelect;
-        } else if (deptInput === 'Program Management') {
-            window.location.href = "/pm/" + employeeSelect;
-        } else if (deptInput === 'Certification') {
-            window.location.href = "/certs/" + employeeSelect;
-        }  else if (categorySelect) {
-            window.location.href = "/category/" + categorySelect;
+        if (categorySelect) {
+            window.location.href = "/stu/cat/" + categorySelect;
+        } else if (studentSelect) {
+            window.location.href = "/stu/" + studentSelect;
+        } else if (projectSelect) {
+            window.location.href = "/prj/" + categorySelect;
         }
     }
 });
