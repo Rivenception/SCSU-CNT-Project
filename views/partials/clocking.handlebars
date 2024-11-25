@@ -1,7 +1,11 @@
+{{#if this.studentName.length}}
 <tr id="form-row">
     <td colspan="12">
         <br>
         <form class="index-form">
+            <label for="auth">Date:</label>
+            <input placeholder="Enter the date" id="date" value="" type="date" />
+            <br>
             <label for="deptSelect">Dept:</label>
             <select class="custom-select" id="deptSelect" name="deptSelect">
 
@@ -13,14 +17,13 @@
             <label for="name">Name:</label>
             <select placeholder="Select Student" class="custom-select" id="inputGroupStudent">
             </select>
-            <label for="task">Project:</label>
-            <select class="custom-select" id="inputGroupProject">
+            <label for="name">Clock Type:</label>
+            <select placeholder="In/Out" class="custom-select" id="in-out">
+                <option value="Time In">Time In</option>
+                <option value="Time Out">Time Out</option>     
             </select>
-            <label for="category">Category:</label>
-            <select placeholder="Enter the Category" class="custom-select" id="inputGroupCategory">
-                <option value="Daily Log">Daily Log</option>
-                <option value="Weekly Goal">Weekly Goal</option>
-                <option value="Meeting Minutes">Meeting Minutes</option>          
+            <label for="Time">Time:</label>
+            <select class="custom-select" id="inputGroupTime">
             </select>
 
             <div style="display: flex; justify-content: center; align-tiems: center;">
@@ -28,14 +31,16 @@
             </div>
     </td>
 </tr>
+{{/if}}
 <tr>
     <th>Record#</th>
     <th>Name</th>
     <th>Date</th>
-    <th>Project</th>
-    <th>Category</th>
-    <th>Notes</th>
-    {{!-- <th>Duplicate</th>
+    <th>In/Out</th>
+    <th>Time</th>
+    {{#if this.studentName.length}}
+    <th>Duplicate</th>
     <th>Update</th>
-    <th>Delete</th> --}}
+    <th>Delete</th>
+    {{/if}}
 </tr>

@@ -43,6 +43,10 @@ module.exports = function (app) {
     res.render("task");
   });
 
+  app.get("/clocking", function (req, res) {
+    res.render("clocking");
+  });
+
 // SCSU Projects
   app.get("/stu/:user", function (req, res) {
     db.Student.findOne({
@@ -139,8 +143,23 @@ module.exports = function (app) {
         }}],
       }).then(function (dbTask) {
         res.render("task", {
-          studentName: dbTask.studentName,
+          studentName: dbTask.assignedTo,
           student_id: dbTask.Student.student_id,
+        });
+      });
+    });
+
+    app.get("/task/status/:status", function (req, res) {
+      const status = decodeURIComponent(req.params.status);
+      db.Task.findOne({
+        include: [db.Student],
+        include: [db.Project],
+        where: {
+          status: status
+        }   
+      }).then(function (dbTask) {
+        res.render("task", {
+          status: dbTask.status,
         });
       });
     });
@@ -159,6 +178,26 @@ module.exports = function (app) {
         // cntUser: dbcntTimesheet.student_id,
         // studentName: dbcntTimesheet.studentName,
         category: dbcntTimesheet.category,
+      });
+    });
+  });
+
+  // SCSU Clocking
+  app.get("/clocking/stu/:user", function (req, res) {
+    db.Clocking.findOne({
+      include: [
+        {
+        model: db.Student,
+        where: {
+          student_id: req.params.user
+      }}],
+    }).then(function (dbClocking) {
+      console.log(dbClocking.student_id);
+      console.log(dbClocking.studentName);
+      res.render("clocking", {
+        cntUser: dbClocking.Student.student_id,
+        studentName: dbClocking.studentName,
+        // dept: dbStudent.dept,
       });
     });
   });

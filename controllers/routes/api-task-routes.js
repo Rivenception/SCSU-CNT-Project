@@ -5,8 +5,29 @@ module.exports = function (app) {
         console.log('Received request for project tasks');
         db.Task.findAll({
             order: [
-                ['task_id', 'ASC']
+                ['dueDate', 'ASC']
             ],
+        }).then(function (dbTask) {
+            res.json(dbTask);
+        });
+    });
+
+    app.get("/api/task/status/:status", function (req, res) {
+        console.log('Received request for project tasks');
+        db.Task.findAll({
+            include: [
+                {
+                    model: db.Project,
+                },
+                {
+                model: db.Student,
+                }],
+                where: {
+                    status: req.params.status
+                },
+                order: [
+                    ['dueDate', 'DESC']
+                ],
         }).then(function (dbTask) {
             res.json(dbTask);
         });
@@ -26,7 +47,7 @@ module.exports = function (app) {
                     }
                 }],
                 order: [
-                    ['task_id', 'ASC']
+                    ['dueDate', 'ASC']
                 ],
         }).then(function (dbTask) {
             res.json(dbTask);
