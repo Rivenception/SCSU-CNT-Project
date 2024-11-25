@@ -2,15 +2,15 @@ $(document).ready(function () {
     var tableBody = $("tbody");
     var tableContainer = $(".table-container");
 
-    var dept = $('#dept').text();
+    //var dept = $('#dept').text();
     var userName = $('#hidden-studentName').text();
-    var nameSelect = $('#inputGroupEmployee');
+    var nameSelect = $('#inputGroupStudent');
     var dateSelect = $('#date');
     var categorySelect = $("#inputGroupCategory");
-    var taskSelect = $('#inputGroupTask');
-    var timeSelect = $('#inputGroupTime');
-    var programId = $('#inputGroupProgram');
-    var inputEcr = $('#inputGroupEcr');
+    //var taskSelect = $('#inputGroupTask');
+    //var timeSelect = $('#inputGroupTime');
+    //var programId = $('#inputGroupProgram');
+    //var inputEcr = $('#inputGroupEcr');
     var inputNotes = $('#inputGroupNotes');
     var deptURL = '';
 
@@ -18,28 +18,29 @@ $(document).ready(function () {
     $(document).on("click", ".delete-entry", handleDeleteButtonPress);
 
     // Getting the initial list of Time Entries
+
     getLastEntries();
-    checkDept();
+    // checkDept();
 
     // Function that checks html to confirm department called from routes
-    function checkDept() {
-        deptURL = '';
-        if (dept === 'Engineering') {
-            deptURL = "eng";
-        } else if (dept === 'Manufacturing') {
-            deptURL = "mfg";
-        } else if (dept === 'Program Management') {
-            deptURL = "pm";
-        } else if (dept === 'Certification') {
-            deptURL = "certs";
-        };
-    };
+    // function checkDept() {
+    //     deptURL = '';
+    //     if (dept === 'Engineering') {
+    //         deptURL = "eng";
+    //     } else if (dept === 'Manufacturing') {
+    //         deptURL = "mfg";
+    //     } else if (dept === 'Program Management') {
+    //         deptURL = "pm";
+    //     } else if (dept === 'Certification') {
+    //         deptURL = "certs";
+    //     };
+    // };
 
     // A function for handling what happens when the form to create a new post is submitted
     function handleFormSubmit() {
         console.log("Add Button Triggered");
         // Wont submit the post if we are missing a body, title, or author
-        if (!nameSelect.val() || !dateSelect.val().trim() || !categorySelect.val() || !taskSelect.val() || !timeSelect.val() || !programId.val().trim()) {
+        if (!nameSelect.val() || !dateSelect.val().trim() || !categorySelect.val() || !inputNotes.val()) {
             var alertDiv = $("<div>");
             alertDiv.addClass("alert alert-danger");
             alertDiv.text("Make sure the program ID is not empty and all required fields are filled in.");
@@ -49,27 +50,23 @@ $(document).ready(function () {
 
         // Constructing a newPost object to hand to the database
         var newEntry = {
-            employee_id: userName,
-            name: nameSelect.text().trim(),
+            //employee_id: userName,
+            studentName: nameSelect.text().trim(),
 
             // may need to reformat date information for mySQL?
             date: dateSelect.val(),
             category: categorySelect.val(),
-            task: taskSelect.val(),
-            timespent: timeSelect.val(),
-            program: programId.val().trim(),
-            ecr: inputEcr.val(),
-            notes: inputNotes.val(),
-            FKemployee_id: userName,
+            logNotes: inputNotes.val(),
+            //FKemployee_id: userName,
         };
-
+        console.log(newEntry);
         submitTableRow(newEntry);
     };
 
     // Submits a new tableRow entry
     function submitTableRow(data) {
         console.log("Posting new entry...")
-        $.post("/api/timesheets", data)
+        $.post("/api/cntTimesheets", data)
             .then(getLastEntries);
     }
 
@@ -96,7 +93,7 @@ $(document).ready(function () {
 
     // Function for retrieving tableRows and getting them ready to be rendered to the page
     function getLastEntries() {
-        checkDept();
+        // checkDept();
         console.log("Getting latest entries for " + userName);
         var rowsToAdd = [];
         var route = "/api/cnttimesheets/users/"  + userName;
@@ -212,6 +209,17 @@ $(document).ready(function () {
         });
     }
 
+    function addToDropDown() {
+        const values = ["Daily Log", "Weekly Goal", "Meeting Minutes"]
+
+        for (const value of values) {
+            const option = document.createElement("option")
+            option.text = value
+            option.value = value
+            categorySelect.append(option)
+        }
+    }
     getLoggedTime();
+    addToDropDown();
 
 });

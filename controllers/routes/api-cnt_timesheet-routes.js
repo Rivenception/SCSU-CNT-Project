@@ -254,14 +254,13 @@ module.exports = function (app) {
         //     });
         // });
     
-        // app.post("/api/cntTimesheets", function (req, res) {
-        //     db.Timesheet.create(req.body,
-        //         {
-        //             include: [db.Student],
-        //         }).then(function (dbTimesheet) {
-        //             res.json(dbTimesheet);
-        //         });
-        // });    
+        app.post("/api/cntTimesheets", function (req, res) {
+            db.cntTimesheet.create(req.body,
+                {
+                }).then(function (dbTimesheet) {
+                    res.json(dbTimesheet);
+                });
+        });    
 
 };
 
