@@ -3,6 +3,7 @@
     <h1 class="header">Project Task Summary</h1>
     <h2 class="subheader" id="project">{{this.projectName}}</h2>
     <h2 class="subheader" id="student">{{this.studentName}}</h2>
+    <h2 class="subheader" id="status">{{this.status}}</h2>
     <h2 class="hidden" id="project-id">{{this.project_id}}</h2>
     <h2 class="hidden" id="student-id">{{this.student_id}}</h2>
     <h2 class="subheader" id="time-log" style="font-size: large;"></h2>
@@ -34,6 +35,8 @@
 <script src="assets/js/task.js" type="text/javascript"></script>
 {{else if this.studentName.length}}
 <script src="assets/js/task.js" type="text/javascript"></script>
+{{else if this.status.length}}
+<script src="assets/js/task_status.js" type="text/javascript"></script>
 {{else}}
 <!-- Custom Script -->
 <script src="assets/js/task_list.js" type="text/javascript"></script>

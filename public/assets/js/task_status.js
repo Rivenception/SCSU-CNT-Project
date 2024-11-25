@@ -2,7 +2,7 @@ $(document).ready(function () {
     var tableBody = $("tbody");
     var tableContainer = $(".table-container");
 
-    var proj = $('#project').text();
+    var status = $('#status').text();
     var userName = $('#hidden-employeeId').text();
     var nameSelect = $('#inputGroupEmployee');
     var dateSelect = $('#date');
@@ -42,7 +42,7 @@ $(document).ready(function () {
     // Function for retrieving tableRows and getting them ready to be rendered to the page
     function getLastEntries() {
         var rowsToAdd = [];
-        var route = "/api/task/prj";
+        var route = "/api/task/status/" + status;
         console.log(route);
         $.get(route, function (data) {
             for (var i = 0; i < data.length; i++) {
