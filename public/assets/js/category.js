@@ -169,8 +169,8 @@ $(document).ready(function () {
             }
         })
 
+        //Below code is deprecated to use get request to access data rather than using the DOM.
         // duplicateEntry = {
-        //     // student_id: userName,
         //     studentName: $(this).parent("td").parent("tr").children("#tableName").text(),
         //     date: today,
         //     projectName: $(this).parent("td").parent("tr").children("#tableProject").text(),

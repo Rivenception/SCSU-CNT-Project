@@ -13,6 +13,18 @@ module.exports = function (app) {
         });
     });
 
+    app.get("/api/clocking/entries/:id", function (req, res) {
+        console.log('Received request for project Clockings');
+        db.Clocking.findAll({
+            where: {
+                clock_id: req.params.id
+            },
+        }).then(function (dbClocking) {
+            res.json(dbClocking);
+        });
+    });
+
+
     app.get("/api/clocking/stu/:student", function (req, res) {
         console.log('Received request for student Clockings');
         db.Clocking.findAll({
@@ -34,7 +46,7 @@ module.exports = function (app) {
     app.post("/api/clocking", function (req, res) {
         db.Clocking.create(req.body,
             {
-                include: [db.Student],
+                // include: [db.Student],
             }).then(function (dbClocking) {
                 res.json(dbClocking);
             });
@@ -43,7 +55,7 @@ module.exports = function (app) {
     app.delete("/api/clocking/entries/:id", function (req, res) {
         db.Clocking.destroy({
             where: {
-                id: req.params.id
+                clock_id: req.params.id
             }
         }).then(function (dbClocking) {
             res.json(dbClocking);
@@ -54,7 +66,7 @@ module.exports = function (app) {
         db.Clocking.update(req.body,
             {
                 where: {
-                    id: req.body.id
+                    clock_id: req.body.id
                 }
             }).then(function (dbClocking) {
                 res.json(dbClocking);
