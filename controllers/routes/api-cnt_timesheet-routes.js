@@ -106,6 +106,10 @@ module.exports = function (app) {
         });
     });
 
+    // --------------------------------- Functional to here!
+
+
+
     app.get("/api/cntTimesheets/:category", function (req, res) {
         db.cntTimesheet.findAll({
             include: [db.Student],
@@ -144,8 +148,6 @@ module.exports = function (app) {
             res.json(dbTimesheet);
         });
     });
-
-    // --- Functional to Here
 
     // Data based on last Xn of days - Daily
     app.get("/api/cntTimesheets/tasks/eng/daily", function (req, res) {
@@ -191,6 +193,59 @@ module.exports = function (app) {
         });
     });
 
+    // Data based on last Xn of days - Monthly
+    app.get("/api/cntTimesheets/tasks/eng/monthly", function (req, res) {
+        db.cntTimesheet.findAll({
+            include: [{
+                model: db.Student,
+                where: {
+                    dept: "Engineering"
+                }
+            }],
+            where: {
+                createdAt: {
+                    [Op.gte]: moment().subtract(30, 'days').toDate()
+                }
+            },
+            order: [
+                ['date', 'DESC']
+            ]
+        }).then(function (dbTimesheet) {
+            res.json(dbTimesheet);
+        });
+    });
+
+    // Data based on current day using moment.js formatting
+    app.get("/api/cntTimesheets/tasks/:id", function (req, res) {
+        db.Timesheet.findAll({
+            include: [db.Student],
+            where: {
+                Student_id: req.params.id,
+                date: moment(new Date()).format("YYYY-MM-DD")
+                // createdAt: {
+                //     [Op.gte]: moment().subtract(1, 'days').toDate()
+                // }
+            },
+            order: [
+                ['date', 'DESC']
+            ]
+        }).then(function (dbTimesheet) {
+            res.json(dbTimesheet);
+        });
+    });
+
+
+    // below this we need 
+    
+    app.post("/api/cntTimesheets", function (req, res) {
+        db.Timesheet.create(req.body,
+            {
+                include: [db.Student],
+            }).then(function (dbTimesheet) {
+                res.json(dbTimesheet);
+            });
+    });
+
     app.delete("/api/cntTimesheets/entries/:id", function (req, res) {
         db.Timesheet.destroy({
             where: {
@@ -211,57 +266,6 @@ module.exports = function (app) {
                 res.json(dbTimesheet);
             });
     });
-        // --- Below is code for implementation of looking back at data over X number of days for future release ---
-
-        // // Data based on last Xn of days - Monthly
-        // app.get("/api/cntTimesheets/tasks/eng/monthly", function (req, res) {
-        //     db.cntTimesheet.findAll({
-        //         include: [{
-        //             model: db.Student,
-        //             where: {
-        //                 dept: "Engineering"
-        //             }
-        //         }],
-        //         where: {
-        //             createdAt: {
-        //                 [Op.gte]: moment().subtract(30, 'days').toDate()
-        //             }
-        //         },
-        //         order: [
-        //             ['date', 'DESC']
-        //         ]
-        //     }).then(function (dbTimesheet) {
-        //         res.json(dbTimesheet);
-        //     });
-        // });
-    
-        // // Data based on current day using moment.js formatting
-        // app.get("/api/cntTimesheets/tasks/:id", function (req, res) {
-        //     db.Timesheet.findAll({
-        //         include: [db.Student],
-        //         where: {
-        //             Student_id: req.params.id,
-        //             date: moment(new Date()).format("YYYY-MM-DD")
-        //             // createdAt: {
-        //             //     [Op.gte]: moment().subtract(1, 'days').toDate()
-        //             // }
-        //         },
-        //         order: [
-        //             ['date', 'DESC']
-        //         ]
-        //     }).then(function (dbTimesheet) {
-        //         res.json(dbTimesheet);
-        //     });
-        // });
-    
-        // app.post("/api/cntTimesheets", function (req, res) {
-        //     db.Timesheet.create(req.body,
-        //         {
-        //             include: [db.Student],
-        //         }).then(function (dbTimesheet) {
-        //             res.json(dbTimesheet);
-        //         });
-        // });    
 
 };
 

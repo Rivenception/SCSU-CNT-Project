@@ -40,7 +40,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         dueDate: {
-            type: DataTypes.DATEONLY,
+            type: DataTypes.DATE,
             allowNull: false,
             len: [1]
         },
@@ -65,13 +65,15 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Task.associate = function (models) {
-        Task.belongsTo(models.Project, {
+        Task.hasOne(models.Project, {
             foreignKey: {
                 name: 'projectName',
                 allowNull: false,
             },
         });
+    };
 
+    Task.associate = function (models) {
         Task.belongsTo(models.Student, {
             foreignKey: {
                 name: 'assignedTo',
