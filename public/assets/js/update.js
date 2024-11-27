@@ -22,19 +22,6 @@ $(document).ready(function () {
 
     // Getting the initial list of Time Entries
     getLastEntries();
-    checkDept();
-
-    // Function that checks html to confirm department called from routes
-    function checkDept() {
-        deptURL = '';
-        if (dept === 'Engineering') {
-            deptURL = "eng";
-        } else if (dept === 'Manufacturing') {
-            deptURL = "mfg";
-        } else if (dept === 'Program Management') {
-            deptURL = "pm";
-        };
-    };
 
     // A function for handling what happens when the form to create a new post is submitted
     function handleFormSubmit(event) {
