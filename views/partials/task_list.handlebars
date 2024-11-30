@@ -2,28 +2,57 @@
 <tr id="form-row">
     <td colspan="12">
         <br>
-        <label for="auth">Date:</label>
-        <input placeholder="Enter the date" id="date" value="" type="date" />
+        <div class="form-group">
+            <label for="category">Priority:</label>
+                <select placeholder="Enter the Category" class="custom-select" id="inputGroupCategory">
+                    <option value="Daily Log">High</option>
+                    <option value="Weekly Goal">Normal</option>
+                    <option value="Meeting Minutes">Low</option>          
+                </select>
+        </div>
         <br>
-        <p style="font-size: x-small;">*Required field: Please use Admin as a catch-all for non-project items</p>
-        <label for="name">Name:</label>
-        <select placeholder="Select Student" class="custom-select" id="inputGroupStudent">
-        </select>
-        <label for="task">Project:</label>
-        <select class="custom-select" id="inputGroupProject">
-        </select>
-        <br>
-        <label for="category">Category:</label>
-        <select placeholder="Enter the Category" class="custom-select" id="inputGroupCategory">
-            <option value="Daily Log">Daily Log</option>
-            <option value="Weekly Goal">Weekly Goal</option>
-            <option value="Meeting Minutes">Meeting Minutes</option>          
-        </select>
-        <br>
-        <label for="notes">Notes:</label>
-        <input placeholder="Enter Notes" id="inputGroupNotes" type="text"
-            style="width: -webkit-fill-available; height: 100px;" />
-        <br>
+        <div class="form-group">
+            <label for="auth">Date:</label>
+                <input placeholder="Enter the date" id="date" value="" type="date" />
+        </div>
+        <div class="form-group">
+            <label for="task">Project:</label>
+            <p style="font-size: x-small;">*Required field: Please use Admin as a catch-all for non-project items</p>
+                <select class="custom-select" id="inputGroupProject">
+                </select>
+        </div>    
+        <div class="form-group">
+            <label for="notes">Task:</label>
+                <input placeholder="Enter Task" id="inputGroupNotes" type="text" style="width: -webkit-fill-available; height: 100px;" />
+        </div>
+        <div class="form-group">
+            <label for="name">Assigned To:</label>
+                <select placeholder="Select Student" class="custom-select" id="inputGroupStudent">
+                </select>
+        </div>    
+        <div class="form-group">
+            <label for="name">Requestor:</label>
+                <select placeholder="Select Student" class="custom-select" id="inputGroupStudent">
+                </select>
+        </div>
+        <div class="form-group">
+            <label for="category">Category:</label>
+                <select placeholder="Enter the Category" class="custom-select" id="inputGroupCategory">
+                    <option value="Daily Log">Daily Log</option>
+                    <option value="Weekly Goal">Weekly Goal</option>
+                    <option value="Meeting Minutes">Meeting Minutes</option>          
+                </select>
+        </div>
+        <div class="form-group">
+            <label for="statusSelect">Status:</label>
+            <select class="custom-select" id="statusSelect" name="status">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+        </div>
+            <label for="notes">Task Comments:</label>
+                <input placeholder="Enter Comments" id="inputGroupNotes" type="text" style="width: -webkit-fill-available; height: 100px;" />
+            <br>
         <div style="display: flex; justify-content: center; align-tiems: center;">
             <button type="submit" class="btn btn-success" id="timeSubmit">Add Entry</button>
         </div>
