@@ -1,0 +1,65 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="header">Add Project</h1>
+  </div>
+</div>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr id="form-row">
+        <td colspan="12">
+          <br>
+          <form class="employeeEntry-form">
+            <div class="form-group">
+              <label for="projectSelect">Project Name:</label>
+              <select class="custom-select" id="inputGroupProject" name="inputGroupProject">
+              </select>
+            <div class="form-group">
+              <label for="sponsorSelect">Project Sponsor:</label>
+              <select class="custom-select" id="inputGroupSponsor" name="inputGroupSponsor">
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="statusSelect">Status:</label>
+              <select class="custom-select" id="statusSelect" name="status">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center;">
+              <button type="submit" class="btn btn-success" id="employeeSubmit">Add Entry</button>
+            </div>
+        </td>  
+      </tr>
+</div>       
+<div class="container">
+      <tr>
+        <th>Project</th>
+        <th>Sponsor</th>
+        <th>Status</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+<!-- Custom Script -->
+<script src="assets/js/admin_project.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  function sponsorDropdown() {
+  console.log("Requesting Sponsor Dropdown");
+  var sponsorInput = $("#inputGroupSponsor");
+  // For loop that gets all students and dynamically creates list in the html for the respective projects.
+    $.get("/api/drop/sponsor", function (data) {
+        for (var i = 0; i < data.length; i++) {
+                let dropdown = $("<option>").attr("value", data[i].affiliateName).text(data[i].affiliateName);
+                sponsorInput.append(dropdown);
+        }
+    })
+  };
+
+  sponsorDropdown()
+</script>

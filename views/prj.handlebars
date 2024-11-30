@@ -13,7 +13,19 @@
 
 <div class="table-container">
   <table class="table table-striped">
-    <thead>
+      <thead>
+      <tr id="form-row">
+        <td colspan="12">
+          <br>
+          <form class="index-form">
+            <label for="category">Project:</label>
+              <select placeholder="Enter the Category" class="custom-select" id="inputGroupProject">   
+              </select>
+            <div style="display: flex; justify-content: center; align-tiems: center;">
+              <button type="submit" class="btn btn-success" id="Search">Search</button>
+            </div>
+        </td>
+      </tr>
       {{#if this.projectName.length}}
         {{> cntPrj}}
       {{else}}
