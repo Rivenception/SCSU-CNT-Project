@@ -154,24 +154,26 @@ $(document).ready(function () {
     today = yyyy + '-' + mm + '-' + dd;
 
     // This function figures out which post we want to edit and takes it to the appropriate url
+    // This function figures out which post we want to edit and takes it to the appropriate url
     function duplicate() {
         // console.log($(this));
         // console.log($(this).parent("td"));
         // console.log($(this).parent("td").parent("tr"));
-        console.log($(this).parent("td").parent("tr").children("#tableECR"));
-        console.log($(this).parent("td").parent("tr").children("#tableECR").text());
-        console.log($(this).parent("td").parent("tr").children("#tableProgram"));
-        console.log($(this).parent("td").parent("tr").children("#tableProgram").text());
-        duplicateEntry = {
-            employee_id: userName,
-            name: $(this).parent("td").parent("tr").children("#tableName").text(),
-            date: today,
-            category: $(this).parent("td").parent("tr").children("#tableCategory").text(),
-            task: $(this).parent("td").parent("tr").children("#tableTask").text(),
-            program: $(this).parent("td").parent("tr").children("#tableProgram").text(),
-            notes: $(this).parent("td").parent("tr").children("#tableNotes").text(),
-        }
-        console.log(duplicateEntry.ecr);
-        submitTableRow(duplicateEntry);
+        var id = $(this).parent("td").parent("tr").data("tableRow");
+        console.log(id);
+        var route = "/api/clocking/entries/" + id;
+        console.log(route);
+        $.get(route, function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var duplicateEntry = {
+                    studentName: data[i].studentName,
+                    date: data[i].date,
+                    timeType: data[i].timeType,
+                    timeEntry: data[i].timeEntry,
+                }
+                console.log(duplicateEntry);
+                submitTableRow(duplicateEntry);
+            }
+        })
     }
 });

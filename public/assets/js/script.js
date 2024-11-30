@@ -1,21 +1,5 @@
 $(document).ready(function () {
 
-
-    let admin_tasks = ["Other", "Internal Meeting", "Customer Meeting", "EHS/PE", "Training", "H-cell Support", "Emails"]
-    let rd_tasks = ["Product Development", "Production Implementation", "Sales Samples"]
-    let ci_tasks = ["Internal Meeting", "Training", "Review", "Other"]
-    let ps_tasks = ["Production Support", "Samples Support"]
-    let cert_tasks = ["Drawings", "GPDs", "Test Plan"]
-
-    let eng_category = ["ECR", "Development", "Admin", "Production/Mfg Support", "Continuous Improvement", "R&D"]
-    let mfg_category = ["ECR", "Development", "Admin", "Production/Mfg Support", "Continuous Improvement", "Transfer", "R&D"]
-    let pm_category = ["Program Management", "Admin"]
-    let cert_category = ["Dress Cover", "Oil Burn/C-Burn", "Vertical Burn/A-Burn"]
-    let all_category = ["ECR", "Development", "Admin", "R&D", "Program Management", "Production/Mfg Support", "Continuous Improvement"]
-
-
-    let type = ["Dress Cover", "Cushions", "Armcaps", "Other"]
-
     const minutes = [15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480, 510]
 
     var students = [];
@@ -40,7 +24,7 @@ $(document).ready(function () {
     // Function that dyanmically creates the time input options for the user in the html
     function projectDropdown() {
         console.log("fetching Project...");
-        $.get("/api/projects", function (data) {
+        $.get("/api/drop/projects", function (data) {
         for (let i = 0; i < data.length; i++) {
             let dropdown = $("<option>").attr("value", data[i]).text(data[i].projectName);
             $("#inputGroupProject").append(dropdown);
@@ -50,7 +34,7 @@ $(document).ready(function () {
 
     function categoryDropdown() {
         console.log("fetching Category...");
-        $.get("/api/category", function (data) {
+        $.get("/api/drop/category", function (data) {
         for (let i = 0; i < data.length; i++) {
             let dropdown = $("<option>").attr("value", data[i]).text(data[i].category);
             $("#inputGroupCatetory").append(dropdown);
@@ -58,36 +42,13 @@ $(document).ready(function () {
         })
     }
 
-    function typeDropdown() {
-        console.log("fetching Types...");
-        for (let i = 0; i < type.length; i++) {
-            let dropdown = $("<option>").attr("value", type[i]).text(type[i]);
-            $("#inputGroupType").append(dropdown);
-        }
-    }
-
-    // Function for retrieving students and for dynamic drop down filler
-    function getStudents() {
-        console.log("fetching Students...");
-        $.get("/api/students", function (data) {
-            for (var i = 0; i < data.length; i++) {
-                if (data[i].status === 'Active') {
-                    students.push(data[i].name);
-                    studentId.push(data[i].student_id);
-                    // department.push(data[i].dept)
-                }
-            }
-        })
-            .then(studentsDropdown);
-    };
-
     function studentsDropdown() {
         console.log("Student User: " + userName);
         var studentInput = $("#inputGroupStudent");
         // For loop that gets all students and dynamically creates list in the html for the respective projects.
         if (userName) {
             //For loop that checks the URL for a userId and compares to student_id key in the database. If accurate, it sets the Name value in the html for the user by default.
-            $.get("/api/students", function (data) {
+            $.get("/api/drop/students", function (data) {
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].student_id === userName & data[i].status === 'Active') {
                         let dropdown = $("<option>").attr("value", data[i].student_id).text(data[i].studentName);
@@ -96,7 +57,7 @@ $(document).ready(function () {
                 }
             })
         } else {
-            $.get("/api/students", function (data) {
+            $.get("/api/drop/students", function (data) {
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].status === 'Active') {
                         let dropdown = $("<option>").attr("value", data[i].student_id).text(data[i].studentName);
@@ -143,6 +104,7 @@ $(document).ready(function () {
             // };
         };
     };
+
     // Function that dyanmically creates the categories input options for the user in the html
     function categoriesDropdown() {
         console.log("fetching Categories for " + userName);
@@ -350,20 +312,18 @@ $(document).ready(function () {
 
     // Section 3: Active Functions
 
-    getStudents();
+    studentsDropdown();
     categoryDropdown();
     projectDropdown();
-
-    // Unused Functions
-    tasksDropdown();
     timesDropdown();
-    typeDropdown();
+    
+    // Unused Functions
     // capacityEng();
     // getDailyCapacity()
     // getWeeklyCapacity()
     // getMonthlyCapacity()
 
-    // Section 4: On Change Functions
+    // Section 4: On Change Functions (Not in use but useful if you want to dynamically change tasks by user or department)
 
     $(document).on("change", "#inputGroupCategory", getSelects);
 
@@ -427,52 +387,6 @@ $(document).ready(function () {
                 $("#inputGroupTask").append(dropdown);
             }
         }
-    }
-
-    $(document).on("change", "#deptSelect", getEmployeeByDept);
-
-    function getEmployeeByDept() {
-        var deptInput = $("#deptSelect").val();
-        // console.log(deptInput);
-        var employeeInput = $("#inputGroupEmployee");
-        employeeInput.children().remove();
-        if (deptInput === "Engineering") {
-            $.get("/api/employees", function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i].dept === 'Engineering') {
-                        let dropdown = $("<option>").attr("value", data[i].employee_id).text(data[i].name);
-                        employeeInput.append(dropdown);
-                    }
-                }
-            })
-        } else if (deptInput === "Manufacturing") {
-            $.get("/api/employees", function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i].dept === 'Manufacturing') {
-                        let dropdown = $("<option>").attr("value", data[i].employee_id).text(data[i].name);
-                        employeeInput.append(dropdown);
-                    }
-                }
-            })
-        } else if (deptInput === "Program Management") {
-            $.get("/api/employees", function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i].dept === 'Program Management') {
-                        let dropdown = $("<option>").attr("value", data[i].employee_id).text(data[i].name);
-                        employeeInput.append(dropdown);
-                    }
-                }
-            })
-        } else if (deptInput === "Certification") {
-            $.get("/api/employees", function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i].dept === 'Certification') {
-                        let dropdown = $("<option>").attr("value", data[i].employee_id).text(data[i].name);
-                        employeeInput.append(dropdown);
-                    }
-                }
-            })
-        };
     }
 
     $(document).on("click", "#Search", search);

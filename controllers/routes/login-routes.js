@@ -20,11 +20,6 @@ db.connect((err) => {
 });
 
 module.exports = function (app) {
-    // Route to handle the root path
-    app.get('/', (req, res) => {
-        res.redirect('/login'); // Redirects to the login page
-    });
-
     // Route to render login page
     app.get('/login', (req, res) => {
         res.render('login');

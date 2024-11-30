@@ -37,13 +37,20 @@ module.exports = function (app) {
 
     app.get("/api/cntTimesheets/entries/:id", function (req, res) {
         db.cntTimesheet.findAll({
-            include: [db.Student],
-            where: {
-                id: req.params.id
-            },
-            order: [
-                ['id', 'DESC']
-            ],
+            include: [
+                {
+                model: db.Student,
+                },
+                {
+                model: db.Project, // Include the Project model
+                required: true  // Optional: You can set to `true` if you want to only return rows where the Timesheet has a Project associated
+                }],
+                where: {
+                    id: req.params.id
+                    },
+                order: [
+                    ['id', 'DESC']
+                ],
         }).then(function (dbTimesheet) {
             res.json(dbTimesheet);
         });
@@ -60,7 +67,7 @@ module.exports = function (app) {
                 required: true  // Optional: You can set to `true` if you want to only return rows where the Timesheet has a Project associated
                 }],
             order: [
-                ['id', 'DESC']
+                ['date', 'DESC']
             ],
             limit: 50
         }).then(function (dbTimesheet) {
@@ -138,7 +145,7 @@ module.exports = function (app) {
                 category: req.params.category,
             },
             order: [
-                ['category', 'ASC']
+                ['date', 'DESC']
             ],
         }).then(function (dbTimesheet) {
             res.json(dbTimesheet);
@@ -191,8 +198,14 @@ module.exports = function (app) {
         });
     });
 
+    app.post("/api/cntTimesheets/entries/", function (req, res) {
+        db.cntTimesheet.create(req.body).then(function (dbcntTimesheet) {
+            res.json(dbcntTimesheet);
+        });
+    });
+
     app.delete("/api/cntTimesheets/entries/:id", function (req, res) {
-        db.Timesheet.destroy({
+        db.cntTimesheet.destroy({
             where: {
                 id: req.params.id
             }
@@ -202,7 +215,7 @@ module.exports = function (app) {
     });
 
     app.put("/api/cntTimesheets/entries/:id", function (req, res) {
-        db.Timesheet.update(req.body,
+        db.cntTimesheet.update(req.body,
             {
                 where: {
                     id: req.body.id

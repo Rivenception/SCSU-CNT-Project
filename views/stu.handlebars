@@ -16,7 +16,19 @@
       {{#if this.studentName.length}}
       {{> cntUser}}
       {{else}}
-      {{> prj}}
+        <tr id="form-row">
+          <td colspan="12">
+          <br>
+            <div class="form-group">
+              <label for="name">Name:</label>
+                <select placeholder="Select Student" class="custom-select" id="inputGroupStudent">
+                </select>
+            </div>
+            <div style="display: flex; justify-content: center; align-tiems: center;">
+              <button type="submit" class="btn btn-success" id="Search">Search</button>
+            </div>
+          </td>
+        </tr>
       {{/if}}
     </thead>
     <tbody>
