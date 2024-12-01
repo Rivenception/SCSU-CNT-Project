@@ -3,29 +3,34 @@
     <td colspan="12">
         <br>
         <form class="index-form">
-            <label for="auth">Date:</label>
-            <input placeholder="Enter the date" id="date" value="" type="date" />
-            <br>
-            <label for="deptSelect">Dept:</label>
-            <select class="custom-select" id="deptSelect" name="deptSelect">
-
-                <!--tried to get handlebars to handle if statement to change the order of the options-->
-
-                <option value="cnt">CNT</option>
-                <option value="iHub">iHUB</option>
-            </select>
-            <label for="name">Name:</label>
-            <select placeholder="Select Student" class="custom-select" id="inputGroupStudent" name="studentSelect">
-            </select>
-            <label for="name">Clock Type:</label>
-            <select placeholder="In/Out" class="custom-select" id="in-out">
-                <option value="Time In">Time In</option>
-                <option value="Time Out">Time Out</option>     
-            </select>
-            <label for="Time">Time:</label>
-            <select class="custom-select" id="inputGroupTime">
-            </select>
-
+            <div class="form-group">
+                <label for="auth">Date:</label>
+                    <input placeholder="Enter the date" id="date" value="" type="date" />
+            </div>
+            <div class="form-group">
+                <label for="deptSelect">Dept:</label>
+                    <select class="custom-select" id="deptSelect" name="deptSelect">
+                        <option value="cnt">CNT</option>
+                        <option value="iHub">iHUB</option>
+                    </select>
+            </div>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                    <select placeholder="Select Student" class="custom-select" id="inputGroupStudent" name="studentSelect">
+                    </select>
+            </div>
+            <div class="form-group">
+                <label for="name">Clock Type:</label>
+                    <select placeholder="In/Out" class="custom-select" id="in-out">
+                        <option value="Time In">Time In</option>
+                        <option value="Time Out">Time Out</option>     
+                    </select>
+            </div>
+            <div class="form-group">
+                <label for="Time">Time:</label>
+                    <select class="custom-select" id="inputGroupTime">
+                    </select>
+            </div>
             <div style="display: flex; justify-content: center; align-tiems: center;">
                 <button type="submit" class="btn btn-success" id="Search">Search</button>
             </div>

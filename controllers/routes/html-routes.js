@@ -47,6 +47,27 @@ module.exports = function (app) {
     res.render("clocking");
   });
 
+// Admin Pages
+  app.get("/admin/stu", function (req, res) {
+    res.render("admin_student");
+  });
+
+  app.get("/admin/fac", function (req, res) {
+    res.render("admin_faculty");
+  });
+
+  app.get("/admin/contacts", function (req, res) {
+    res.render("admin_contact");
+  });
+
+  app.get("/admin/prj", function (req, res) {
+    res.render("admin_project");
+  });
+
+  app.get("/admin/sponsor", function (req, res) {
+    res.render("admin_sponsor");
+  });
+
 // SCSU Projects
   app.get("/stu/:user", function (req, res) {
     db.Student.findOne({

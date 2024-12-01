@@ -1,15 +1,22 @@
-<h2>Register</h2>
-{{#if error}}
-    <p style="color: red;">{{error}}</p>
-{{/if}}
-<form action="/register" method="POST">
-    <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-    </div>
-    <button type="submit">Register</button>
-</form>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="header">Register</h1>
+  </div>
+</div>
+<section class="container" class="container" style="width:400px; center;">
+    {{#if error}}
+        <p style="color: red;">{{error}}</p>
+    {{/if}}
+    <form action="/register" method="POST">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <br>
+        <button type="submit">Register</button>
+    </form>
+</section>

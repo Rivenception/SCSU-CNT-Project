@@ -37,13 +37,20 @@ module.exports = function (app) {
 
     app.get("/api/cntTimesheets/entries/:id", function (req, res) {
         db.cntTimesheet.findAll({
-            include: [db.Student],
-            where: {
-                id: req.params.id
-            },
-            order: [
-                ['id', 'DESC']
-            ],
+            include: [
+                {
+                model: db.Student,
+                },
+                {
+                model: db.Project, // Include the Project model
+                required: true  // Optional: You can set to `true` if you want to only return rows where the Timesheet has a Project associated
+                }],
+                where: {
+                    id: req.params.id
+                    },
+                order: [
+                    ['id', 'DESC']
+                ],
         }).then(function (dbTimesheet) {
             res.json(dbTimesheet);
         });
@@ -60,7 +67,7 @@ module.exports = function (app) {
                 required: true  // Optional: You can set to `true` if you want to only return rows where the Timesheet has a Project associated
                 }],
             order: [
-                ['id', 'DESC']
+                ['date', 'DESC']
             ],
             limit: 50
         }).then(function (dbTimesheet) {
@@ -142,7 +149,7 @@ module.exports = function (app) {
                 category: req.params.category,
             },
             order: [
-                ['category', 'ASC']
+                ['date', 'DESC']
             ],
         }).then(function (dbTimesheet) {
             res.json(dbTimesheet);
@@ -193,61 +200,14 @@ module.exports = function (app) {
         });
     });
 
-    // Data based on last Xn of days - Monthly
-    app.get("/api/cntTimesheets/tasks/eng/monthly", function (req, res) {
-        db.cntTimesheet.findAll({
-            include: [{
-                model: db.Student,
-                where: {
-                    dept: "Engineering"
-                }
-            }],
-            where: {
-                createdAt: {
-                    [Op.gte]: moment().subtract(30, 'days').toDate()
-                }
-            },
-            order: [
-                ['date', 'DESC']
-            ]
-        }).then(function (dbTimesheet) {
-            res.json(dbTimesheet);
+    app.post("/api/cntTimesheets/entries/", function (req, res) {
+        db.cntTimesheet.create(req.body).then(function (dbcntTimesheet) {
+            res.json(dbcntTimesheet);
         });
-    });
-
-    // Data based on current day using moment.js formatting
-    app.get("/api/cntTimesheets/tasks/:id", function (req, res) {
-        db.Timesheet.findAll({
-            include: [db.Student],
-            where: {
-                Student_id: req.params.id,
-                date: moment(new Date()).format("YYYY-MM-DD")
-                // createdAt: {
-                //     [Op.gte]: moment().subtract(1, 'days').toDate()
-                // }
-            },
-            order: [
-                ['date', 'DESC']
-            ]
-        }).then(function (dbTimesheet) {
-            res.json(dbTimesheet);
-        });
-    });
-
-
-    // below this we need 
-    
-    app.post("/api/cntTimesheets", function (req, res) {
-        db.Timesheet.create(req.body,
-            {
-                include: [db.Student],
-            }).then(function (dbTimesheet) {
-                res.json(dbTimesheet);
-            });
     });
 
     app.delete("/api/cntTimesheets/entries/:id", function (req, res) {
-        db.Timesheet.destroy({
+        db.cntTimesheet.destroy({
             where: {
                 id: req.params.id
             }
@@ -257,7 +217,7 @@ module.exports = function (app) {
     });
 
     app.put("/api/cntTimesheets/entries/:id", function (req, res) {
-        db.Timesheet.update(req.body,
+        db.cntTimesheet.update(req.body,
             {
                 where: {
                     id: req.body.id
