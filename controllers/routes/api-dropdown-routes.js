@@ -32,7 +32,7 @@ module.exports = function (app) {
             attributes: [
                 [db.Sequelize.fn('DISTINCT', db.Sequelize.col('affiliateName')), 'affiliateName']
             ],
-            distinct: true,
+            distinct: true, //distinct:true didn't work with Sequelize. Needed to use above fn code from the docs. This may require update to db structure at a later date
             order: [
                 ['affiliateName', 'ASC']
             ],

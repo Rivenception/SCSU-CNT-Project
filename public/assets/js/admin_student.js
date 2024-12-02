@@ -11,13 +11,12 @@ $(document).ready(function () {
 
     var studentId = $("#student-id");
     var name = $('#name')
-    var position = $('#deptSelect');
-    var email = $("#title");
-    var supervisor = $('#salary');
-    var status = $('#statusSelect');
+    var email = $("#email");
+    var position = $('#deptSelect option:selected');
+    var status = $('#statusSelect option:selected');
     var userName = $('#hidden-studentId').text();
 
-    $(document).on("click", "#StudentSubmit", handleFormSubmit);
+    $(document).on("click", "#submit", handleFormSubmit);
 
     getAllStudents();
 
@@ -26,11 +25,13 @@ $(document).ready(function () {
         // Wont submit if data is missing.
 
         console.log(studentId.val().trim());
-        console.log(position.text().trim());
         console.log(name.val().trim());
-        console.log(status.val().trim());
+        console.log(email.val().trim());
+        console.log(position.text().trim());
+        console.log($('#inputGroupSupervisor option:selected').text());
+        console.log(status.text().trim());
 
-        if (!studentId.val().trim() || !name.val().trim() || !email.val().trim()) {
+        if (!studentId.val().trim() || !name.val().trim() || !email.val()) {
             return;
         }
         // Constructing a newStudent object to hand to the database
@@ -38,15 +39,16 @@ $(document).ready(function () {
             student_id: studentId.val().trim(),
             studentName: name.val().trim(),
             email: email.val().trim(),
-            position: position.val().trim(),
-            supervisor: supervisor.val().trim(),
-            status: status.val().trim(),
+            position: position.text().trim(),
+            supervisor: $('#inputGroupSupervisor option:selected').text(),
+            status: status.text().trim(),
         };
 
         if (userName && (userName != "")) {
             console.log("fetching updates");
             updateStudent(newStudent);
         } else {
+            console.log(newStudent);
             submitStudent(newStudent);
         }
     };
