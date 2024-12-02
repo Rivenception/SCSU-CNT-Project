@@ -13,11 +13,8 @@ module.exports = function (app) {
     });
     
     app.post("/api/projects", function (req, res) {
-        db.Timesheet.create(req.body,
-            {
-                include: [db.Student],
-            }).then(function (dbTimesheet) {
-                res.json(dbTimesheet);
+        db.Project.create(req.body).then(function (dbProject) {
+                res.json(dbProject);
             });
     });
 

@@ -2,7 +2,6 @@ $(document).ready(function () {
     var tableBody = $("tbody");
     var tableContainer = $(".table-container");
 
-    var dept = $('#dept').text();
     var userName = $('#hidden-studentName').text();
     var nameSelect = $('#inputGroupEmployee');
     var dateSelect = $('#date');
@@ -12,28 +11,12 @@ $(document).ready(function () {
     var programId = $('#inputGroupProgram');
     var inputEcr = $('#inputGroupEcr');
     var inputNotes = $('#inputGroupNotes');
-    var deptURL = '';
 
     $(document).on("click", "#timeSubmit", handleFormSubmit);
     $(document).on("click", ".delete-entry", handleDeleteButtonPress);
 
     // Getting the initial list of Time Entries
     getLastEntries();
-    checkDept();
-
-    // Function that checks html to confirm department called from routes
-    function checkDept() {
-        deptURL = '';
-        if (dept === 'Engineering') {
-            deptURL = "eng";
-        } else if (dept === 'Manufacturing') {
-            deptURL = "mfg";
-        } else if (dept === 'Program Management') {
-            deptURL = "pm";
-        } else if (dept === 'Certification') {
-            deptURL = "certs";
-        };
-    };
 
     // A function for handling what happens when the form to create a new post is submitted
     function handleFormSubmit() {
@@ -60,7 +43,6 @@ $(document).ready(function () {
             program: programId.val().trim(),
             ecr: inputEcr.val(),
             notes: inputNotes.val(),
-            FKemployee_id: userName,
         };
 
         submitTableRow(newEntry);
@@ -96,7 +78,6 @@ $(document).ready(function () {
 
     // Function for retrieving tableRows and getting them ready to be rendered to the page
     function getLastEntries() {
-        checkDept();
         console.log("Getting latest entries for " + userName);
         var rowsToAdd = [];
         var route = "/api/cnttimesheets/users/"  + userName;
@@ -181,7 +162,7 @@ $(document).ready(function () {
         console.log($(this).parent("td").parent("tr").children("#tableProgram"));
         console.log($(this).parent("td").parent("tr").children("#tableProgram").text());
         duplicateEntry = {
-            employee_id: userName,
+            student_id: userName,
             name: $(this).parent("td").parent("tr").children("#tableName").text(),
             date: today,
             category: $(this).parent("td").parent("tr").children("#tableCategory").text(),
