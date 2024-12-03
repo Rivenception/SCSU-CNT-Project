@@ -9,40 +9,40 @@ $(document).ready(function () {
     var tableBody = $("tbody");
     var tableContainer = $(".table-container");
 
-    var ProjectId = $("#Project-id");
-    var name = $('#name')
-    var position = $('#deptSelect');
-    var email = $("#title");
-    var supervisor = $('#salary');
+    var name = $('#project')
+    var sponsor = $('#inputGroupSponsor');
     var status = $('#statusSelect');
     var userName = $('#hidden-ProjectId').text();
 
-    $(document).on("click", "#submit", handleFormSubmit);
+    $(document).on("click", "#submit", function(event) {
+        event.preventDefault();  // Prevent the form submission (and page reload)
+        
+        // Your logic for form submission (e.g., via AJAX)
+        handleFormSubmit();
+    });
 
-    getAllProject();
+    getLastEntries();
 
     // A function for handling what happens when the form to create a new Project is submitted
     function handleFormSubmit() {
         // Wont submit if data is missing.
 
-        console.log(ProjectId.val().trim());
-        console.log(position.text().trim());
         console.log(name.val().trim());
+        console.log(sponsor.val().trim());
         console.log(status.val().trim());
 
-        if (!ProjectId.val().trim() || !name.val().trim() || !email.val().trim()) {
-            return;
-        }
         // Constructing a newProject object to hand to the database
         var newProject = {
-            projectName: ProjectId.val().trim(),
-            projectSponsor: name.val().trim(),
+            projectName: name.val().trim(),
+            projectSponsor: sponsor.val().trim(),
+            status: status.val().trim(),
         };
 
         if (userName && (userName != "")) {
             console.log("fetching updates");
             updateProject(newProject);
         } else {
+            console.log(newProject);
             submitProject(newProject);
         }
     };
@@ -50,7 +50,7 @@ $(document).ready(function () {
     // Submits a new Project entry
     function submitProject(data) {
         $.post("/api/projects", data)
-        .then(getAllProjects);
+        .then(getLastEntries);
     }
 
     
@@ -64,13 +64,14 @@ $(document).ready(function () {
             newTr.append("<td id='tableSponsor'>" + newEntry[i].projectSponsor + "</td>");
             newTr.append("<td id='tableStatus'>" + newEntry[i].status + "</td>");
             newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
+            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='delete-entry fa fa-trash-o'></i></td>");
             allEntries.push(newTr)
         }
         return allEntries;
     }
 
     // Function for retrieving timeblocks and getting them ready to be rendered to the page
-    function getAllProject() {
+    function getLastEntries() {
         var rowsToAdd = [];
         var route = "";
         if (userName && (userName != "")) {
@@ -84,7 +85,7 @@ $(document).ready(function () {
             };
             for (var i = 0; i < data.length; i++) {
                 var newEntry = {
-                    projectId: data[i].projectName,
+                    projectId: data[i].project_id,
                     projectName: data[i].projectName,
                     projectSponsor: data[i].projectSponsor,
                     status: data[i].status,
@@ -97,7 +98,9 @@ $(document).ready(function () {
 
     // A function for rendering the list of timeblocks to the page
     function renderList(rowsToAdd) {
-        tableBody.children().not(":last").remove();
+        //use the below if you want to keep your last entry when rendering or re-rendering your list
+        // tableBody.children().not(":last").remove();
+        tableBody.children().remove();
         tableContainer.children(".alert").remove();
         if (rowsToAdd.length) {
             // console.log(rowsToAdd);
@@ -114,6 +117,19 @@ $(document).ready(function () {
         alertDiv.addClass("alert alert-danger");
         alertDiv.text("Please contact your administrator to have your ProjectID entered");
         tableContainer.append(alertDiv);
+    }
+
+    $(document).on("click", ".delete-entry", handleDeleteButtonPress);
+
+    // Function for handling what happens when the delete button is pressed
+    function handleDeleteButtonPress() {
+        var id = $(this).parent("td").parent("tr").data("tableRow");
+        console.log(id);
+        $.ajax({
+            method: "DELETE",
+            url: "api/projects/entries/" + id
+        })
+            .then(getLastEntries);
     }
 
     $(document).on("click", ".edit-entry", handleEdit);

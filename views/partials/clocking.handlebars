@@ -7,13 +7,17 @@
                 <label for="auth">Date:</label>
                     <input placeholder="Enter the date" id="date" value="" type="date" />
             </div>
-            <div class="form-group">
+            <div class="form-group" id="timeForm">
+                <label for="Time">Time:</label>
+                    <input type="time" id="timeInput" name="timeInput">
+            </div>
+            {{!-- <div class="form-group">
                 <label for="deptSelect">Dept:</label>
                     <select class="custom-select" id="deptSelect" name="deptSelect">
                         <option value="cnt">CNT</option>
                         <option value="iHub">iHUB</option>
                     </select>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label for="name">Name:</label>
                     <select placeholder="Select Student" class="custom-select" id="inputGroupStudent" name="studentSelect">
@@ -26,13 +30,8 @@
                         <option value="Time Out">Time Out</option>     
                     </select>
             </div>
-            <div class="form-group">
-                <label for="Time">Time:</label>
-                    <select class="custom-select" id="inputGroupTime">
-                    </select>
-            </div>
             <div style="display: flex; justify-content: center; align-tiems: center;">
-                <button type="submit" class="btn btn-success" id="Search">Search</button>
+                <button type="submit" class="btn btn-success" id="submit">Add Entry</button>
             </div>
     </td>
 </tr>
@@ -44,7 +43,7 @@
     <th>In/Out</th>
     <th>Time</th>
     {{#if this.studentName.length}}
-    <th>Duplicate</th>
+    {{!-- <th>Duplicate</th> --}}
     <th>Update</th>
     <th>Delete</th>
     {{/if}}

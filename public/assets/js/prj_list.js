@@ -2,18 +2,6 @@ $(document).ready(function () {
     var tableBody = $("tbody");
     var tableContainer = $(".table-container");
 
-    var proj = $('#project').text();
-    var userName = $('#hidden-employeeId').text();
-    var nameSelect = $('#inputGroupEmployee');
-    var dateSelect = $('#date');
-    var categorySelect = $("#inputGroupCategory");
-    var taskSelect = $('#inputGroupTask');
-    var timeSelect = $('#inputGroupTime');
-    var programId = $('#inputGroupProgram');
-    var inputEcr = $('#inputGroupEcr');
-    var inputNotes = $('#inputGroupNotes');
-    var projURL = '';
-
     // Getting the initial list of Time Entries
     getLastEntries();
 
@@ -24,7 +12,7 @@ $(document).ready(function () {
             var newTr = $("<tr>");
             newTr.data("tableRow", newEntry[i].id);
             newTr.append("<td id='projectId#"  + newEntry[i].project_id + "'>" + newEntry[i].project_id + "</td>");
-            newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project_id + "'>" + newEntry[i].project + "</td>");
+            newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project + "'>" + newEntry[i].project + "</td>");
             newTr.append("<td id='tableSponsor'>" + newEntry[i].sponsor + "</td>");
             newTr.append("<td id='tableNotes'>" + newEntry[i].status + "</td>");
             // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
@@ -58,7 +46,9 @@ $(document).ready(function () {
 
     // A function for rendering the list of tableRows to the page
     function renderList(rowsToAdd) {
-        tableBody.children().not(":last").remove();
+        //use the below if you want to keep your last entry when rendering or re-rendering your list
+        // tableBody.children().not(":last").remove();
+        tableBody.children().remove();
         tableContainer.children(".alert").remove();
         if (rowsToAdd.length) {
             // console.log(rowsToAdd);
