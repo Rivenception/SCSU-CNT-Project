@@ -71,7 +71,7 @@ $(document).ready(function () {
     // Submits a new Student entry
     function submitStudent(data) {
         $.post("/api/students", data)
-        .then(getAllStudents);
+        .then(getLastEntries);
     }
 
     
