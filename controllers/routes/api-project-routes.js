@@ -29,13 +29,13 @@ module.exports = function (app) {
     });
 
     app.put("/api/projects/entries/:id", function (req, res) {
-        db.Timesheet.update(req.body,
+        db.Project.update(req.body,
             {
                 where: {
-                    id: req.body.id
+                    project_id: req.body.id
                 }
-            }).then(function (dbTimesheet) {
-                res.json(dbTimesheet);
+            }).then(function (dbProject) {
+                res.json(dbProject);
             });
     });
 

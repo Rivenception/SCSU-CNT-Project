@@ -2,10 +2,6 @@ $(document).ready(function () {
 
     const minutes = [15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480, 510]
 
-    var students = [];
-    var studentId = [];
-    var department = [];
-
     var dept = $('#dept').text();
     var allCategory = $('#category').text();
     var userName = $('#hidden-studentName').text();
@@ -325,84 +321,83 @@ $(document).ready(function () {
 
     // Section 4: On Change Functions (Not in use but useful if you want to dynamically change tasks by user or department)
 
-    $(document).on("change", "#inputGroupCategory", getSelects);
+    // $(document).on("change", "#inputGroupCategory", getSelects);
 
-    function getSelects() {
-        console.log("fetching Selects...");
-        var categoryInput = $("#inputGroupCategory").val();
-        var taskInput = $("#inputGroupTask");
-        var dept = $('#dept').text();
-        taskInput.children().remove();
-        console.log(categoryInput);
-        if (categoryInput === "ECR") {
-            for (let i = 0; i < ecr_tasks.length; i++) {
-                let dropdown = $("<option>").attr("value", ecr_tasks[i]).text(ecr_tasks[i]);
-                $("#inputGroupTask").append(dropdown);
-            }
-        } else if (categoryInput === "Development") {
-            if (dept === 'Engineering') {
-                for (let i = 0; i < eng_tasks.length; i++) {
-                    let dropdown = $("<option>").attr("value", eng_tasks[i]).text(eng_tasks[i]);
-                    $("#inputGroupTask").append(dropdown);
-                }
-            } else if (dept === 'Manufacturing') {
-                for (let i = 0; i < mfg_tasks.length; i++) {
-                    let dropdown = $("<option>").attr("value", mfg_tasks[i]).text(mfg_tasks[i]);
-                    $("#inputGroupTask").append(dropdown);
-                }
-            }
-        } else if (categoryInput === "Admin") {
-            for (let i = 0; i < admin_tasks.length; i++) {
-                let dropdown = $("<option>").attr("value", admin_tasks[i]).text(admin_tasks[i]);
-                $("#inputGroupTask").append(dropdown);
-            }
-        } else if (categoryInput === "Program Management") {
-            for (let i = 0; i < pm_tasks.length; i++) {
-                let dropdown = $("<option>").attr("value", pm_tasks[i]).text(pm_tasks[i]);
-                $("#inputGroupTask").append(dropdown);
-            }
-        } else if (categoryInput === "R&D") {
-            for (let i = 0; i < rd_tasks.length; i++) {
-                let dropdown = $("<option>").attr("value", rd_tasks[i]).text(rd_tasks[i]);
-                $("#inputGroupTask").append(dropdown);
-            }
-        } else if (categoryInput === "Transfer") {
-            for (let i = 0; i < mfg_tasks.length; i++) {
-                let dropdown = $("<option>").attr("value", mfg_tasks[i]).text(mfg_tasks[i]);
-                $("#inputGroupTask").append(dropdown);
-            }
-        } else if (categoryInput === "Production/Mfg Support") {
-            for (let i = 0; i < ps_tasks.length; i++) {
-                let dropdown = $("<option>").attr("value", ps_tasks[i]).text(ps_tasks[i]);
-                $("#inputGroupTask").append(dropdown);
-            }
-        } else if (categoryInput === "Continuous Improvement") {
-            for (let i = 0; i < ci_tasks.length; i++) {
-                let dropdown = $("<option>").attr("value", ci_tasks[i]).text(ci_tasks[i]);
-                $("#inputGroupTask").append(dropdown);
-            }
-        } else if (categoryInput === "Oil Burn/C-Burn" || "Vertical Burn/A-Burn" || "Dress Cover") {
-            for (let i = 0; i < cert_tasks.length; i++) {
-                let dropdown = $("<option>").attr("value", cert_tasks[i]).text(cert_tasks[i]);
-                $("#inputGroupTask").append(dropdown);
-            }
-        }
-    }
+    // function getSelects() {
+    //     console.log("fetching Selects...");
+    //     var categoryInput = $("#inputGroupCategory").val();
+    //     var taskInput = $("#inputGroupTask");
+    //     var dept = $('#dept').text();
+    //     taskInput.children().remove();
+    //     console.log(categoryInput);
+    //     if (categoryInput === "ECR") {
+    //         for (let i = 0; i < ecr_tasks.length; i++) {
+    //             let dropdown = $("<option>").attr("value", ecr_tasks[i]).text(ecr_tasks[i]);
+    //             $("#inputGroupTask").append(dropdown);
+    //         }
+    //     } else if (categoryInput === "Development") {
+    //         if (dept === 'Engineering') {
+    //             for (let i = 0; i < eng_tasks.length; i++) {
+    //                 let dropdown = $("<option>").attr("value", eng_tasks[i]).text(eng_tasks[i]);
+    //                 $("#inputGroupTask").append(dropdown);
+    //             }
+    //         } else if (dept === 'Manufacturing') {
+    //             for (let i = 0; i < mfg_tasks.length; i++) {
+    //                 let dropdown = $("<option>").attr("value", mfg_tasks[i]).text(mfg_tasks[i]);
+    //                 $("#inputGroupTask").append(dropdown);
+    //             }
+    //         }
+    //     } else if (categoryInput === "Admin") {
+    //         for (let i = 0; i < admin_tasks.length; i++) {
+    //             let dropdown = $("<option>").attr("value", admin_tasks[i]).text(admin_tasks[i]);
+    //             $("#inputGroupTask").append(dropdown);
+    //         }
+    //     } else if (categoryInput === "Program Management") {
+    //         for (let i = 0; i < pm_tasks.length; i++) {
+    //             let dropdown = $("<option>").attr("value", pm_tasks[i]).text(pm_tasks[i]);
+    //             $("#inputGroupTask").append(dropdown);
+    //         }
+    //     } else if (categoryInput === "R&D") {
+    //         for (let i = 0; i < rd_tasks.length; i++) {
+    //             let dropdown = $("<option>").attr("value", rd_tasks[i]).text(rd_tasks[i]);
+    //             $("#inputGroupTask").append(dropdown);
+    //         }
+    //     } else if (categoryInput === "Transfer") {
+    //         for (let i = 0; i < mfg_tasks.length; i++) {
+    //             let dropdown = $("<option>").attr("value", mfg_tasks[i]).text(mfg_tasks[i]);
+    //             $("#inputGroupTask").append(dropdown);
+    //         }
+    //     } else if (categoryInput === "Production/Mfg Support") {
+    //         for (let i = 0; i < ps_tasks.length; i++) {
+    //             let dropdown = $("<option>").attr("value", ps_tasks[i]).text(ps_tasks[i]);
+    //             $("#inputGroupTask").append(dropdown);
+    //         }
+    //     } else if (categoryInput === "Continuous Improvement") {
+    //         for (let i = 0; i < ci_tasks.length; i++) {
+    //             let dropdown = $("<option>").attr("value", ci_tasks[i]).text(ci_tasks[i]);
+    //             $("#inputGroupTask").append(dropdown);
+    //         }
+    //     } else if (categoryInput === "Oil Burn/C-Burn" || "Vertical Burn/A-Burn" || "Dress Cover") {
+    //         for (let i = 0; i < cert_tasks.length; i++) {
+    //             let dropdown = $("<option>").attr("value", cert_tasks[i]).text(cert_tasks[i]);
+    //             $("#inputGroupTask").append(dropdown);
+    //         }
+    //     }
+    // }
 
     $(document).on("click", "#Search", search);
 
     function search(event) {
         event.preventDefault();
         var studentSelect = $("#inputGroupStudent").val();
-        var projectSelect = $("#inputGroupProject").val();
-        var categorySelect = $("#inputGroupCategory").val();
-        var deptInput = $("#deptSelect").val();
+        var projectSelect = $("#inputGroupProject option:selected").text();
+        var categorySelect = $("#inputGroupCategory option:selected").text();
         if (categorySelect) {
             window.location.href = "/stu/cat/" + categorySelect;
         } else if (studentSelect) {
             window.location.href = "/stu/" + studentSelect;
         } else if (projectSelect) {
-            window.location.href = "/prj/" + categorySelect;
+            window.location.href = "/prj/" + projectSelect;
         }
     }
 });

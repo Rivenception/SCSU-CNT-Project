@@ -101,23 +101,23 @@ module.exports = function (app) {
     });
 
     app.delete("/api/task/entries/:id", function (req, res) {
-        db.Timesheet.destroy({
+        db.Task.destroy({
             where: {
-                id: req.params.id
+                task_id: req.params.id
             }
-        }).then(function (dbTimesheet) {
-            res.json(dbTimesheet);
+        }).then(function (dbTask) {
+            res.json(dbTask);
         });
     });
 
     app.put("/api/task/entries/:id", function (req, res) {
-        db.Timesheet.update(req.body,
+        db.Task.update(req.body,
             {
                 where: {
-                    id: req.body.id
+                    task_id: req.body.id
                 }
-            }).then(function (dbTimesheet) {
-                res.json(dbTimesheet);
+            }).then(function (dbTask) {
+                res.json(dbTask);
             });
     });
 

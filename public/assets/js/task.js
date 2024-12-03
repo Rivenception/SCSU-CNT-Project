@@ -4,14 +4,6 @@ $(document).ready(function () {
 
     var proj = $('#project').text();
     var userName = $('#student-id').text();
-    var nameSelect = $('#inputGroupEmployee');
-    var dateSelect = $('#date');
-    var categorySelect = $("#inputGroupCategory");
-    var taskSelect = $('#inputGroupTask');
-    var timeSelect = $('#inputGroupTime');
-    var programId = $('#inputGroupProgram');
-    var inputEcr = $('#inputGroupEcr');
-    var inputNotes = $('#inputGroupNotes');
     var projURL = '';
 
     $(document).on("click", "#timeSubmit", handleFormSubmit);
@@ -71,30 +63,39 @@ $(document).ready(function () {
 
     // A function for handling what happens when the form to create a new post is submitted
     function handleFormSubmit() {
-        // Wont submit the post if we are missing a body, title, or author
-        if (!nameSelect.val() || !dateSelect.val().trim() || !categorySelect.val() || !taskSelect.val() || !timeSelect.val() || !programId.val().trim()) {
-            return;
-        }
+        // Want to build in a error modal if form values are not entered
+        // if (!nameSelect.val() || !dateSelect.val().trim() || !categorySelect.val() || !taskSelect.val() || !timeSelect.val() || !programId.val().trim()) {
+        //     return;
+        // }
+
+        var prioritySelect = $("#inputGroupPriority");
+        var dateSelect = $('#date');
+        var task = $('#inputGroupTask');
+        var inputNotes = $('#inputGroupNotes');
+        var statusSelect = $('#statusSelect');
+
         // Constructing a newPost object to hand to the database
         var newEntry = {
-            employee_id: userName,
-            name: nameSelect.val(),
+            priority: prioritySelect.val(),
+
+            // $('#inputGroupSupervisor option:selected').text(),
 
             // may need to reformat date information for mySQL?
-            date: dateSelect.val(),
-            category: categorySelect.val(),
-            task: taskSelect.val(),
-            timespent: timeSelect.val(),
-            program: programId.val().trim(),
-            ecr: inputEcr.val(),
-            notes: inputNotes.val(),
+            dueDate: dateSelect.val(),
+            projectName: $("#inputGroupProject option:selected").text(),
+            task: task.val(),
+            assignedTo: $("#inputGroupStudent option:selected").text(),
+            requestor: $("#inputGroupRequestor option:selected").text(),
+            status: statusSelect.val(),
+            taskNotes: inputNotes.val(),
         };
+        console.log(newEntry)
         submitTableRow(newEntry);
     };
 
     // Submits a new tableRow entry
     function submitTableRow(data) {
-        $.post("/api/timesheets", data)
+        $.post("/api/tasks", data)
             .then(getLastEntries);
     }
 
@@ -104,9 +105,9 @@ $(document).ready(function () {
         for (var i = 0; i < newEntry.length; i++) {
             var newTr = $("<tr>");
             newTr.data("tableRow", newEntry[i].id);
-            newTr.append("<td id='priority"  + newEntry[i].priority + "'>" + newEntry[i].priority + "</td>");
-            newTr.append("<td id='dueDate"  + newEntry[i].due + "'>" + newEntry[i].due + "</td>");
-            newTr.append("<td id='tableProject'><a href='/task/prj/" + newEntry[i].project_id + "'>" + newEntry[i].project + "</td>");
+            newTr.append("<td id='tablePriority'>" + newEntry[i].priority + "</td>");
+            newTr.append("<td id='dueDate'>" + newEntry[i].due + "</td>");
+            newTr.append("<td id='tableProject'><a href='/task/prj/" + newEntry[i].project + "'>" + newEntry[i].project + "</td>");
             newTr.append("<td id='tableTask'>" + newEntry[i].task + "</td>");
             newTr.append("<td id='tableAssignment'><a href='task/stu/" + newEntry[i].student_id + "'>" + newEntry[i].assigned + "</td>");
             newTr.append("<td id='tableRequestor'>" + newEntry[i].requestor + "</td>");
@@ -135,7 +136,7 @@ $(document).ready(function () {
         $.get(route, function (data) {
             for (var i = 0; i < data.length; i++) {
                 var newEntry = {
-                    task_id: data[i].task_id,
+                    id: data[i].task_id,
                     priority: data[i].priority,
                     due: data[i].dueDate,
                     project_id: data[i].Project.project_id,
@@ -157,7 +158,9 @@ $(document).ready(function () {
 
     // A function for rendering the list of tableRows to the page
     function renderList(rowsToAdd) {
-        tableBody.children().not(":last").remove();
+        //use the below if you want to keep your last entry when rendering or re-rendering your list
+        // tableBody.children().not(":last").remove();
+        tableBody.children().remove();
         tableContainer.children(".alert").remove();
         if (rowsToAdd.length) {
             // console.log(rowsToAdd);
@@ -182,7 +185,7 @@ $(document).ready(function () {
         console.log(id);
         $.ajax({
             method: "DELETE",
-            url: "api/timesheets/entries/" + id
+            url: "api/task/entries/" + id
         })
             .then(getLastEntries);
     }
@@ -211,22 +214,21 @@ $(document).ready(function () {
         // console.log($(this));
         // console.log($(this).parent("td"));
         // console.log($(this).parent("td").parent("tr"));
-        console.log($(this).parent("td").parent("tr").children("#tableECR"));
-        console.log($(this).parent("td").parent("tr").children("#tableECR").text());
-        console.log($(this).parent("td").parent("tr").children("#tableProgram"));
-        console.log($(this).parent("td").parent("tr").children("#tableProgram").text());
+        console.log($(this).parent("td").parent("tr").children("#tablePriority"));
+        console.log($(this).parent("td").parent("tr").children("#tablePriority").text());
+
         duplicateEntry = {
-            employee_id: userName,
-            name: $(this).parent("td").parent("tr").children("#tableName").text(),
-            date: today,
-            category: $(this).parent("td").parent("tr").children("#tableCategory").text(),
+            priority: $(this).parent("td").parent("tr").children("#tablePriority").text(),
+            dueDate: today,
+            projectName: $(this).parent("td").parent("tr").children("#tableProject").text(),
             task: $(this).parent("td").parent("tr").children("#tableTask").text(),
-            timespent: $(this).parent("td").parent("tr").children("#tableTime").text(),
-            program: $(this).parent("td").parent("tr").children("#tableProgram").text(),
-            ecr: $(this).parent("td").parent("tr").children("#tableECR").text(),
-            notes: $(this).parent("td").parent("tr").children("#tableNotes").text(),
+            assignedTo: $(this).parent("td").parent("tr").children("#tableAssignment").text(),
+            requestor: $(this).parent("td").parent("tr").children("#tableRequestor").text(),
+            projectName: $(this).parent("td").parent("tr").children("#tableProject").text(),
+            status: $(this).parent("td").parent("tr").children("#tableStatus").text(),
+            logNotes: $(this).parent("td").parent("tr").children("#tableNotes").text(),
         }
-        console.log(duplicateEntry.ecr);
+        console.log("entry duplicated");
         submitTableRow(duplicateEntry);
 
         // window.location.href = "/update/" + currentEntry

@@ -63,5 +63,23 @@ module.exports = function (app) {
             res.json(dbFaculty);
         });
     });
+
+    app.get("/api/drop/requestors1", function (req, res) {
+        console.log('Received request for all requestors');
+        db.Faculty.findAll({
+            attributes: ['faculty_id', 'facultyName'],
+        }).then(function (dbFaculty) {
+            res.json(dbFaculty);
+        });
+    });
+
+    app.get("/api/drop/requestors2", function (req, res) {
+        console.log('Received request for all requestors');
+        db.Student.findAll({
+            attributes: ['student_id', 'studentName'],
+        }).then(function (dbStudent) {
+            res.json(dbStudent);
+        });
+    });
 };
 

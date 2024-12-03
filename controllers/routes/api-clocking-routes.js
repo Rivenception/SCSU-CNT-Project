@@ -36,7 +36,8 @@ module.exports = function (app) {
                     }
                 }],
                 order: [
-                    ['date', 'DESC']
+                    ['date', 'DESC'],
+                    ['timeEntry', 'DESC']
                 ],
         }).then(function (dbClocking) {
             res.json(dbClocking);
@@ -46,7 +47,6 @@ module.exports = function (app) {
     app.post("/api/clocking", function (req, res) {
         db.Clocking.create(req.body,
             {
-                // include: [db.Student],
             }).then(function (dbClocking) {
                 res.json(dbClocking);
             });

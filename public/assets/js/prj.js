@@ -107,7 +107,7 @@ $(document).ready(function () {
             newTr.append("<td id='logId#"  + newEntry[i].id + "'>" + newEntry[i].id + "</td>");
             newTr.append("<td id='tableName'><a href='/stu/" + newEntry[i].student_id + "'>" + newEntry[i].name + "</td>");
             newTr.append("<td id='tableDate'>" + newEntry[i].date + "</td>");
-            newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project_id + "'>" + newEntry[i].project + "</td>");
+            newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project + "'>" + newEntry[i].project + "</td>");
             newTr.append("<td id='tableCategory'><a href='/stu/cat/" + newEntry[i].category + "'>" + newEntry[i].category + "</td>");
             newTr.append("<td id='tableNotes'>" + newEntry[i].notes + "</td>");
             // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
@@ -122,7 +122,7 @@ $(document).ready(function () {
     function getLastEntries() {
         checkProj();
         var rowsToAdd = [];
-        var route = "/api/cntTimesheets/limit=50/" + projURL;
+        var route = "/api/cntTimesheets/limit=50/" + proj;
         console.log(route);
         $.get(route, function (data) {
             for (var i = 0; i < data.length; i++) {
@@ -146,7 +146,9 @@ $(document).ready(function () {
 
     // A function for rendering the list of tableRows to the page
     function renderList(rowsToAdd) {
-        tableBody.children().not(":last").remove();
+        //use the below if you want to keep your last entry when rendering or re-rendering your list
+        // tableBody.children().not(":last").remove();
+        tableBody.children().remove();
         tableContainer.children(".alert").remove();
         if (rowsToAdd.length) {
             // console.log(rowsToAdd);
@@ -171,7 +173,7 @@ $(document).ready(function () {
         console.log(id);
         $.ajax({
             method: "DELETE",
-            url: "api/timesheets/entries/" + id
+            url: "api/project/entries/" + id
         })
             .then(getLastEntries);
     }
@@ -215,7 +217,7 @@ $(document).ready(function () {
             ecr: $(this).parent("td").parent("tr").children("#tableECR").text(),
             notes: $(this).parent("td").parent("tr").children("#tableNotes").text(),
         }
-        console.log(duplicateEntry.ecr);
+        console.log("entry duplicated");
         submitTableRow(duplicateEntry);
 
         // window.location.href = "/update/" + currentEntry
