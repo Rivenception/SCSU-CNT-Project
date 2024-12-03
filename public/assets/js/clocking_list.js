@@ -2,20 +2,7 @@ $(document).ready(function () {
     var tableBody = $("tbody");
     var tableContainer = $(".table-container");
 
-    var dept = $('#dept').text();
-    var userName = $('#hidden-studentName').text();
-    var user_id = $('#hidden-student-id').text();
-    var nameSelect = $('#inputGroupEmployee');
-    var dateSelect = $('#date');
-    var categorySelect = $("#inputGroupCategory");
-    var taskSelect = $('#inputGroupTask');
-    var timeSelect = $('#inputGroupTime');
-    var programId = $('#inputGroupProgram');
-    var inputEcr = $('#inputGroupEcr');
-    var inputNotes = $('#inputGroupNotes');
-    var deptURL = '';
-
-    $(document).on("click", "#timeSubmit", handleFormSubmit);
+    $(document).on("click", "#submit", handleFormSubmit);
     $(document).on("click", ".delete-entry", handleDeleteButtonPress);
 
     // Getting the initial list of Time Entries
@@ -24,31 +11,21 @@ $(document).ready(function () {
     // A function for handling what happens when the form to create a new post is submitted
     function handleFormSubmit() {
         console.log("Add Button Triggered");
-        // Wont submit the post if we are missing a body, title, or author
-        if (!nameSelect.val() || !dateSelect.val().trim() || !categorySelect.val() || !taskSelect.val() || !timeSelect.val() || !programId.val().trim()) {
-            var alertDiv = $("<div>");
-            alertDiv.addClass("alert alert-danger");
-            alertDiv.text("Make sure the program ID is not empty and all required fields are filled in.");
-            tableContainer.prepend(alertDiv);
-            return;
-        }
+        event.preventDefault()
+
+        var dateSelect = $('#date');
+        var timeSelect = $('#timeInput');
+        var nameSelect = $('#inputGroupStudent');
+        var typeSelect = $('#in-out');
 
         // Constructing a newPost object to hand to the database
         var newEntry = {
-            employee_id: userName,
-            name: nameSelect.text().trim(),
-
-            // may need to reformat date information for mySQL?
-            date: dateSelect.val(),
-            category: categorySelect.val(),
-            task: taskSelect.val(),
-            timespent: timeSelect.val(),
-            program: programId.val().trim(),
-            ecr: inputEcr.val(),
-            notes: inputNotes.val(),
-            FKemployee_id: userName,
+            date: dateSelect.val().trim(),
+            timeEntry: timeSelect.val().trim(),
+            studentName: nameSelect.text().trim(),
+            timeType: typeSelect.val().trim(),
         };
-
+        console.log(newEntry);
         submitTableRow(newEntry);
     };
 
@@ -104,7 +81,9 @@ $(document).ready(function () {
 
     // A function for rendering the list of tableRows to the page
     function renderList(rowsToAdd) {
-        tableBody.children().not(":last").remove();
+        //use the below if you want to keep your last entry when rendering or re-rendering your list
+        // tableBody.children().not(":last").remove();
+        tableBody.children().remove();
         tableContainer.children(".alert").remove();
         if (rowsToAdd.length) {
             // console.log(rowsToAdd);
@@ -171,6 +150,7 @@ $(document).ready(function () {
                     timeEntry: data[i].timeEntry,
                 }
                 console.log(duplicateEntry);
+                console.log("entry duplicated");
                 submitTableRow(duplicateEntry);
             }
         })

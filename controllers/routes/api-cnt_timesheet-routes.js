@@ -76,7 +76,8 @@ module.exports = function (app) {
     });
 
     // SELECT * FROM cntTimesheets... JOIN students JOIN project.... WHERE project_id = '1' ORDER BY date AND id;
-    app.get("/api/cntTimesheets/limit=50/:id", function (req, res) {
+    app.get("/api/cntTimesheets/limit=50/:name", function (req, res) {
+        const name = decodeURIComponent(req.params.name);
         db.cntTimesheet.findAll({
             include: [
                 {
@@ -85,7 +86,7 @@ module.exports = function (app) {
                 {
                 model: db.Project,
                 where: {
-                    project_id: req.params.id
+                    projectName: name
                 }}],
             order: [
                 ['date', 'DESC'],
@@ -198,7 +199,7 @@ module.exports = function (app) {
         });
     });
 
-    app.post("/api/cntTimesheets/entries/", function (req, res) {
+    app.post("/api/cntTimesheets", function (req, res) {
         db.cntTimesheet.create(req.body).then(function (dbcntTimesheet) {
             res.json(dbcntTimesheet);
         });
@@ -220,8 +221,8 @@ module.exports = function (app) {
                 where: {
                     id: req.body.id
                 }
-            }).then(function (dbTimesheet) {
-                res.json(dbTimesheet);
+            }).then(function (dbcntTimesheet) {
+                res.json(dbcntTimesheet);
             });
     });
         // --- Below is code for implementation of looking back at data over X number of days for future release ---

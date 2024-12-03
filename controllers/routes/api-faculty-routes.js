@@ -61,7 +61,7 @@ module.exports = function (app) {
     app.get("/api/faculty/:user", function (req, res) {
         db.Faculty.findOne({
             where: {
-                Faculty_id: req.params.user
+                faculty_id: req.params.user
             },
             include: [db.cntTimesheet]
         }).then(function (dbFaculty) {
@@ -75,11 +75,21 @@ module.exports = function (app) {
         });
     });
 
-    app.put("/api/faculty/:user", function (req, res) {
+    app.delete("/api/faculty/entries/:user", function (req, res) {
+        db.Faculty.destroy({
+                where: {
+                    faculty_id: req.params.user
+                }
+            }).then(function (dbFaculty) {
+            res.json(dbFaculty);
+        });
+    });
+
+    app.put("/api/faculty/entries/:user", function (req, res) {
         db.Faculty.update(req.body,
             {
                 where: {
-                    Faculty_id: req.params.user
+                    faculty_id: req.params.user
                 }
             }).then(function (dbFaculty) {
             res.json(dbFaculty);

@@ -197,7 +197,7 @@ $(document).ready(function () {
             notes: $(this).parent("td").parent("tr").children("#tableNotes").text(),
             FKemployee_id: userName,
         }
-        console.log(duplicateEntry.ecr);
+        console.log("entry duplicated");
         submitTableRow(duplicateEntry);
     }
 

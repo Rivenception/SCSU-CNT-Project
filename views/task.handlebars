@@ -41,3 +41,37 @@
 <!-- Custom Script -->
 <script src="assets/js/task_list.js" type="text/javascript"></script>
 {{/if}}
+
+<script type="text/javascript">
+  // works but I should ask whether this should be pulled from a table or just a manual entry. Are GS in charge of entering tasks? Are staff? Can anyone?
+  // for now the faculty section is commented out. This may only be functional for certain people and hardcoded?
+
+  {{!-- function requestorFacultyDropdown() {
+    console.log("Requesting Faculty Requestors Dropdown");
+    var facultyInput = $("#inputGroupRequestor");
+    // For loop that gets all students and dynamically creates list in the html for the respective projects.
+      $.get("/api/drop/requestors1", function (data) {
+          for (var i = 0; i < data.length; i++) {
+                  let dropdown = $("<option>").attr("value", data[i].faculty_id).text(data[i].facultyName);
+                  facultyInput.append(dropdown);
+          }
+      })
+  };
+
+  requestorFacultyDropdown() --}}
+
+    function requestorStudentDropdown() {
+    console.log("Requesting Student Requestors Dropdown");
+    var studentInput = $("#inputGroupRequestor");
+    // For loop that gets all students and dynamically creates list in the html for the respective projects.
+      $.get("/api/drop/requestors2", function (data) {
+          for (var i = 0; i < data.length; i++) {
+                  let dropdown = $("<option>").attr("value", data[i].student_id).text(data[i].studentName);
+                  studentInput.append(dropdown);
+          }
+      })
+  };
+
+  requestorStudentDropdown()
+
+</script>

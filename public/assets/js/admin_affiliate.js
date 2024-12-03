@@ -17,9 +17,14 @@ $(document).ready(function () {
     var status = $('#statusSelect');
     var userName = $('#hidden-studentId').text();
 
-    $(document).on("click", "#submit", handleFormSubmit);
+    $(document).on("click", "#submit", function(event) {
+        event.preventDefault();  // Prevent the form submission (and page reload)
+        
+        // Your logic for form submission (e.g., via AJAX)
+        handleFormSubmit();
+    });
 
-    getAllStudents();
+    getLastEntries();
 
     // A function for handling what happens when the form to create a new Student is submitted
     function handleFormSubmit() {
@@ -30,9 +35,11 @@ $(document).ready(function () {
         console.log(name.val().trim());
         console.log(status.val().trim());
 
-        if (!studentId.val().trim() || !name.val().trim() || !email.val().trim()) {
-            return;
-        }
+        // try to get a modal functioning for if values are missing
+        // if (!studentId.val().trim() || !name.val().trim() || !email.val().trim()) {
+        //     return;
+        // }
+
         // Constructing a newStudent object to hand to the database
         var newStudent = {
             student_id: studentId.val().trim(),
@@ -54,7 +61,7 @@ $(document).ready(function () {
     // Submits a new Student entry
     function submitStudent(data) {
         $.post("/api/affiliates", data)
-        .then(getAllStudents);
+        .then(getLastEntries);
     }
 
     
@@ -71,13 +78,14 @@ $(document).ready(function () {
             newTr.append("<td id='tableSupervisor'>" + newEntry[i].supervisor + "</td>");
             newTr.append("<td id='tableStatus'>" + newEntry[i].status + "</td>");
             newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
+            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='delete-entry fa fa-trash-o'></i></td>");
             allEntries.push(newTr)
         }
         return allEntries;
     }
 
     // Function for retrieving timeblocks and getting them ready to be rendered to the page
-    function getAllStudents() {
+    function getLastEntries() {
         var rowsToAdd = [];
         var route = "";
         if (userName && (userName != "")) {
@@ -125,7 +133,9 @@ $(document).ready(function () {
 
     // A function for rendering the list of timeblocks to the page
     function renderList(rowsToAdd) {
-        tableBody.children().not(":last").remove();
+        //use the below if you want to keep your last entry when rendering or re-rendering your list
+        // tableBody.children().not(":last").remove();
+        tableBody.children().remove();
         tableContainer.children(".alert").remove();
         if (rowsToAdd.length) {
             // console.log(rowsToAdd);
@@ -142,6 +152,19 @@ $(document).ready(function () {
         alertDiv.addClass("alert alert-danger");
         alertDiv.text("Please contact your administrator to have your StudentID entered");
         tableContainer.append(alertDiv);
+    }
+
+    $(document).on("click", ".delete-entry", handleDeleteButtonPress);
+
+    // Function for handling what happens when the delete button is pressed
+    function handleDeleteButtonPress() {
+        var id = $(this).parent("td").parent("tr").data("tableRow");
+        console.log(id);
+        $.ajax({
+            method: "DELETE",
+            url: "api/affiliate/entries/" + id
+        })
+            .then(getLastEntries);
     }
 
     $(document).on("click", ".edit-entry", handleEdit);

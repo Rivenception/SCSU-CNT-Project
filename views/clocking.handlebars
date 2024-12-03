@@ -27,3 +27,29 @@
 <!-- Custom Script -->
 <script src="assets/js/clocking_list.js" type="text/javascript"></script>
 {{/if}}
+
+<script type="text/javascript">
+
+  document.addEventListener('DOMContentLoaded', () => {
+      const timeInput = document.getElementById('timeInput');
+
+      // Function to get the current time in "HH:mm" format
+      const getCurrentTime = () => {
+          const now = new Date();
+          const hours = String(now.getHours()).padStart(2, '0');
+          const minutes = String(now.getMinutes()).padStart(2, '0');
+          return `${hours}:${minutes}`;
+      };
+
+      // Set the input's default value to the current time when the page loads
+      timeInput.value = getCurrentTime();
+
+      // Form submission handler
+      document.getElementById('timeForm').addEventListener('submit', (event) => {
+          event.preventDefault(); // Prevent page reload
+          console.log('Selected Time:', timeInput.value);
+          alert(`Selected Time: ${timeInput.value}`);
+      });
+  });
+
+</script>

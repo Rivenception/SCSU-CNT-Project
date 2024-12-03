@@ -95,14 +95,32 @@ module.exports = function (app) {
     });
   });
   
-    app.get("/prj/:id", function (req, res) {
+    // app.get("/prj/:id", function (req, res) {
+    //   db.cntTimesheet.findOne({
+    //     include: [
+    //       {
+    //       model: db.Project,
+    //       where: {
+    //         project_id: req.params.id
+    //     }}],
+    //   }).then(function (dbcntTimesheet) {
+    //     res.render("prj", {
+    //       projectName: dbcntTimesheet.projectName,
+    //       project_id: dbcntTimesheet.Project.project_id,
+    //     });
+    //   });
+    // });
+
+    app.get("/prj/:name", function (req, res) {
+      const name = decodeURIComponent(req.params.name);
       db.cntTimesheet.findOne({
+        where: {
+          projectName: name
+        },
         include: [
           {
           model: db.Project,
-          where: {
-            project_id: req.params.id
-        }}],
+          }],
       }).then(function (dbcntTimesheet) {
         res.render("prj", {
           projectName: dbcntTimesheet.projectName,

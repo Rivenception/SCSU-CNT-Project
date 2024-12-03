@@ -18,7 +18,7 @@ $(document).ready(function () {
 
     $(document).on("click", "#submit", handleFormSubmit);
 
-    getAllProject();
+    getLastEntries();
 
     // A function for handling what happens when the form to create a new Project is submitted
     function handleFormSubmit() {
@@ -49,7 +49,7 @@ $(document).ready(function () {
     // Submits a new Project entry
     function submitProject(data) {
         $.post("/api/sponsors", data)
-        .then(getAllProjects);
+        .then(getLastEntries);
     }
 
     
@@ -69,7 +69,7 @@ $(document).ready(function () {
     }
 
     // Function for retrieving timeblocks and getting them ready to be rendered to the page
-    function getAllProject() {
+    function getLastEntries() {
         var rowsToAdd = [];
         var route = "";
         if (userName && (userName != "")) {
@@ -96,7 +96,9 @@ $(document).ready(function () {
 
     // A function for rendering the list of timeblocks to the page
     function renderList(rowsToAdd) {
-        tableBody.children().not(":last").remove();
+        //use the below if you want to keep your last entry when rendering or re-rendering your list
+        // tableBody.children().not(":last").remove();
+        tableBody.children().remove();
         tableContainer.children(".alert").remove();
         if (rowsToAdd.length) {
             // console.log(rowsToAdd);

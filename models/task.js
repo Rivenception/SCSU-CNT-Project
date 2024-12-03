@@ -37,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         requestor: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         dueDate: {
             type: DataTypes.DATEONLY,

@@ -3,7 +3,6 @@ $(document).ready(function () {
     var tableContainer = $(".table-container");
 
     var category = $('#category').text();
-    var userName = $('#hidden-employeeId').text();
     var nameSelect = $('#inputGroupEmployee');
     var dateSelect = $('#date');
     var categorySelect = $("#inputGroupCategory");
@@ -11,7 +10,6 @@ $(document).ready(function () {
     var timeSelect = $('#inputGroupTime');
     var programId = $('#inputGroupProgram');
     var inputNotes = $('#inputGroupNotes');
-    var categoryURL = '';
 
     $(document).on("click", "#timeSubmit", handleFormSubmit);
     $(document).on("click", ".delete-entry", handleDeleteButtonPress);
@@ -54,10 +52,10 @@ $(document).ready(function () {
             newTr.append("<td id='logId#"  + newEntry[i].id + "'>" + newEntry[i].id + "</td>");
             newTr.append("<td id='tableName'><a href='/stu/" + newEntry[i].student_id + "'>" + newEntry[i].name + "</td>");
             newTr.append("<td id='tableDate'>" + newEntry[i].date + "</td>");
-            newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project_id + "'>" + newEntry[i].project + "</td>");
+            newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project + "'>" + newEntry[i].project + "</td>");
             newTr.append("<td id='tableCategory'><a href='/stu/cat/" + newEntry[i].category + "'>" + newEntry[i].category + "</td>");
             newTr.append("<td id='tableNotes'>" + newEntry[i].notes + "</td>");
-            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
+            // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
             newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
             newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='delete-entry fa fa-trash-o'></i></td>");
             allEntries.push(newTr)

@@ -6,10 +6,6 @@ $(document).ready(function () {
     var nameSelect = $('#inputGroupStudent');
     var dateSelect = $('#date');
     var categorySelect = $("#inputGroupCategory");
-    //var taskSelect = $('#inputGroupTask');
-    //var timeSelect = $('#inputGroupTime');
-    //var programId = $('#inputGroupProgram');
-    //var inputEcr = $('#inputGroupEcr');
     var inputNotes = $('#inputGroupNotes');
 
     $(document).on("click", "#timeSubmit", handleFormSubmit);
@@ -22,28 +18,24 @@ $(document).ready(function () {
     // A function for handling what happens when the form to create a new post is submitted
     function handleFormSubmit() {
         console.log("Add Button Triggered");
-        // Wont submit the post if we are missing a body, title, or author
-        if (!nameSelect.val() || !dateSelect.val().trim() || !categorySelect.val() || !inputNotes.val()) {
-            var alertDiv = $("<div>");
-            alertDiv.addClass("alert alert-danger");
-            alertDiv.text("Make sure the program ID is not empty and all required fields are filled in.");
-            tableContainer.prepend(alertDiv);
-            return;
-        }
+
+        // // Wont submit the post if we are missing a body, title, or author
+        // if (!nameSelect.val() || !dateSelect.val().trim() || !categorySelect.val() || !taskSelect.val() || !timeSelect.val() || !programId.val().trim()) {
+        //     var alertDiv = $("<div>");
+        //     alertDiv.addClass("alert alert-danger");
+        //     alertDiv.text("Make sure the program ID is not empty and all required fields are filled in.");
+        //     tableContainer.prepend(alertDiv);
+        //     return;
+        // }
 
         // Constructing a newPost object to hand to the database
         var newEntry = {
-            //employee_id: userName,
             studentName: nameSelect.text().trim(),
-
             // may need to reformat date information for mySQL?
             date: dateSelect.val(),
+            projectName: $('#inputGroupProject option:selected').text().trim(),
             category: categorySelect.val(),
-            task: taskSelect.val(),
-            timespent: timeSelect.val(),
-            program: programId.val().trim(),
-            ecr: inputEcr.val(),
-            notes: inputNotes.val(),
+            logNotes: inputNotes.val(),
         };
         console.log(newEntry);
         submitTableRow(newEntry);
@@ -52,7 +44,7 @@ $(document).ready(function () {
     // Submits a new tableRow entry
     function submitTableRow(data) {
         console.log("Posting new entry...")
-        $.post("/api/cntTimesheets", data)
+        $.post("/api/cnttimesheets", data)
             .then(getLastEntries);
     }
 
@@ -66,7 +58,7 @@ $(document).ready(function () {
             newTr.append("<td id='logId#"  + newEntry[i].id + "'>" + newEntry[i].id + "</td>");
             newTr.append("<td id='tableName'><a href='/stu/" + newEntry[i].student_id + "'>" + newEntry[i].name + "</td>");
             newTr.append("<td id='tableDate'>" + newEntry[i].date + "</td>");
-            newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project_id + "'>" + newEntry[i].project + "</td>");
+            newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project + "'>" + newEntry[i].project + "</td>");
             newTr.append("<td id='tableCategory'><a href='/stu/cat/" + newEntry[i].category + "'>" + newEntry[i].category + "</td>");
             newTr.append("<td id='tableNotes'>" + newEntry[i].notes + "</td>");
             newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
@@ -119,7 +111,7 @@ $(document).ready(function () {
     function renderEmpty() {
         var alertDiv = $("<div>");
         alertDiv.addClass("alert alert-danger");
-        alertDiv.text("Please contact your administrator to have your employeeID entered. If the user has an employeeID then the user hasn't logged any hours yet!");
+        alertDiv.text("This user hasn't logged any hours yet! Please enter your first record");
         tableContainer.append(alertDiv);
     }
 
@@ -130,7 +122,7 @@ $(document).ready(function () {
         console.log(id);
         $.ajax({
             method: "DELETE",
-            url: "api/timesheets/entries/" + id
+            url: "api/cnttimesheets/entries/" + id
         })
             .then(getLastEntries);
     }
@@ -171,7 +163,7 @@ $(document).ready(function () {
             program: $(this).parent("td").parent("tr").children("#tableProgram").text(),
             notes: $(this).parent("td").parent("tr").children("#tableNotes").text(),
         }
-        console.log(duplicateEntry.ecr);
+        console.log("entry duplicated");
         submitTableRow(duplicateEntry);
     }
 

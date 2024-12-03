@@ -8,6 +8,7 @@ global.document = document;  */
 $(document).ready(function () {
     var tableBody = $("tbody");
     var tableContainer = $(".table-container");
+    var alert = $(".alert-container");
 
     var studentId = $("#student-id");
     var name = $('#name')
@@ -16,9 +17,23 @@ $(document).ready(function () {
     var status = $('#statusSelect option:selected');
     var userName = $('#hidden-studentId').text();
 
-    $(document).on("click", "#submit", handleFormSubmit);
+    $(document).on("click", "#submit", function(event) {
+        event.preventDefault();  // Prevent the form submission (and page reload)
+        
+        function comment() {
+            var alertDiv = $("<div>");
+            alertDiv.addClass("alert alert-danger");
+            alertDiv.text("User Added");
+            alert.append(alertDiv);
+        }
 
-    getAllStudents();
+        comment();
+
+        // Your logic for form submission (e.g., via AJAX)
+        handleFormSubmit();
+    });
+
+    getLastEntries();
 
     // A function for handling what happens when the form to create a new Student is submitted
     function handleFormSubmit() {
@@ -65,7 +80,7 @@ $(document).ready(function () {
         var allEntries = [];
         for (var i = 0; i < newEntry.length; i++) {
             var newTr = $("<tr>");
-            newTr.data("tableRow", newEntry[i].studentId);
+            newTr.data("tableRow", newEntry[i].student_id);
             newTr.append("<td id='tableStudentId'>" + newEntry[i].student_id + "</td>");
             newTr.append("<td id='tableName'>" + newEntry[i].studentName + "</td>");
             newTr.append("<td id='tableEmail'>" + newEntry[i].email + "</td>");
@@ -73,13 +88,14 @@ $(document).ready(function () {
             newTr.append("<td id='tableSupervisor'>" + newEntry[i].supervisor + "</td>");
             newTr.append("<td id='tableStatus'>" + newEntry[i].status + "</td>");
             newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
+            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='delete-entry fa fa-trash-o'></i></td>");
             allEntries.push(newTr)
         }
         return allEntries;
     }
 
     // Function for retrieving timeblocks and getting them ready to be rendered to the page
-    function getAllStudents() {
+    function getLastEntries() {
         var rowsToAdd = [];
         var route = "";
         if (userName && (userName != "")) {
@@ -127,7 +143,9 @@ $(document).ready(function () {
 
     // A function for rendering the list of timeblocks to the page
     function renderList(rowsToAdd) {
-        tableBody.children().not(":last").remove();
+        //use the below if you want to keep your last entry when rendering or re-rendering your list
+        // tableBody.children().not(":last").remove();
+        tableBody.children().remove();
         tableContainer.children(".alert").remove();
         if (rowsToAdd.length) {
             // console.log(rowsToAdd);
@@ -144,6 +162,19 @@ $(document).ready(function () {
         alertDiv.addClass("alert alert-danger");
         alertDiv.text("Please contact your administrator to have your StudentID entered");
         tableContainer.append(alertDiv);
+    }
+
+    $(document).on("click", ".delete-entry", handleDeleteButtonPress);
+
+    // Function for handling what happens when the delete button is pressed
+    function handleDeleteButtonPress() {
+        var id = $(this).parent("td").parent("tr").data("tableRow");
+        console.log(id);
+        $.ajax({
+            method: "DELETE",
+            url: "api/students/entries/" + id
+        })
+            .then(getLastEntries);
     }
 
     $(document).on("click", ".edit-entry", handleEdit);

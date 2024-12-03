@@ -3,16 +3,6 @@ $(document).ready(function () {
     var tableContainer = $(".table-container");
 
     var status = $('#status').text();
-    var userName = $('#hidden-employeeId').text();
-    var nameSelect = $('#inputGroupEmployee');
-    var dateSelect = $('#date');
-    var categorySelect = $("#inputGroupCategory");
-    var taskSelect = $('#inputGroupTask');
-    var timeSelect = $('#inputGroupTime');
-    var programId = $('#inputGroupProgram');
-    var inputEcr = $('#inputGroupEcr');
-    var inputNotes = $('#inputGroupNotes');
-    var projURL = '';
 
     // Getting the initial list of Time Entries
     getLastEntries();
@@ -23,9 +13,9 @@ $(document).ready(function () {
         for (var i = 0; i < newEntry.length; i++) {
             var newTr = $("<tr>");
             newTr.data("tableRow", newEntry[i].id);
-            newTr.append("<td id='priority"  + newEntry[i].priority + "'>" + newEntry[i].priority + "</td>");
-            newTr.append("<td id='dueDate"  + newEntry[i].due + "'>" + newEntry[i].due + "</td>");
-            newTr.append("<td id='tableProject'><a href='/task/prj/" + newEntry[i].project_id + "'>" + newEntry[i].project + "</td>");
+            newTr.append("<td id='tablePriority'>" + newEntry[i].priority + "</td>");
+            newTr.append("<td id='dueDate'>" + newEntry[i].due + "</td>");
+            newTr.append("<td id='tableProject'><a href='/task/prj/" + newEntry[i].project + "'>" + newEntry[i].project + "</td>");
             newTr.append("<td id='tableTask'>" + newEntry[i].task + "</td>");
             newTr.append("<td id='tableAssignment'><a href='task/stu/" + newEntry[i].student_id + "'>" + newEntry[i].assigned + "</td>");
             newTr.append("<td id='tableRequestor'>" + newEntry[i].requestor + "</td>");
@@ -47,7 +37,7 @@ $(document).ready(function () {
         $.get(route, function (data) {
             for (var i = 0; i < data.length; i++) {
                 var newEntry = {
-                    task_id: data[i].task_id,
+                    id: data[i].task_id,
                     priority: data[i].priority,
                     due: data[i].dueDate,
                     project_id: data[i].Project.project_id,
@@ -69,7 +59,9 @@ $(document).ready(function () {
 
     // A function for rendering the list of tableRows to the page
     function renderList(rowsToAdd) {
-        tableBody.children().not(":last").remove();
+        //use the below if you want to keep your last entry when rendering or re-rendering your list
+        // tableBody.children().not(":last").remove();
+        tableBody.children().remove();
         tableContainer.children(".alert").remove();
         if (rowsToAdd.length) {
             // console.log(rowsToAdd);
@@ -95,4 +87,65 @@ $(document).ready(function () {
     var yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
 
+    // Function for handling what happens when the delete button is pressed
+    function handleDeleteButtonPress() {
+        var id = $(this).parent("td").parent("tr").data("tableRow");
+        console.log(id);
+        $.ajax({
+            method: "DELETE",
+            url: "api/task/entries/" + id
+        })
+            .then(getLastEntries);
+    }
+
+    $(document).on("click", ".delete-entry", handleDeleteButtonPress);
+    $(document).on("click", ".edit-entry", handleEdit);
+
+    // This function figures out which post we want to edit and takes it to the appropriate url
+    function handleEdit() {
+        console.log("yes");
+        var currentEntry = $(this).parent("td").parent("tr").data("tableRow");
+        console.log(currentEntry);
+        window.location.href = "/update/" + currentEntry
+    }
+
+    $(document).on("click", ".duplicate-entry", duplicate);
+
+    //Set default date of today
+    var today = new Date();
+    var dd = ("0" + (today.getDate())).slice(-2);
+    var mm = ("0" + (today.getMonth() + 1)).slice(-2);
+    var yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+
+    // Submits a new tableRow entry
+    function submitTableRow(data) {
+        $.post("/api/tasks", data)
+            .then(getLastEntries);
+    }
+
+    // This function figures out which post we want to edit and takes it to the appropriate url
+    function duplicate() {
+        // console.log($(this));
+        // console.log($(this).parent("td"));
+        // console.log($(this).parent("td").parent("tr"));
+        console.log($(this).parent("td").parent("tr").children("#tablePriority"));
+        console.log($(this).parent("td").parent("tr").children("#tablePriority").text());
+
+        duplicateEntry = {
+            priority: $(this).parent("td").parent("tr").children("#tablePriority").text(),
+            dueDate: today,
+            projectName: $(this).parent("td").parent("tr").children("#tableProject").text(),
+            task: $(this).parent("td").parent("tr").children("#tableTask").text(),
+            assignedTo: $(this).parent("td").parent("tr").children("#tableAssignment").text(),
+            requestor: $(this).parent("td").parent("tr").children("#tableRequestor").text(),
+            projectName: $(this).parent("td").parent("tr").children("#tableProject").text(),
+            status: $(this).parent("td").parent("tr").children("#tableStatus").text(),
+            logNotes: $(this).parent("td").parent("tr").children("#tableNotes").text(),
+        }
+        console.log("entry duplicated");
+        submitTableRow(duplicateEntry);
+
+        // window.location.href = "/update/" + currentEntry
+    }    
 });

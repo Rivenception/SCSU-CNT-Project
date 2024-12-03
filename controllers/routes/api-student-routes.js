@@ -77,7 +77,17 @@ module.exports = function (app) {
         });
     });
 
-    app.put("/api/students/:user", function (req, res) {
+    app.delete("/api/students/entries/:user", function (req, res) {
+        db.Student.destroy({
+            where: {
+                student_id: req.params.user
+            }
+        }).then(function (dbStudent) {
+            res.json(dbStudent);
+        });
+    });
+
+    app.put("/api/students/entries/:user", function (req, res) {
         db.Student.update(req.body,
             {
                 where: {

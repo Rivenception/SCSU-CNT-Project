@@ -15,7 +15,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         projectAffiliation: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             len: [1]
         },
         createdAt: {
