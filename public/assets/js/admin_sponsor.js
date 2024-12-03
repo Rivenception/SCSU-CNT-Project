@@ -13,7 +13,6 @@ $(document).ready(function () {
     var name = $('#name')
     var position = $('#deptSelect');
     var email = $("#title");
-    var supervisor = $('#salary');
     var status = $('#statusSelect');
     var userName = $('#hidden-ProjectId').text();
 
@@ -49,7 +48,7 @@ $(document).ready(function () {
 
     // Submits a new Project entry
     function submitProject(data) {
-        $.post("/api/projects", data)
+        $.post("/api/sponsors", data)
         .then(getAllProjects);
     }
 
@@ -60,10 +59,10 @@ $(document).ready(function () {
         for (var i = 0; i < newEntry.length; i++) {
             var newTr = $("<tr>");
             newTr.data("tableRow", newEntry[i].projectId);
-            newTr.append("<td id='tableProject'>" + newEntry[i].projectName + "</td>");
             newTr.append("<td id='tableSponsor'>" + newEntry[i].projectSponsor + "</td>");
-            newTr.append("<td id='tableStatus'>" + newEntry[i].status + "</td>");
-            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
+            newTr.append("<td id='tableProject'>" + newEntry[i].projectName + "</td>");
+            // newTr.append("<td id='tableStatus'>" + newEntry[i].status + "</td>");
+            // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
             allEntries.push(newTr)
         }
         return allEntries;

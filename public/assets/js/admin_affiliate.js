@@ -17,7 +17,7 @@ $(document).ready(function () {
     var status = $('#statusSelect');
     var userName = $('#hidden-studentId').text();
 
-    $(document).on("click", "#StudentSubmit", handleFormSubmit);
+    $(document).on("click", "#submit", handleFormSubmit);
 
     getAllStudents();
 
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
     // Submits a new Student entry
     function submitStudent(data) {
-        $.post("/api/students", data)
+        $.post("/api/affiliates", data)
         .then(getAllStudents);
     }
 

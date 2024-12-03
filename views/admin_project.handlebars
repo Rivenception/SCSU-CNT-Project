@@ -9,15 +9,15 @@
       <tr id="form-row">
         <td colspan="12">
           <br>
-          <form class="employeeEntry-form">
+          <form class="projectEntry-form">
             <div class="form-group">
-              <label for="projectSelect">Project Name:</label>
-              <select class="custom-select" id="inputGroupProject" name="inputGroupProject">
-              </select>
+              <label for="project">Project Name:</label>
+              <input type="text" id="project" name="project">
             </div>
             <div class="form-group">
               <label for="sponsorSelect">Project Sponsor:</label>
               <select class="custom-select" id="inputGroupSponsor" name="inputGroupSponsor">
+                  <option value="Null"></option>
               </select>
             </div>
             <div class="form-group">
@@ -28,7 +28,7 @@
               </select>
             </div>
             <div style="display: flex; justify-content: center; align-items: center;">
-              <button type="submit" class="btn btn-success" id="employeeSubmit">Add Entry</button>
+              <button type="submit" class="btn btn-success" id="submit">Add Entry</button>
             </div>
         </td>  
       </tr>

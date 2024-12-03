@@ -94,12 +94,9 @@ module.exports = function (app) {
         });
     });
 
-    app.post("/api/task", function (req, res) {
-        db.Timesheet.create(req.body,
-            {
-                include: [db.Student],
-            }).then(function (dbTimesheet) {
-                res.json(dbTimesheet);
+    app.post("/api/tasks", function (req, res) {
+        db.Task.create(req.body).then(function (dbTask) {
+                res.json(dbTask);
             });
     });
 
