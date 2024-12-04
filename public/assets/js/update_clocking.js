@@ -3,47 +3,48 @@ $(document).ready(function () {
     var tableContainer = $(".table-container");
 
     var userName = $('#hidden-studentName').text();
-    var nameSelect = $('#inputGroupStudent');
-    var dateSelect = $('#date');
-    var categorySelect = $("#inputGroupCategory");
-    var inputNotes = $('#inputGroupNotes');
-
-    $(document).on("click", "#timeSubmit", handleFormSubmit);
-    $(document).on("click", ".delete-entry", handleDeleteButtonPress);
+    var entryId = $('#hidden-logId').text();
+    var updating = true;
 
     // Getting the initial list of Time Entries
     getLastEntries();
 
+    $(document).on("click", "#submit", handleFormSubmit);
+    $(document).on("click", ".delete-entry", handleDeleteButtonPress);
+
     // A function for handling what happens when the form to create a new post is submitted
     function handleFormSubmit() {
         console.log("Add Button Triggered");
+        event.preventDefault()
 
-        // // Wont submit the post if we are missing a body, title, or author
-        // if (!nameSelect.val() || !dateSelect.val().trim() || !categorySelect.val() || !taskSelect.val() || !timeSelect.val() || !programId.val().trim()) {
-        //     var alertDiv = $("<div>");
-        //     alertDiv.addClass("alert alert-danger");
-        //     alertDiv.text("Make sure the program ID is not empty and all required fields are filled in.");
-        //     tableContainer.prepend(alertDiv);
-        //     return;
-        // }
+        var dateSelect = $('#date');
+        var timeSelect = $('#timeInput');
+        var nameSelect = $('#inputGroupStudent');
+        var typeSelect = $('#in-out');
 
         // Constructing a newPost object to hand to the database
         var newEntry = {
+            date: dateSelect.val().trim(),
+            timeEntry: timeSelect.val().trim(),
             studentName: nameSelect.text().trim(),
-            // may need to reformat date information for mySQL?
-            date: dateSelect.val(),
-            projectName: $('#inputGroupProject option:selected').text().trim(),
-            category: categorySelect.val(),
-            logNotes: inputNotes.val(),
+            timeType: typeSelect.val().trim(),
         };
 
-        submitTableRow(newEntry);
+        if (updating) {
+            console.log("fetching updates");
+            newEntry.clock_id = entryId;
+            updateTableEntry(newEntry);
+            getLastEntries();
+            displayMessage("Punch Clock Record# " + entryId + " updated")
+        } else {
+            submitTableRow(newEntry);
+        }
     };
 
     // Submits a new tableRow entry
     function submitTableRow(data) {
         console.log("Posting new entry...")
-        $.post("/api/cnttimesheets", data)
+        $.post("/api/clocking", data)
             .then(getLastEntries);
     }
 
@@ -55,12 +56,11 @@ $(document).ready(function () {
             var newTr = $("<tr>");
             newTr.data("tableRow", newEntry[i].id);
             newTr.append("<td id='logId#"  + newEntry[i].id + "'>" + newEntry[i].id + "</td>");
-            newTr.append("<td id='tableName'><a href='/stu/" + newEntry[i].student_id + "'>" + newEntry[i].name + "</td>");
+            newTr.append("<td id='tableName'><a href='/clocking/stu/" + newEntry[i].student_id + "'>" + newEntry[i].name + "</td>");
             newTr.append("<td id='tableDate'>" + newEntry[i].date + "</td>");
-            newTr.append("<td id='tableProject'><a href='/prj/" + newEntry[i].project + "'>" + newEntry[i].project + "</td>");
-            newTr.append("<td id='tableCategory'><a href='/stu/cat/" + newEntry[i].category + "'>" + newEntry[i].category + "</td>");
-            newTr.append("<td id='tableNotes'>" + newEntry[i].notes + "</td>");
-            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
+            newTr.append("<td id='tableType'>" + newEntry[i].type + "</td>");
+            newTr.append("<td id='tableTimeEntry'>" + newEntry[i].time + "</td>");
+            // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
             newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
             newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='delete-entry fa fa-trash-o'></i></td>");
             allEntries.push(newTr)
@@ -72,18 +72,16 @@ $(document).ready(function () {
     function getLastEntries() {
         console.log("Getting latest entries for " + userName);
         var rowsToAdd = [];
-        var route = "/api/cnttimesheets/users/"  + userName;
+        var route = "/api/clocking/entries/"  + entryId;
         $.get(route, function (data) {
             for (var i = 0; i < data.length; i++) {
                 var newEntry = {
-                    id: data[i].id,
+                    id: data[i].clock_id,
                     student_id: data[i].Student.student_id,
-                    project_id: data[i].Project.project_id,
                     name: data[i].studentName,
                     date: data[i].date,
-                    project: data[i].projectName,
-                    category: data[i].category,
-                    notes: data[i].logNotes,
+                    type: data[i].timeType,
+                    time: data[i].timeEntry,
                 }
                 // console.log(newEntry);
                 rowsToAdd.push(newEntry);
@@ -95,6 +93,7 @@ $(document).ready(function () {
 
     // A function for rendering the list of tableRows to the page
     function renderList(rowsToAdd) {
+        //use the below if you want to keep your last entry when rendering or re-rendering your list
         // tableBody.children().not(":last").remove();
         tableBody.children().remove();
         tableContainer.children(".alert").remove();
@@ -111,7 +110,7 @@ $(document).ready(function () {
     function renderEmpty() {
         var alertDiv = $("<div>");
         alertDiv.addClass("alert alert-danger");
-        alertDiv.text("This user hasn't logged any hours yet! Please enter your first record");
+        alertDiv.text("Please contact your administrator to have your employeeID entered. If the user has an employeeID then the user hasn't logged any hours yet!");
         tableContainer.append(alertDiv);
     }
 
@@ -122,7 +121,7 @@ $(document).ready(function () {
         console.log(id);
         $.ajax({
             method: "DELETE",
-            url: "api/cnttimesheets/entries/" + id
+            url: "api/clocking/entries/" + id
         })
             .then(getLastEntries);
     }
@@ -139,34 +138,27 @@ $(document).ready(function () {
         window.location.href = baseUrl
     }
 
-    $(document).on("click", ".duplicate-entry", duplicate);
-
-    //Set default date of today
-    var today = new Date();
-    var dd = ("0" + (today.getDate())).slice(-2);
-    var mm = ("0" + (today.getMonth() + 1)).slice(-2);
-    var yyyy = today.getFullYear();
-    today = yyyy + '-' + mm + '-' + dd;
-
-    // This function figures out which post we want to edit and takes it to the appropriate url
-    function duplicate() {
-        // console.log($(this));
-        // console.log($(this).parent("td"));
-        // console.log($(this).parent("td").parent("tr"));
-        console.log($(this).parent("td").parent("tr").children("#tableECR"));
-        console.log($(this).parent("td").parent("tr").children("#tableECR").text());
-        console.log($(this).parent("td").parent("tr").children("#tableProgram"));
-        console.log($(this).parent("td").parent("tr").children("#tableProgram").text());
-        duplicateEntry = {
-            student_id: userName,
-            name: $(this).parent("td").parent("tr").children("#tableName").text(),
-            date: today,
-            category: $(this).parent("td").parent("tr").children("#tableCategory").text(),
-            task: $(this).parent("td").parent("tr").children("#tableTask").text(),
-            program: $(this).parent("td").parent("tr").children("#tableProgram").text(),
-            notes: $(this).parent("td").parent("tr").children("#tableNotes").text(),
-        }
-        console.log("entry duplicated");
-        submitTableRow(duplicateEntry);
+    function displayMessage(message) {
+        // Set the text content of the #message element
+        document.getElementById("message").innerText = message;
+        
+        // Remove the 'hidden' class from the parent div by using the ID 'hidden-message'
+        document.getElementById("hidden-message").classList.remove("hidden");
     }
+
+    // Update a given post, bring user to the blog page when done ***NEED TO IMPLEMENT SWITCH BETWEEN DEPARTMENTS***
+    function updateTableEntry(entry) {
+        $.ajax({
+            method: "PUT",
+            url: "/api/clocking/entries/" + entryId,
+            data: entry
+        })
+            .then(function () {
+                var baseUrl = window.location.href;
+                console.log(baseUrl)
+
+                // window.location.href = "/eng/" + userName;
+            });
+    }
+
 });

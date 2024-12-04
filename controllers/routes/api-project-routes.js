@@ -11,6 +11,16 @@ module.exports = function (app) {
             res.json(dbProject);
         });
     });
+
+    app.get("/api/projects/entries/:id", function (req, res) {
+        db.Project.findOne({
+                where: {
+                    project_id: req.body.id
+                }
+            }).then(function (dbProject) {
+                res.json(dbProject);
+            });
+    });
     
     app.post("/api/projects", function (req, res) {
         db.Project.create(req.body).then(function (dbProject) {

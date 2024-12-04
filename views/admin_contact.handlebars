@@ -1,8 +1,10 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h1 class="header">Add Contact</h1>
+    <h2 class="hidden" id="isUpdate">{{this.update}}</h2>
   </div>
 </div>
+{{>hidden-message}}
 <div class="container">
   <table class="table table-striped">
     <thead>
@@ -23,7 +25,7 @@
               <input type="text" id="email" name="email">
             </div>
             <div style="display: flex; justify-content: center; align-items: center;">
-              <button type="submit" class="btn btn-success" id="submit">Add Entry</button>
+              <button type="submit" class="btn btn-success" id="submit">Submit</button>
             </div>
         </td>  
       </tr>
