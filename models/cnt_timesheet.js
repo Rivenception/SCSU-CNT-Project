@@ -16,7 +16,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         projectName: {
             type: DataTypes.STRING,
-            defaultValue: "Admin",
+            // defaultValue: "Admin",
             allowNull: false,
         },
         category: {
@@ -51,6 +51,7 @@ module.exports = function (sequelize, DataTypes) {
                 name: 'studentName',
                 allowNull: false,
             },
+            targetKey: 'studentName',
         });
 
         cntTimesheet.belongsTo(models.Project, {
@@ -58,6 +59,7 @@ module.exports = function (sequelize, DataTypes) {
                 name: 'projectName',
                 allowNull: false,
             },
+            targetKey: 'projectName',
         });
     };
     

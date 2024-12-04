@@ -122,7 +122,13 @@ $(document).ready(function () {
     function getLastEntries() {
         checkProj();
         var rowsToAdd = [];
-        var route = "/api/cntTimesheets/limit=50/prj/" + proj;
+        
+        if (proj) {
+            var route = "/api/cntTimesheets/limit=50/prj/" + proj;
+        } else {
+            var route = "/api/cntTimesheets/limit=50"
+        };
+
         console.log(route);
         $.get(route, function (data) {
             for (var i = 0; i < data.length; i++) {
