@@ -54,7 +54,7 @@
         </td>
       </tr>
       <tr id="TableRow">
-        <td id="Link"><a href="./api/task/stu/rmingione"> Task List: By Student </a></td>
+        <td id="Link"><a href="./api/task/stu/rmingione"> **Task List: By Student** </a></td>
         <td id="MySQL-statement">
           SELECT Tasks.*, Projects.*, Students.*
           FROM Tasks
@@ -180,15 +180,32 @@
       </tr>
       <tr id="TableRow">
         <td id="Link"><a href="./api/clocking/entries"> Punch Clock </a></td>
-        <td id="MySQL-statement"></td>
+        <td id="MySQL-statement">
+          SELECT Clockings.*, Students.*
+          FROM Clockings
+          LEFT JOIN Students ON Clockings.studentName = Students.studentName
+          ORDER BY Clockings.date DESC;
+        </td>
       </tr>
       <tr id="TableRow">
         <td id="Link"><a href="./api/clocking/stu/tmasi"> Punch Clock: By Student </a></td>
-        <td id="MySQL-statement"></td>
+        <td id="MySQL-statement">
+          SELECT Clockings.*, Students.*
+          FROM Clockings
+          LEFT JOIN Students ON Clockings.studentName = Students.studentName
+          WHERE Clockings.studentName = ????;
+          ORDER BY Clockings.date DESC;
+        </td>
       </tr>
       <tr id="TableRow">
         <td id="Link"><a href="./api/clocking/entries/14"> Punch Clock: By Record </a></td>
-        <td id="MySQL-statement"></td>
+        <td id="MySQL-statement">
+          SELECT Clockings.*, Students.*
+          FROM Clockings
+          LEFT JOIN Students ON Clockings.studentName = Students.studentName
+          WHERE Clockings.clock_id = ????;
+          ORDER BY Clockings.date DESC;
+        </td>
       </tr>
 
     </tbody>
