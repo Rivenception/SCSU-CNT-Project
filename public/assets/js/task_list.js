@@ -19,7 +19,7 @@ $(document).ready(function () {
             newTr.append("<td id='tableRequestor'>" + newEntry[i].requestor + "</td>");
             newTr.append("<td id='tableStatus'><a href='task/status/" + newEntry[i].status + "'>" + newEntry[i].status + "</td>");
             newTr.append("<td id='tableNotes'>" + newEntry[i].notes + "</td>");
-            // newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
+            newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='duplicate-entry fa fa-files-o aria-hidden='true'></i></td>");
             newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='edit-entry fa fa-pencil-square-o aria-hidden='true'></i></td>");
             newTr.append("<td><i style='cursor:pointer;color:#a72b32' class='delete-entry fa fa-trash-o'></i></td>");
             allEntries.push(newTr)
@@ -101,10 +101,12 @@ $(document).ready(function () {
 
     // This function figures out which post we want to edit and takes it to the appropriate url
     function handleEdit() {
-        console.log("yes");
         var currentEntry = $(this).parent("td").parent("tr").data("tableRow");
-        console.log(currentEntry);
-        window.location.href = "/update/" + currentEntry
+        console.log("Currently Updating table record number:" + currentEntry);
+        var baseUrl = window.location.href + "/update/" + currentEntry;
+        console.log(baseUrl)
+
+        window.location.href = baseUrl
     }
 
     $(document).on("click", ".duplicate-entry", duplicate);

@@ -103,10 +103,12 @@ $(document).ready(function () {
 
     // This function figures out which post we want to edit and takes it to the appropriate url
     function handleEdit() {
-        console.log("yes");
         var currentEntry = $(this).parent("td").parent("tr").data("tableRow");
         console.log(currentEntry);
-        window.location.href = "/update/" + currentEntry
+        var baseUrl = window.location.href + "/update/" + currentEntry;
+        console.log(baseUrl)
+
+        window.location.href = baseUrl
     }
 
     $(document).on("click", ".duplicate-entry", duplicate);

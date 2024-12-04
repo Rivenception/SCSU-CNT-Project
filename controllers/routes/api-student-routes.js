@@ -71,6 +71,16 @@ module.exports = function (app) {
         });
     });
 
+    app.get("/api/students/entries/:user", function (req, res) {
+        db.Student.findOne({
+                where: {
+                    student_id: req.params.user
+                }
+            }).then(function (dbStudent) {
+            res.json(dbStudent);
+        });
+    });
+
     app.post("/api/students", function (req, res) {
         db.Student.create(req.body).then(function (dbStudent) {
             res.json(dbStudent);
