@@ -94,6 +94,17 @@ module.exports = function (app) {
         });
     });
 
+    app.get("/api/task/entries/:id", function (req, res) {
+        db.Task.findOne({
+            include: [db.Student, db.Project],
+            where: {
+                task_id: req.params.id
+            },
+        }).then(function (dbTask) {
+            res.json(dbTask);
+        });
+    });
+
     app.post("/api/tasks", function (req, res) {
         db.Task.create(req.body).then(function (dbTask) {
                 res.json(dbTask);
@@ -114,7 +125,7 @@ module.exports = function (app) {
         db.Task.update(req.body,
             {
                 where: {
-                    task_id: req.body.id
+                    task_id: req.params.id
                 }
             }).then(function (dbTask) {
                 res.json(dbTask);

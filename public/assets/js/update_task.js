@@ -5,6 +5,10 @@ $(document).ready(function () {
     var proj = $('#project').text();
     var userName = $('#student-id').text();
     var projURL = '';
+    var userName = $('#hidden-employeeId').text();
+    var entryId = $('#hidden-logId').text();
+    var updating = true;
+
 
     $(document).on("click", "#timeSubmit", handleFormSubmit);
     $(document).on("click", ".delete-entry", handleDeleteButtonPress);
@@ -89,8 +93,16 @@ $(document).ready(function () {
             status: statusSelect.val(),
             taskNotes: inputNotes.val(),
         };
-        console.log(newEntry)
-        submitTableRow(newEntry);
+            if (updating) {
+                console.log("fetching updates for record# " + entryId);
+                newEntry.task_id = entryId;
+                console.log(newEntry);
+                updateTableRow(newEntry);
+                getLastEntries();
+                displayMessage("Task Record# " + entryId + " updated")
+            } else {
+                submitTableRow(newEntry);
+            }
     };
 
     // Submits a new tableRow entry
@@ -121,38 +133,74 @@ $(document).ready(function () {
         return allEntries;
     }
 
-    // Function for retrieving tableRows and getting them ready to be rendered to the page
+    // Function for retrieving tableRows and getting them ready to be rendered to the page if getting an array
+    // function getLastEntries() {
+    //     var rowsToAdd = [];
+    //     var route = ""
+
+    //     if (updating) {
+    //         var route = "/api/task/entries/" + entryId;
+    //     } else if (userName.trim()) {
+    //         var route = "/api/task/stu/" + userName;
+    //     } else if (proj.trim()) {
+    //         var route = "/api/task/prj/" + projURL;
+    //     } else {
+    //         var route = "/api/task";
+    //     };
+    //     console.log(route);
+    //     $.get(route, function (data) {
+    //         console.log(data);
+    //         console.log("Item at index", i, data[i]);
+    //         for (var i = 0; i < data.length; i++) {
+    //             var newEntry = {
+    //                 id: data[i].task_id,
+    //                 priority: data[i].priority,
+    //                 due: data[i].dueDate,
+    //                 project_id: data[i].Project.project_id,
+    //                 project: data[i].projectName,
+    //                 task: data[i].task,
+    //                 assigned: data[i].assignedTo,
+    //                 student_id: data[i].Student.student_id,
+    //                 requestor: data[i].requestor,
+    //                 status: data[i].status,
+    //                 notes: data[i].taskNotes,
+    //             }
+    //             // console.log(newEntry);
+    //             rowsToAdd.push(newEntry);
+    //             // console.log(rowsToAdd);
+    //         }
+    //         renderList(createRow(rowsToAdd));
+        
+    //     });
+    // }
+
+    // Function for retrieving tableRows and getting them ready to be rendered to the page for single object
     function getLastEntries() {
-        checkProj();
         var rowsToAdd = [];
-        if (userName.trim()) {
-            var route = "/api/task/stu/" + userName;
-        } else if (proj.trim()) {
-            var route = "/api/task/prj/" + projURL;
-        } else {
-            var route = "/api/task";
+        var route = ""
+
+        if (updating) {
+            var route = "/api/task/entries/" + entryId;
         };
         console.log(route);
         $.get(route, function (data) {
-            for (var i = 0; i < data.length; i++) {
                 var newEntry = {
-                    id: data[i].task_id,
-                    priority: data[i].priority,
-                    due: data[i].dueDate,
-                    project_id: data[i].Project.project_id,
-                    project: data[i].projectName,
-                    task: data[i].task,
-                    assigned: data[i].assignedTo,
-                    student_id: data[i].Student.student_id,
-                    requestor: data[i].requestor,
-                    status: data[i].status,
-                    notes: data[i].taskNotes,
-                }
+                    id: data.task_id,
+                    priority: data.priority,
+                    due: data.dueDate,
+                    project_id: data.Project.project_id,
+                    project: data.projectName,
+                    task: data.task,
+                    assigned: data.assignedTo,
+                    student_id: data.Student.student_id,
+                    requestor: data.requestor,
+                    status: data.status,
+                    notes: data.taskNotes,
+                };
                 // console.log(newEntry);
                 rowsToAdd.push(newEntry);
                 // console.log(rowsToAdd);
-            }
-            renderList(createRow(rowsToAdd));
+                renderList(createRow(rowsToAdd));
         });
     }
 
@@ -202,38 +250,30 @@ $(document).ready(function () {
         window.location.href = baseUrl
     }
 
-    $(document).on("click", ".duplicate-entry", duplicate);
+    function displayMessage(message) {
+        // Set the text content of the #message element
+        document.getElementById("message").innerText = message;
+        
+        // Remove the 'hidden' class from the parent div by using the ID 'hidden-message'
+        document.getElementById("hidden-message").classList.remove("hidden");
+    }
+    
+    // Update a given post, bring user to the blog page when done ***NEED TO IMPLEMENT SWITCH BETWEEN DEPARTMENTS***
+    function updateTableRow(entry) {
+        // entry.task_id = parseInt(entry.task_id, 10)
+        // console.log("attempting to update: " + entry.task_id);
+        // console.log(entry);
+        $.ajax({
+            method: "PUT",
+            url: "/api/task/entries/" + entryId,
+            data: entry
+        })
+            .then(function () {
+                var baseUrl = window.location.href;
+                console.log(baseUrl)
 
-    //Set default date of today
-    var today = new Date();
-    var dd = ("0" + (today.getDate())).slice(-2);
-    var mm = ("0" + (today.getMonth() + 1)).slice(-2);
-    var yyyy = today.getFullYear();
-    today = yyyy + '-' + mm + '-' + dd;
-
-    // This function figures out which post we want to edit and takes it to the appropriate url
-    function duplicate() {
-        // console.log($(this));
-        // console.log($(this).parent("td"));
-        // console.log($(this).parent("td").parent("tr"));
-        console.log($(this).parent("td").parent("tr").children("#tablePriority"));
-        console.log($(this).parent("td").parent("tr").children("#tablePriority").text());
-
-        duplicateEntry = {
-            priority: $(this).parent("td").parent("tr").children("#tablePriority").text(),
-            dueDate: today,
-            projectName: $(this).parent("td").parent("tr").children("#tableProject").text(),
-            task: $(this).parent("td").parent("tr").children("#tableTask").text(),
-            assignedTo: $(this).parent("td").parent("tr").children("#tableAssignment").text(),
-            requestor: $(this).parent("td").parent("tr").children("#tableRequestor").text(),
-            projectName: $(this).parent("td").parent("tr").children("#tableProject").text(),
-            status: $(this).parent("td").parent("tr").children("#tableStatus").text(),
-            logNotes: $(this).parent("td").parent("tr").children("#tableNotes").text(),
-        }
-        console.log("entry duplicated");
-        submitTableRow(duplicateEntry);
-
-        // window.location.href = "/update/" + currentEntry
+                // window.location.href = "/eng/" + userName;
+            });
     }
 
 });

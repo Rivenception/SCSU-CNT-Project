@@ -1,3 +1,4 @@
+{{#if this.studentName.length}}
 <tr id="form-row">
     <td colspan="12">
         <br>
@@ -30,10 +31,11 @@
         </div>
         <br>
         <div style="display: flex; justify-content: center; align-tiems: center;">
-            <button type="submit" class="btn btn-success" id="timeSubmit">Add Entry</button>
+            <button type="submit" class="btn btn-success" id="timeSubmit">Submit</button>
         </div>
     </td>
 </tr>
+{{/if}}
 <tr>
     <th>Record#</th>
     <th>Name</th>
@@ -41,7 +43,9 @@
     <th>Project</th>
     <th>Category</th>
     <th>Notes</th>
+    {{#if this.studentName.length}}
     <th>Duplicate</th>
     <th>Update</th>
     <th>Delete</th>
+    {{/if}}
 </tr>

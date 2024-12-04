@@ -3,18 +3,14 @@ $(document).ready(function () {
     var tableContainer = $(".table-container");
 
     var userName = $('#hidden-studentName').text();
-
-    $(document).on("click", "#timeSubmit", handleFormSubmit);
-    $(document).on("click", ".delete-entry", handleDeleteButtonPress);
+    var entryId = $('#hidden-logId').text();
+    var updating = true;
 
     // Getting the initial list of Time Entries
     getLastEntries();
 
     $(document).on("click", "#submit", handleFormSubmit);
     $(document).on("click", ".delete-entry", handleDeleteButtonPress);
-
-    // Getting the initial list of Time Entries
-    getLastEntries();
 
     // A function for handling what happens when the form to create a new post is submitted
     function handleFormSubmit() {
@@ -33,8 +29,16 @@ $(document).ready(function () {
             studentName: nameSelect.text().trim(),
             timeType: typeSelect.val().trim(),
         };
-        console.log(newEntry);
-        submitTableRow(newEntry);
+
+        if (updating) {
+            console.log("fetching updates");
+            newEntry.clock_id = entryId;
+            updateTableEntry(newEntry);
+            getLastEntries();
+            displayMessage("Punch Clock Record# " + entryId + " updated")
+        } else {
+            submitTableRow(newEntry);
+        }
     };
 
     // Submits a new tableRow entry
@@ -68,7 +72,7 @@ $(document).ready(function () {
     function getLastEntries() {
         console.log("Getting latest entries for " + userName);
         var rowsToAdd = [];
-        var route = "/api/clocking/stu/"  + userName;
+        var route = "/api/clocking/entries/"  + entryId;
         $.get(route, function (data) {
             for (var i = 0; i < data.length; i++) {
                 var newEntry = {
@@ -134,37 +138,27 @@ $(document).ready(function () {
         window.location.href = baseUrl
     }
 
-    $(document).on("click", ".duplicate-entry", duplicate);
-
-    //Set default date of today
-    var today = new Date();
-    var dd = ("0" + (today.getDate())).slice(-2);
-    var mm = ("0" + (today.getMonth() + 1)).slice(-2);
-    var yyyy = today.getFullYear();
-    today = yyyy + '-' + mm + '-' + dd;
-
-    // This function figures out which post we want to edit and takes it to the appropriate url
-    // This function figures out which post we want to edit and takes it to the appropriate url
-    function duplicate() {
-        // console.log($(this));
-        // console.log($(this).parent("td"));
-        // console.log($(this).parent("td").parent("tr"));
-        var id = $(this).parent("td").parent("tr").data("tableRow");
-        console.log(id);
-        var route = "/api/clocking/entries/" + id;
-        console.log(route);
-        $.get(route, function (data) {
-            for (var i = 0; i < data.length; i++) {
-                var duplicateEntry = {
-                    studentName: data[i].studentName,
-                    date: data[i].date,
-                    timeType: data[i].timeType,
-                    timeEntry: data[i].timeEntry,
-                }
-                console.log(duplicateEntry);
-                console.log("entry duplicated");
-                submitTableRow(duplicateEntry);
-            }
-        })
+    function displayMessage(message) {
+        // Set the text content of the #message element
+        document.getElementById("message").innerText = message;
+        
+        // Remove the 'hidden' class from the parent div by using the ID 'hidden-message'
+        document.getElementById("hidden-message").classList.remove("hidden");
     }
+
+    // Update a given post, bring user to the blog page when done ***NEED TO IMPLEMENT SWITCH BETWEEN DEPARTMENTS***
+    function updateTableEntry(entry) {
+        $.ajax({
+            method: "PUT",
+            url: "/api/clocking/entries/" + entryId,
+            data: entry
+        })
+            .then(function () {
+                var baseUrl = window.location.href;
+                console.log(baseUrl)
+
+                // window.location.href = "/eng/" + userName;
+            });
+    }
+
 });

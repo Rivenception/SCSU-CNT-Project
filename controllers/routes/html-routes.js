@@ -11,8 +11,8 @@ module.exports = function (app) {
     res.render("index");
   });
 
-  app.get("/admin", function (req, res) {
-    res.render("admin");
+  app.get("/api", function (req, res) {
+    res.render("api");
   });
 
   app.get("/stu_admin", function (req, res) {
@@ -21,14 +21,6 @@ module.exports = function (app) {
 
   app.get("/dept", function (req, res) {
     res.render("dept");
-  });
-
-  app.get("/analysis", function (req, res) {
-    res.render("analysis");
-  });
-
-  app.get("/dashboard", function (req, res) {
-    res.render("dashboard");
   });
 
   app.get("/category", function (req, res) {
@@ -156,13 +148,13 @@ module.exports = function (app) {
       });
     });
 
-    app.get("/task/prj/:id", function (req, res) {
+    app.get("/task/prj/:name", function (req, res) {
       db.Task.findOne({
         include: [
           {
           model: db.Project,
           where: {
-            project_id: req.params.id
+            projectName: req.params.name
         }}],
       }).then(function (dbTask) {
         res.render("task", {
@@ -236,7 +228,179 @@ module.exports = function (app) {
       res.render("clocking", {
         cntUser: dbClocking.Student.student_id,
         studentName: dbClocking.studentName,
+        logId: dbClocking.clock_id,
         // dept: dbStudent.dept,
+      });
+    });
+  });
+
+  // Update Routes
+  app.get("/stu/:user/update/:id", function (req, res) {
+    db.cntTimesheet.findOne({
+      where: {
+        id: req.params.id
+      },
+      include: [
+        {
+        model: db.Student,
+        where: {
+          student_id: req.params.user
+        }}],
+    }).then(function (dbcntTimesheet) {
+      console.log(dbcntTimesheet.studentName);
+      res.render("stu", {
+        cntUser: dbcntTimesheet.Student.student_id,
+        studentName: dbcntTimesheet.studentName,
+        logId: dbcntTimesheet.id,
+        update: "true",
+        // dept: dbStudent.dept,
+      });
+    });
+  });
+
+  // app.get("/stu/:user/update/:id", function (req, res) {
+  //   db.cntTimesheet.findOne({
+  //     where: {
+  //       id: req.params.id
+  //     },
+  //     include: [
+  //       {
+  //       model: db.Student,
+  //       where: {
+  //         student_id: req.params.user
+  //       }
+  //     }],
+  //   }).then(function (dbStudent) {
+  //     res.json(dbStudent);
+  //   });
+  // });
+
+  app.get("/clocking/stu/:user/update/:id", function (req, res) {
+    db.Clocking.findOne({
+      where: {
+        clock_id: req.params.id
+      },
+      include: [
+        {
+        model: db.Student,
+        where: {
+          student_id: req.params.user
+        }}],
+    }).then(function (dbClocking) {
+      console.log(dbClocking.student_id);
+      console.log(dbClocking.studentName);
+      res.render("clocking", {
+        cntUser: dbClocking.Student.student_id,
+        studentName: dbClocking.studentName,
+        logId: dbClocking.clock_id,
+        update: "true",
+        // dept: dbStudent.dept,
+      });
+    });
+  });
+
+  app.get("/stu/cat/:category/update/:id", function (req, res) {
+    console.log("This is executing");
+    const category = decodeURIComponent(req.params.category);
+    console.log("This is the category" + category);
+    db.cntTimesheet.findOne({
+      where: {
+        category: category,
+        id: req.params.id
+      }   
+    }).then(function (dbcntTimesheet) {
+      res.render("category", {
+        // cntUser: dbcntTimesheet.student_id,
+        // studentName: dbcntTimesheet.studentName,
+        category: dbcntTimesheet.category,
+        logId: dbcntTimesheet.id,
+        update: "true",
+      });
+    });
+  });
+
+  app.get("/task/status/:status/update/:id", function (req, res) {
+    const status = decodeURIComponent(req.params.status);
+    db.Task.findOne({
+      where: {
+        task_id: req.params.id
+      },
+      include: [db.Student],
+      include: [db.Project],
+      where: {
+        status: status
+      }   
+    }).then(function (dbTask) {
+      res.render("task", {
+        status: dbTask.status,
+        logId: dbTask.task_id,
+        update: "true",
+      });
+    });
+  });
+
+  app.get("/task/prj/:name/update/:id", function (req, res) {
+    const name = decodeURIComponent(req.params.name);
+    db.Task.findOne({
+      where: {
+        task_id: req.params.id
+      },
+      include: [
+        {
+        model: db.Project,
+        where: {
+          projectName: name
+      }}],
+    }).then(function (dbTask) {
+      res.render("task", {
+        projectName: dbTask.projectName,
+        project_id: dbTask.Project.project_id,
+        logId: dbTask.task_id,
+        update: "true",
+      });
+    });
+  });
+
+  app.get("/task/stu/:user/update/:id", function (req, res) {
+    db.Task.findOne({
+      where: {
+        task_id: req.params.id
+      },
+      include: [
+        {
+        model: db.Student,
+        where: {
+          student_id: req.params.user
+        },
+        required: true,
+      }],
+    }).then(function (dbTask) {
+      res.render("task", {
+        studentName: dbTask.assignedTo,
+        student_id: dbTask.Student.student_id,
+        logId: dbTask.task_id,
+        update: "true",
+      });
+    });
+  });
+
+  app.get("/prj/:name/update/:id", function (req, res) {
+    const name = decodeURIComponent(req.params.name);
+    db.cntTimesheet.findOne({
+      where: {
+        projectName: name,
+        id: req.params.id
+      },
+      include: [
+        {
+        model: db.Project,
+        }],
+    }).then(function (dbcntTimesheet) {
+      res.render("prj", {
+        projectName: dbcntTimesheet.projectName,
+        project_id: dbcntTimesheet.Project.project_id,
+        logId: dbcntTimesheet.id,
+        update: "true",
       });
     });
   });

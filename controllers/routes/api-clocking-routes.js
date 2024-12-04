@@ -4,9 +4,13 @@ module.exports = function (app) {
     app.get("/api/clocking/entries", function (req, res) {
         console.log('Received request for project Clockings');
         db.Clocking.findAll({
-            include: [db.Student],
+            include: [{
+                model: db.Student,
+                attributes: ['student_id']  // Only fetch the student_id attribute
+            }],
             order: [
-                ['date', 'ASC']
+                ['date', 'DESC'],
+                ['timeEntry', 'DESC']
             ],
         }).then(function (dbClocking) {
             res.json(dbClocking);
@@ -19,11 +23,14 @@ module.exports = function (app) {
             where: {
                 clock_id: req.params.id
             },
+            include: [{
+                model: db.Student,
+                attributes: ['student_id']  // Only fetch the student_id attribute
+            }],
         }).then(function (dbClocking) {
             res.json(dbClocking);
         });
     });
-
 
     app.get("/api/clocking/stu/:student", function (req, res) {
         console.log('Received request for student Clockings');
@@ -66,7 +73,7 @@ module.exports = function (app) {
         db.Clocking.update(req.body,
             {
                 where: {
-                    clock_id: req.body.id
+                    clock_id: req.params.id
                 }
             }).then(function (dbClocking) {
                 res.json(dbClocking);

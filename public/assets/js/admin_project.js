@@ -137,8 +137,11 @@ $(document).ready(function () {
     // This function figures out which post we want to edit and takes it to the appropriate url
     function handleEdit() {
         var currentEntry = $(this).parent("td").parent("tr").data("tableRow");
-        console.log(currentEntry);
-        window.location.href = "/admin/" + currentEntry
+        console.log("Currently Updating table record number:" + currentEntry);
+        var baseUrl = window.location.href + "/update/" + currentEntry;
+        console.log(baseUrl)
+
+        window.location.href = baseUrl
     }
 
     // Update a given post, bring user to the blog page when done
