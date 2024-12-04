@@ -153,18 +153,15 @@ $(document).ready(function () {
         // console.log($(this));
         // console.log($(this).parent("td"));
         // console.log($(this).parent("td").parent("tr"));
-        console.log($(this).parent("td").parent("tr").children("#tableECR"));
-        console.log($(this).parent("td").parent("tr").children("#tableECR").text());
-        console.log($(this).parent("td").parent("tr").children("#tableProgram"));
-        console.log($(this).parent("td").parent("tr").children("#tableProgram").text());
+        console.log($(this).parent("td").parent("tr").children("#tableNotes"));
+        console.log($(this).parent("td").parent("tr").children("#tableNotes").text());
         duplicateEntry = {
             student_id: userName,
-            name: $(this).parent("td").parent("tr").children("#tableName").text(),
+            studentName: $(this).parent("td").parent("tr").children("#tableName").text(),
             date: today,
+            projectName: $(this).parent("td").parent("tr").children("#tableProject").text(),
             category: $(this).parent("td").parent("tr").children("#tableCategory").text(),
-            task: $(this).parent("td").parent("tr").children("#tableTask").text(),
-            program: $(this).parent("td").parent("tr").children("#tableProgram").text(),
-            notes: $(this).parent("td").parent("tr").children("#tableNotes").text(),
+            logNotes: $(this).parent("td").parent("tr").children("#tableNotes").text(),
         }
         console.log("entry duplicated");
         submitTableRow(duplicateEntry);
