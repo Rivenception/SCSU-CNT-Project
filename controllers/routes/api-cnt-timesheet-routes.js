@@ -76,7 +76,7 @@ module.exports = function (app) {
     });
 
     // SELECT * FROM cntTimesheets... JOIN students JOIN project.... WHERE project_id = '1' ORDER BY date AND id;
-    app.get("/api/cntTimesheets/limit=50/:name", function (req, res) {
+    app.get("/api/cntTimesheets/limit=50/prj/:name", function (req, res) {
         const name = decodeURIComponent(req.params.name);
         db.cntTimesheet.findAll({
             include: [
@@ -84,10 +84,11 @@ module.exports = function (app) {
                     model: db.Student,
                 },
                 {
-                model: db.Project,
-                where: {
+                    model: db.Project,
+                }],
+            where: {
                     projectName: name
-                }}],
+            },
             order: [
                 ['date', 'DESC'],
                 ['id', 'DESC']
@@ -98,13 +99,18 @@ module.exports = function (app) {
         });
     });
 
-    app.get("/api/cntTimesheets/limit=50/:user?", function (req, res) {
+    app.get("/api/cntTimesheets/limit=50/stu/:user", function (req, res) {
+        const user = decodeURIComponent(req.params.user);
         db.cntTimesheet.findAll({
-            include: [{
+            include: {
                 model: db.Student,
                 where: {
-                    student_id: req.params.user
-                }}],
+                    student_id: user
+                },
+            },
+            // where: {
+            //     studentName: user
+            // },
             order: [
                 ['id', 'DESC']
             ],

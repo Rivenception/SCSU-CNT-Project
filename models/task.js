@@ -70,6 +70,7 @@ module.exports = function (sequelize, DataTypes) {
                 name: 'projectName',
                 allowNull: false,
             },
+            targetKey: 'projectName',
         });
 
         Task.belongsTo(models.Student, {
@@ -77,7 +78,7 @@ module.exports = function (sequelize, DataTypes) {
                 name: 'assignedTo',
                 allowNull: false,
             },
-            targetKey: 'studentName'
+            targetKey: 'studentName',
         });
     };
 

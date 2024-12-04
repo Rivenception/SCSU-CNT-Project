@@ -1,6 +1,6 @@
 <div class="jumbotron jumbotron-fluid">
   <class class="container">
-    <h1 class="header">API Routiing Page</h1>
+    <h1 class="header">API Selects Summary</h1>
 </div>
 <div class="table-container">
   <table class="table table-striped">
@@ -12,32 +12,183 @@
     </thead>
     <tbody>
       <tr id="TableRow">
-        <td id="Link" colspan="12"><a href="./api/students"> Student List </a></td>
-        <td id="MySQL-statement" colspan="12"></td>
+        <td id="Link"><a href="./api/students"> Student List </a></td>
+        <td id="MySQL-statement">
+          SELECT *
+          FROM Students
+          ORDER BY status ASC, studentName ASC;
+        </td>
       </tr>
       <tr id="TableRow">
-        <td id="Link" colspan="12"><a href="./api/prj"> Project List </a></td>
-        <td id="MySQL-statement" colspan="12"></td>
+        <td id="Link"><a href="./api/students/rmingione"> Student List: By Student </a></td>
+        <td id="MySQL-statement">
+          SELECT *
+          FROM Students
+          WHERE studentName = ????
+          ORDER BY status ASC, studentName ASC;
+        </td>
       </tr>
       <tr id="TableRow">
-        <td id="Link" colspan="12"><a href="./api/task"> Task List </a></td>
-        <td id="MySQL-statement" colspan="12"></td>
-      </tr>
-            <tr id="TableRow">
-        <td id="Link" colspan="12"><a href="./api/faculty"> Faculty List </a></td>
-        <td id="MySQL-statement" colspan="12"></td>
-      </tr>
-      <tr id="TableRow">
-        <td id="Link" colspan="12"><a href="./api/cntTimesheets/limit=50/"> Last 50 Timesheet Entries </a></td>
-        <td id="MySQL-statement" colspan="12"></td>
+        <td id="Link"><a href="./api/prj"> Project List </a></td>
+        <td id="MySQL-statement">
+          SELECT *
+          FROM Projects
+          ORDER BY projectName ASC;
+        </td>
       </tr>
       <tr id="TableRow">
-        <td id="Link" colspan="12"><a href="./api/cntTimesheets/limit=50/Batteries & Chips"> Batteries Projecct Log</a></td>
-        <td id="MySQL-statement" colspan="12"></td>
+        <td id="Link"><a href="./api/projects/entries/3"> Project List: By Project </a></td>
+        <td id="MySQL-statement">
+          SELECT *
+          FROM Projects
+          WHERE project_id = ????
+          ORDER BY projectName ASC;
+        </td>
       </tr>
       <tr id="TableRow">
-        <td id="Link" colspan="12"><a href="./api/clocking/entries"> Punch Clock </a></td>
-        <td id="MySQL-statement" colspan="12"></td>
+        <td id="Link"><a href="./api/task"> Task List </a></td>
+        <td id="MySQL-statement">
+          SELECT *
+          FROM Tasks
+          ORDER BY task_id ASC;
+        </td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/task/stu/rmingione"> Task List: By Student </a></td>
+        <td id="MySQL-statement">
+          SELECT Tasks.*, Projects.*, Students.*
+          FROM Tasks
+          JOIN Projects ON Tasks.projectName = Projects.projectName
+          JOIN Students ON Tasks.assignedTo = Students.studentName
+          WHERE Students.studentName = ???? 
+          ORDER BY Tasks.task_id ASC;
+        </td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/task/prj/1"> Task List: By Project </a></td>
+        <td id="MySQL-statement">
+          SELECT Tasks.*, Students.*, Projects.*
+          FROM Tasks
+          JOIN Students ON Tasks.assignedTo = Students.studentName
+          JOIN Projects ON Tasks.projectName = Projects.ProjectName
+          WHERE Projects.projectName = ????
+          ORDER BY Tasks.task_id ASC;
+        </td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/task/status/Active"> Task List: By Status </a></td>
+        <td id="MySQL-statement">
+          SELECT Tasks.*, Students.*, Projects.*
+          FROM Tasks
+          JOIN Students ON Tasks.assignedTo = Students.studentName
+          JOIN Projects ON Tasks.projectName = Projects.ProjectName
+          WHERE status = ????
+          ORDER BY Tasks.task_id ASC;
+        </td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/task/entries/1"> Task List: By Record </a></td>
+        <td id="MySQL-statement">
+          SELECT Tasks.*, Students.*, Projects.*
+          FROM Tasks
+          JOIN Students ON Tasks.assignedTo = Students.studentName
+          JOIN Projects ON Tasks.projectName = Projects.ProjectName
+          WHERE task_id = ????
+          ORDER BY Tasks.task_id ASC;
+        </td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/faculty"> Faculty List </a></td>
+        <td id="MySQL-statement"></td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/faculty/cbroadbridge"> Faculty List: By Faculty </a></td>
+        <td id="MySQL-statement"></td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/contacts"> Affiliate Contacts </a></td>
+        <td id="MySQL-statement"></td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/cntTimesheets"> Timesheet Entries </a></td>
+        <td id="MySQL-statement">
+          SELECT *
+          FROM cntTimesheets
+          ORDER BY cntTimesheets.id DESC;
+        </td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/cntTimesheets/users/sswirsky"> Timesheet Entries: By Student </a></td>
+        <td id="MySQL-statement">
+          SELECT Students.*, cntTimesheets.*
+          FROM Students
+          LEFT JOIN cntTimesheets ON Students.studentName = cntTimesheets.studentName
+          WHERE Students.studentName = ????;
+        </td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/cntTimesheets/category/Daily Log"> Timesheet Entries: By Category </a></td>
+        <td id="MySQL-statement">
+          SELECT cntTimesheets.*, Students.*
+          FROM cntTimesheets
+          JOIN Students ON cntTimesheets.studentName = Students.studentName
+          WHERE Category = ????
+          ORDER BY cntTimesheets.id DESC
+          LIMIT 50;
+        </td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/cntTimesheets/entries/22"> Timesheet Entries: By Record </a></td>
+        <td id="MySQL-statement">
+          FROM cntTimesheets AS t
+          JOIN Students AS s ON t.studentName = s.studentName
+          WHERE t.id = ????
+        </td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/cntTimesheets/limit=50/"> Timesheet Entries: Last 50 </a></td>
+        <td id="MySQL-statement">
+          SELECT cntTimesheets.*, Students.*
+          FROM cntTimesheets
+          JOIN Students ON cntTimesheets.studentName = Students.studentName
+          ORDER BY cntTimesheets.id DESC
+          LIMIT 50;
+        </td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/cntTimesheets/limit=50/Rick Mingione"> Timesheet Entries: Last 50 By Student</a></td>
+        <td id="MySQL-statement">
+          SELECT cntTimesheets.*, Students.*
+          FROM cntTimesheets
+          JOIN Students ON cntTimesheets.studentName = Students.studentName
+          WHERE Students.StudentName = ????
+          ORDER BY cntTimesheets.id DESC
+          LIMIT 50;
+        </td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/cntTimesheets/limit=50/Batteries & Chips"> Timesheet Entries: Last 50 By Project</a></td>
+        <td id="MySQL-statement">
+          SELECT cntTimesheet.*, Student.*, Project.*
+          FROM cntTimesheet
+          JOIN Student ON cntTimesheet.student_id = Student.id
+          JOIN Project ON cntTimesheet.project_id = Project.id
+          WHERE Project.project_id = ????
+          ORDER BY cntTimesheet.date DESC, cntTimesheet.id DESC
+          LIMIT 50;
+        </td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/clocking/entries"> Punch Clock </a></td>
+        <td id="MySQL-statement"></td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/clocking/stu/tmasi"> Punch Clock: By Student </a></td>
+        <td id="MySQL-statement"></td>
+      </tr>
+      <tr id="TableRow">
+        <td id="Link"><a href="./api/clocking/entries/14"> Punch Clock: By Record </a></td>
+        <td id="MySQL-statement"></td>
       </tr>
 
     </tbody>
@@ -45,4 +196,4 @@
 </div>
 
 <!-- Custom Script -->
-<script src="assets/js/update.js" type="text/javascript"></script>
+<script src="" type="text/javascript"></script>
