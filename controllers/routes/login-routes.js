@@ -5,9 +5,9 @@ const mysql = require('mysql2');
 // MySQL connection configuration
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',       // replace with your MySQL username
-    password: 'password',  // replace with your MySQL password
-    database: 'loginApp'
+    user: 'testuser',       // replace with your MySQL username
+    password: 'testuser!',  // replace with your MySQL password
+    database: 'time_monitorDB'
 });
 
 // Connect to the database
@@ -35,7 +35,7 @@ module.exports = function (app) {
         const { username, password } = req.body;
         console.log('Form submitted with:', { username, password });
 
-        db.query('SELECT * FROM users WHERE username = ?', [username], async (err, results) => {
+        db.query('SELECT * FROM logins WHERE username = ?', [username], async (err, results) => {
             if (err) {
                 console.error('Database error:', err);
                 res.render('login', { error: 'An error occurred. Please try again later.' });
@@ -73,7 +73,7 @@ module.exports = function (app) {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Insert user into the database
-        db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], (err, results) => {
+        db.query('INSERT INTO logins (username, password) VALUES (?, ?)', [username, hashedPassword], (err, results) => {
             if (err) {
                 if (err.code === 'ER_DUP_ENTRY') {
                     console.error('Error: Duplicate entry for username.');
