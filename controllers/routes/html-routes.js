@@ -11,8 +11,8 @@ module.exports = function (app) {
     res.render("index");
   });
 
-  app.get("/admin", function (req, res) {
-    res.render("admin");
+  app.get("/api", function (req, res) {
+    res.render("api");
   });
 
   app.get("/stu_admin", function (req, res) {
@@ -21,14 +21,6 @@ module.exports = function (app) {
 
   app.get("/dept", function (req, res) {
     res.render("dept");
-  });
-
-  app.get("/analysis", function (req, res) {
-    res.render("analysis");
-  });
-
-  app.get("/dashboard", function (req, res) {
-    res.render("dashboard");
   });
 
   app.get("/category", function (req, res) {
