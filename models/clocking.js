@@ -55,6 +55,7 @@ module.exports = function (sequelize, DataTypes) {
                 name: 'studentName',
                 allowNull: false,
             },
+            targetKey: 'studentName',
         });
     };
 

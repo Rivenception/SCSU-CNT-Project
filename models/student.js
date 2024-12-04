@@ -10,12 +10,14 @@ module.exports = function (sequelize, DataTypes) {
         student_id: {
             type: DataTypes.STRING,
             allowNull: false,
+            // primaryKey: true,
             unique: true, // This makes student_id unique
             len: [1]
         },
         studentName: {
             type: DataTypes.STRING,
-            primaryKey: true,
+            unique: true, // This makes student_id unique
+            // primaryKey: true,
             validate: {
                 len: [1, 255]}
         },
@@ -60,27 +62,30 @@ module.exports = function (sequelize, DataTypes) {
                 name: 'studentName',
                 allowNull: false,
             },
+            sourceKey: 'studentName',
         });
 
-        Student.hasOne(models.Faculty, {
+        Student.belongsTo(models.Faculty, {
             foreignKey: {
-                name: 'facultyName',
+                name: 'supervisor',
                 allowNull: false,
             },
+            targetKey: 'facultyName',
         });
 
-        Student.hasOne(models.Faculty, {
-            foreignKey: {
-                name: 'facultyName',
-                allowNull: false,
-            },
-        });
+        // Student.hasOne(models.Faculty, {
+        //     foreignKey: {
+        //         name: 'facultyName',
+        //         allowNull: false,
+        //     },
+        // });
 
         Student.hasMany(models.Clocking, {
             foreignKey: {
                 name: 'studentName',
                 allowNull: false,
             },
+            sourceKey: 'studentName',
         });
 
         Student.hasMany(models.Task, {

@@ -5,6 +5,7 @@ CREATE DATABASE time_monitorDB_test;
 USE time_monitorDB_test;
 
 CREATE TABLE affiliate (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     affiliateName VARCHAR(255) NOT NULL PRIMARY KEY,
     projectAffiliation VARCHAR(255) NOT NULL,
     createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -38,12 +39,12 @@ CREATE TABLE affiliateContact (
 
 CREATE TABLE project (
   project_id INT AUTO_INCREMENT UNIQUE,
-  projectName varchar(255) NOT NULL,
+  projectName varchar(255) NOT NULL UNIQUE,
   projectSponsor varchar(255), -- can be NULL. not all projects have sponsors
   status ENUM('Active', 'Inactive') NOT NULL DEFAULT 'Active',
   createdAt datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updatedAt datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (projectName),
+  PRIMARY KEY (project_id),
   FOREIGN KEY (projectSponsor) REFERENCES affiliate(affiliateName) ON DELETE SET NULL -- on delete remove the sponsor and set to NULL
 );
 
@@ -56,8 +57,9 @@ CREATE TABLE projectAffiliate (
 );
 
 CREATE TABLE student (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     student_id VARCHAR(255) NOT NULL UNIQUE,
-    studentName VARCHAR(255) NOT NULL PRIMARY KEY,
+    studentName VARCHAR(255) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL,
     position VARCHAR(255) NOT NULL,
     supervisor VARCHAR(255),
@@ -67,7 +69,8 @@ CREATE TABLE student (
 );
 
 CREATE TABLE faculty (
-    facultyName VARCHAR(255) NOT NULL PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    facultyName VARCHAR(255) NOT NULL UNIQUE,
     faculty_id VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     dept VARCHAR(255) NOT NULL,

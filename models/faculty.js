@@ -9,7 +9,8 @@ module.exports = function (sequelize, DataTypes) {
     var Faculty = sequelize.define("Faculty", {
         facultyName: {
             type: DataTypes.STRING,
-            primaryKey: true,
+            unique: true,
+            // primaryKey: true,
             allowNull: false
         },
         faculty_id: {
@@ -52,11 +53,19 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Faculty.associate = function (models) {
+        // Faculty.hasMany(models.Student, {
+        //     foreignKey: {
+        //         name: 'supervisor',
+        //         allowNull: false,
+        //     },
+        // });
+
         Faculty.hasMany(models.Student, {
             foreignKey: {
                 name: 'supervisor',
                 allowNull: false,
             },
+            sourceKey: 'facultyName',
         });
     };
 

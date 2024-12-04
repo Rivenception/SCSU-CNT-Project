@@ -9,12 +9,14 @@ module.exports = function (sequelize, DataTypes) {
     var Project = sequelize.define("Project", {
         project_id: {
             type: DataTypes.INTEGER,
-            unique: true,
+            // unique: true,
             autoIncrement: true,
+            primaryKey: true,
         },
         projectName: {
             type: DataTypes.STRING,
-            primaryKey: true,
+            // primaryKey: true,
+            unique: true,
         },
         projectSponsor: {
             type: DataTypes.STRING,
@@ -63,6 +65,7 @@ module.exports = function (sequelize, DataTypes) {
                 name: 'projectName',
                 allowNull: false,
             },
+            sourceKey: 'projectName',
         });
     };
 
