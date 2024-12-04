@@ -60,16 +60,16 @@ module.exports = function (app) {
         });
     });
 
-    app.get("/api/students/:user", function (req, res) {
-        db.Student.findOne({
-            where: {
-                student_id: req.params.user
-            },
-            include: [db.cntTimesheet]
-        }).then(function (dbStudent) {
-            res.json(dbStudent);
-        });
-    });
+    // app.get("/api/students/:user", function (req, res) {
+    //     db.Student.findOne({
+    //         where: {
+    //             student_id: req.params.user
+    //         },
+    //         include: [db.cntTimesheet]
+    //     }).then(function (dbStudent) {
+    //         res.json(dbStudent);
+    //     });
+    // });
 
     app.get("/api/students/entries/:user", function (req, res) {
         db.Student.findOne({

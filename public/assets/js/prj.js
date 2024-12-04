@@ -122,7 +122,7 @@ $(document).ready(function () {
     function getLastEntries() {
         checkProj();
         var rowsToAdd = [];
-        var route = "/api/cntTimesheets/limit=50/" + proj;
+        var route = "/api/cntTimesheets/limit=50/prj/" + proj;
         console.log(route);
         $.get(route, function (data) {
             for (var i = 0; i < data.length; i++) {
@@ -183,7 +183,7 @@ $(document).ready(function () {
     // This function figures out which post we want to edit and takes it to the appropriate url
     function handleEdit() {
         var currentEntry = $(this).parent("td").parent("tr").data("tableRow");
-        console.log("Currently Updating table record number:" + currentEntry);
+        console.log("Currently Updating table record number:" + currentEntry);s
         var baseUrl = window.location.href + "/update/" + currentEntry;
         console.log(baseUrl)
 

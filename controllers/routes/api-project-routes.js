@@ -15,7 +15,7 @@ module.exports = function (app) {
     app.get("/api/projects/entries/:id", function (req, res) {
         db.Project.findOne({
                 where: {
-                    project_id: req.body.id
+                    project_id: req.params.id
                 }
             }).then(function (dbProject) {
                 res.json(dbProject);

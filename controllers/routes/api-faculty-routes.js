@@ -40,7 +40,7 @@ module.exports = function (app) {
         console.log('Received request for faculty'); //Check api being called
         db.Faculty.findAll({
             where: {
-                Faculty_id: req.params.user
+                faculty_id: req.params.user
             },
             order: [
                 ['facultyName', 'ASC']
@@ -55,17 +55,6 @@ module.exports = function (app) {
         })
         .catch(function (error) {
             handleError(res, error); // Call the error handling function
-        });
-    });
-
-    app.get("/api/faculty/:user", function (req, res) {
-        db.Faculty.findOne({
-            where: {
-                faculty_id: req.params.user
-            },
-            include: [db.cntTimesheet]
-        }).then(function (dbFaculty) {
-            res.json(dbFaculty);
         });
     });
 
