@@ -1,16 +1,10 @@
 [
     {
-        "name": "Andrew Groover",
-        "student_id": "agroover",
-        "project": "Engineering",
-        "degree": "Engineer",
-        "status": "Active"
-    },
-    {
-        "name": "Andrew Groover",
-        "student_id": "agroover",
-        "project": "Engineering",
-        "degree": "Engineer",
-        "status": "Active"
+        "student_id": "ntest",
+        "studentName": "New Test",
+        "email": "email@email.com",
+        "position": "Graduate Student",
+        "supervisor": "Christine Broadbridge",
+        "status": "Inactive"
     }
 ]
