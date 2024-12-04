@@ -19,9 +19,7 @@
 <div class="table-container">
   <table class="table table-striped">
     <thead>
-      {{#if this.studentName.length}}
-      {{> cntUser}}
-      {{else}}
+      {{#unless this.studentName.length}}
         <tr id="form-row">
           <td colspan="12">
           <br>
@@ -35,7 +33,8 @@
             </div>
           </td>
         </tr>
-      {{/if}}
+      {{/unless}}
+      {{> cntUser}}
     </thead>
     <tbody>
     </tbody>
