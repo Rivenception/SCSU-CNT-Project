@@ -12,6 +12,7 @@ $(document).ready(function () {
     $(document).on("click", ".delete-entry", handleDeleteButtonPress);
 
     // Getting the initial list of Time Entries
+
     getLastEntries();
 
     // A function for handling what happens when the form to create a new post is submitted
@@ -36,7 +37,7 @@ $(document).ready(function () {
             category: categorySelect.val(),
             logNotes: inputNotes.val(),
         };
-
+        console.log(newEntry);
         submitTableRow(newEntry);
     };
 
@@ -166,4 +167,37 @@ $(document).ready(function () {
         console.log("entry duplicated");
         submitTableRow(duplicateEntry);
     }
+
+    // This function gets daily time and displays for user
+    function time_convert(num) {
+        const hours = Math.floor(num / 60);  
+        const minutes = num % 60;
+        return `${hours} hrs : ${minutes} mins`;         
+    }
+
+    function getLoggedTime() {
+        var route = "/api/timesheets/tasks/"  + userName;
+        $.get(route, function (data) {
+            time = 0
+            for (var i = 0; i < data.length; i++) {
+                var time = time + data[i].timespent
+            }
+            console.log(time_convert(time) + " logged today");
+            $('#time-log').text("Today " + time_convert(time) + " Logged");
+        });
+    }
+
+    function addToDropDown() {
+        const values = ["Daily Log", "Weekly Goal", "Meeting Minutes"]
+
+        for (const value of values) {
+            const option = document.createElement("option")
+            option.text = value
+            option.value = value
+            categorySelect.append(option)
+        }
+    }
+    getLoggedTime();
+    addToDropDown();
+
 });

@@ -6,7 +6,7 @@ const mysql = require('mysql2');
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'testuser',       // replace with your MySQL username
-    password: 'testuser!',  // replace with your MySQL password
+    password: 'testuser',  // replace with your MySQL password
     database: 'time_monitorDB'
 });
 
