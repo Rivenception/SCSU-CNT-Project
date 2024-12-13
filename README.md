@@ -46,7 +46,8 @@ Not currently open source, but visit the contact section to get a hold of the de
 
 ## Set Up Cloned Repo for testing
  * Revise the config.json file development "password" for your local machine.
- * Run node server.js on cloned repository
+ * Run "CREATE DATABASE time_monitorDB_test;" and "USE time_monitorDB_test;"
+ * Run npm start on cloned repository to create tables
  * Use the seeds.sql file to upload some initial data using MySql Workbench (Note that this is necessary for certain routes to function properly)
  * Use npm start in terminal to launch the application
  * Navigate to https:/localhost:8080 in browser
