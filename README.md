@@ -33,11 +33,12 @@
 Not currently open source, but visit the contact section to get a hold of the developers for suggestions and editing. 
 
 ## Set Up Cloned Repo for testing
+ * Open the cloned repo in desired editting software (i.e. VScode)
  * Revise the config.json file development "password" for your local machine.
- * Run node server.js on cloned repository
- * Use the seeds.sql file to upload some initial data using MySql Workbench (Note that this is necessary for certain routes to function properly)
- * Use npm start in terminal to launch the application
- * Navigate to https:/localhost:8080 in browser
+ * Open a new Terminal window and run "node server.js" or "npm start" on cloned repository to launch the application.
+ * Open MySql and refresh schemas.
+ * Use the seeds.sql file to upload some initial data using MySql Workbench (Note that this is necessary for routing to function properly).
+ * Navigate to https:/localhost:8080 in browser.
  
 ## Dependencies
  * chai@5.1.1
