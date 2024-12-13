@@ -18,17 +18,13 @@
 ​
   * uses GET, POST, and PUT routes for retrieving and adding new data to database
 ​
-  * deployment to Heroku
-​
-  * uses Mocha & Chai for testing
-​
   * MVC standard file structure
 
 
 
 ## Installation:
-  You can 'git clone' this application onto your local machine, be sure to change the database password to your own in the config.json file. Otherwise, the deployed app can be accessed on heroku through this link:
-
+  You can 'git clone' this application onto your local machine, be sure to change the database password to your own in the config.json file. 
+  
 ## License:
   ISC
   
@@ -36,21 +32,13 @@
 ## Contributing:
 Not currently open source, but visit the contact section to get a hold of the developers for suggestions and editing. 
 
- ## Tests:
-  Mocha - Javascript testing framework
-  Chai - BDD / TDD assertion library for NodeJS
-  'npm run test'
-
-## How To Use
- Run as a user on the deployed app
-
 ## Set Up Cloned Repo for testing
+ * Open the cloned repo in desired editting software (i.e. VScode)
  * Revise the config.json file development "password" for your local machine.
- * Run "CREATE DATABASE time_monitorDB_test;" and "USE time_monitorDB_test;"
- * Run npm start on cloned repository to create tables
- * Use the seeds.sql file to upload some initial data using MySql Workbench (Note that this is necessary for certain routes to function properly)
- * Use npm start in terminal to launch the application
- * Navigate to https:/localhost:8080 in browser
+ * Open a new Terminal window and run "node server.js" or "npm start" on cloned repository to launch the application.
+ * Open MySql and refresh schemas.
+ * Use the seeds.sql file to upload some initial data using MySql Workbench (Note that this is necessary for routing to function properly).
+ * Navigate to https:/localhost:8080 in browser.
  
 ## Dependencies
  * chai@5.1.1
