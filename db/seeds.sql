@@ -1,3 +1,5 @@
+USE time_monitorDB;
+
 -- Insert in order top to bottom. If you try to insert anything out of order the DB will have referential issues.
 
 -- Insert into faculty table
