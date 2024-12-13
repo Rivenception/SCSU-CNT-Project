@@ -18,31 +18,19 @@
 ​
   * uses GET, POST, and PUT routes for retrieving and adding new data to database
 ​
-  * deployment to Heroku
-​
-  * uses Mocha & Chai for testing
-​
   * MVC standard file structure
 
 
 
 ## Installation:
-  You can 'git clone' this application onto your local machine, be sure to change the database password to your own in the config.json file. Otherwise, the deployed app can be accessed on heroku through this link:
-
+  You can 'git clone' this application onto your local machine, be sure to change the database password to your own in the config.json file. 
+  
 ## License:
   ISC
   
 
 ## Contributing:
 Not currently open source, but visit the contact section to get a hold of the developers for suggestions and editing. 
-
- ## Tests:
-  Mocha - Javascript testing framework
-  Chai - BDD / TDD assertion library for NodeJS
-  'npm run test'
-
-## How To Use
- Run as a user on the deployed app
 
 ## Set Up Cloned Repo for testing
  * Revise the config.json file development "password" for your local machine.
