@@ -1,23 +1,23 @@
 {
   "development": {
     "username": "testuser",
-    "password": "testuser!",
-    "database": "time_monitorDB",
+    "password": "testuser",
+    "database": "time_monitorDB_test",
     "host": "localhost",
     "port": 3306,
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": "password",
-    "database": "time_monitorDB",
+    "username": "testuser",
+    "password": "testuser",
+    "database": "time_monitorDB_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": "password",
-    "database": "time_monitorDB",
+    "username": "testuser",
+    "password": "testuser",
+    "database": "time_monitorDB_test",
     "use_env_variable":"JAWSDB_URL",
     "dialect": "mysql"
   }
