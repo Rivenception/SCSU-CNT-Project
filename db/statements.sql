@@ -406,7 +406,7 @@ ORDER BY c.date ASC;
 SELECT Clockings.*, Students.*
 FROM Clockings
 LEFT JOIN Students ON Clockings.studentName = Students.studentName
-WHERE Students.studentName = :studentName;
+WHERE Clockings.studentName = :studentName;
 ORDER BY Clockings.date DESC;
 
 -- Example: -- 
