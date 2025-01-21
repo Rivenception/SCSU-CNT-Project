@@ -67,6 +67,9 @@ module.exports = function (app) {
     app.get("/api/drop/requestors1", function (req, res) {
         console.log('Received request for all requestors');
         db.Faculty.findAll({
+            order: [
+                ['facultyName', 'ASC']
+            ],
             attributes: ['faculty_id', 'facultyName'],
         }).then(function (dbFaculty) {
             res.json(dbFaculty);
@@ -76,6 +79,9 @@ module.exports = function (app) {
     app.get("/api/drop/requestors2", function (req, res) {
         console.log('Received request for all requestors');
         db.Student.findAll({
+            order: [
+                ['studentName', 'ASC']
+            ],
             attributes: ['student_id', 'studentName'],
         }).then(function (dbStudent) {
             res.json(dbStudent);

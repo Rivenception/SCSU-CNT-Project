@@ -392,10 +392,15 @@ $(document).ready(function () {
         var studentSelect = $("#inputGroupStudent").val();
         var projectSelect = $("#inputGroupProject option:selected").text();
         var categorySelect = $("#inputGroupCategory option:selected").text();
+        var pageType = $("#pageType").text();
+        var currentPath = window.location.pathname;
         if (categorySelect) {
             window.location.href = "/stu/cat/" + categorySelect;
         } else if (studentSelect) {
-            window.location.href = "/stu/" + studentSelect;
+            if (pageType === "Time In/Out Summary")
+                window.location.href = currentPath + "/stu/" + studentSelect;
+            else
+                window.location.href = "/stu/" + studentSelect;
         } else if (projectSelect) {
             window.location.href = "/prj/" + projectSelect;
         }

@@ -1,6 +1,6 @@
 <div class="jumbotron jumbotron-fluid">
   <class class="container">
-    <h1 class="header">Time In/Out Summary</h1>
+    <h1 class="header" id="pageType">Time In/Out Summary</h1>
     <h2 class="subheader" id="studentName">{{this.studentName}}</h2>
     <h2 class="subheader" id="time-log" style="font-size: large;"></h2>
     <h2 class="hidden" id="hidden-studentName">{{this.cntUser}}</h2>
@@ -18,6 +18,21 @@
 <div class="table-container">
   <table class="table table-striped">
     <thead>
+        {{#unless this.studentName.length}}
+        <tr id="form-row">
+          <td colspan="12">
+          <br>
+            <div class="form-group">
+              <label for="name">Name:</label>
+                <select placeholder="Select Student" class="custom-select" id="inputGroupStudent">
+                </select>
+            </div>
+            <div style="display: flex; justify-content: center; align-tiems: center;">
+              <button type="submit" class="btn btn-success" id="Search">Search</button>
+            </div>
+          </td>
+        </tr>
+      {{/unless}}
       {{> clocking}}
     </thead>
     <tbody>

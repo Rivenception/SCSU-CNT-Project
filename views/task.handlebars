@@ -1,6 +1,6 @@
 <div class="jumbotron jumbotron-fluid">
   <class class="container">
-    <h1 class="header">Project Task Summary</h1>
+    <h1 class="header" id="pageType">Project Task Summary</h1>
     <h2 class="subheader" id="project">{{this.projectName}}</h2>
     <h2 class="subheader" id="student">{{this.studentName}}</h2>
     <h2 class="subheader" id="status">{{this.status}}</h2>
@@ -50,23 +50,6 @@
 {{/if}}
 
 <script type="text/javascript">
-  // works but I should ask whether this should be pulled from a table or just a manual entry. Are GS in charge of entering tasks? Are staff? Can anyone?
-  // for now the faculty section is commented out. This may only be functional for certain people and hardcoded?
-
-  {{!-- function requestorFacultyDropdown() {
-    console.log("Requesting Faculty Requestors Dropdown");
-    var facultyInput = $("#inputGroupRequestor");
-    // For loop that gets all students and dynamically creates list in the html for the respective projects.
-      $.get("/api/drop/requestors1", function (data) {
-          for (var i = 0; i < data.length; i++) {
-                  let dropdown = $("<option>").attr("value", data[i].faculty_id).text(data[i].facultyName);
-                  facultyInput.append(dropdown);
-          }
-      })
-  };
-
-  requestorFacultyDropdown() --}}
-
     function requestorStudentDropdown() {
     console.log("Requesting Student Requestors Dropdown");
     var studentInput = $("#inputGroupRequestor");
@@ -81,4 +64,21 @@
 
   requestorStudentDropdown()
 
+    // works but I should ask whether this should be pulled from a table or just a manual entry. Are GS in charge of entering tasks? Are staff? Can anyone?
+  // for now the faculty section is commented out. This may only be functional for certain people and hardcoded?
+
+  function requestorFacultyDropdown() {
+    console.log("Requesting Faculty Requestors Dropdown");
+    var facultyInput = $("#inputGroupRequestor");
+    // For loop that gets all students and dynamically creates list in the html for the respective projects.
+      $.get("/api/drop/requestors1", function (data) {
+          for (var i = 0; i < data.length; i++) {
+                  let dropdown = $("<option>").attr("value", data[i].faculty_id).text(data[i].facultyName);
+                  facultyInput.append(dropdown);
+          }
+      })
+  };
+
+  requestorFacultyDropdown()
+  
 </script>

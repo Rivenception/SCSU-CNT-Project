@@ -2,6 +2,46 @@ $(document).ready(function () {
     var tableBody = $("tbody");
     var tableContainer = $(".table-container");
 
+    $(document).on("click", "#timeSubmit", handleFormSubmit);
+
+    // A function for handling what happens when the form to create a new post is submitted
+    function handleFormSubmit() {
+        // Want to build in a error modal if form values are not entered
+        // if (!nameSelect.val() || !dateSelect.val().trim() || !categorySelect.val() || !taskSelect.val() || !timeSelect.val() || !programId.val().trim()) {
+        //     return;
+        // }
+
+        var prioritySelect = $("#inputGroupPriority");
+        var dateSelect = $('#date');
+        var task = $('#inputGroupTask');
+        var inputNotes = $('#inputGroupNotes');
+        var statusSelect = $('#statusSelect');
+
+        // Constructing a newPost object to hand to the database
+        var newEntry = {
+            priority: prioritySelect.val(),
+
+            // $('#inputGroupSupervisor option:selected').text(),
+
+            // may need to reformat date information for mySQL?
+            dueDate: dateSelect.val(),
+            projectName: $("#inputGroupProject option:selected").text(),
+            task: task.val(),
+            assignedTo: $("#inputGroupStudent option:selected").text(),
+            requestor: $("#inputGroupRequestor option:selected").text(),
+            status: statusSelect.val(),
+            taskNotes: inputNotes.val(),
+        };
+        console.log(newEntry)
+        submitTableRow(newEntry);
+    };
+
+    // Submits a new tableRow entry
+    function submitTableRow(data) {
+        $.post("/api/tasks", data)
+            .then(getLastEntries);
+    }
+
     // Getting the initial list of Time Entries
     getLastEntries();
 

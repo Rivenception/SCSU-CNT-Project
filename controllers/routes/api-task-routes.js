@@ -47,7 +47,7 @@ module.exports = function (app) {
                     }
                 }],
                 order: [
-                    ['dueDate', 'ASC']
+                    ['dueDate', 'DESC']
                 ],
         }).then(function (dbTask) {
             res.json(dbTask);
@@ -65,8 +65,8 @@ module.exports = function (app) {
                 model: db.Project,
                 }],
             order: [
-                ['priority', 'ASC'],
-                ['dueDate', 'ASC']
+                ['dueDate', 'DESC'],
+                ['priority', 'ASC']
             ],
         }).then(function (dbTask) {
             res.json(dbTask);
