@@ -143,12 +143,13 @@ $(document).ready(function () {
     function handleEdit() {
         var currentEntry = $(this).parent("td").parent("tr").data("tableRow");
         console.log("Currently Updating table record number:" + currentEntry);
-        var testURL = $(this).closest("tr").find("#tableAssignment a").attr("href");
-        console.log(testURL);
+        var hrefRoute = $(this).closest("tr").find("#tableAssignment a").attr("href");
+        console.log(hrefRoute);
         // var baseUrl = window.location.href + "/update/" + currentEntry;
-        // console.log(baseUrl)
+        var baseUrl = hrefRoute + "/update/" + currentEntry;
+        console.log(baseUrl)
 
-        window.location.href = testURL
+        window.location.href = baseUrl
     }
 
     $(document).on("click", ".duplicate-entry", duplicate);
