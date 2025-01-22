@@ -223,7 +223,7 @@ module.exports = function (app) {
           student_id: req.params.user
       }}],
     }).then(function (dbClocking) {
-      console.log(dbClocking.student_id);
+      console.log(dbClocking.Student.student_id);
       console.log(dbClocking.studentName);
       res.render("clocking", {
         cntUser: dbClocking.Student.student_id,
