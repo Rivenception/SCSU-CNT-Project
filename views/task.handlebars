@@ -73,12 +73,12 @@
     // For loop that gets all students and dynamically creates list in the html for the respective projects.
       $.get("/api/drop/requestors1", function (data) {
           for (var i = 0; i < data.length; i++) {
-                  let dropdown = $("<option>").attr("value", data[i].faculty_id).text(data[i].facultyName);
+                  let dropdown = $("<option>").attr("value", data[i].facultyName).text(data[i].facultyName);
                   facultyInput.append(dropdown);
           }
       })
   };
 
   requestorFacultyDropdown()
-  
+
 </script>

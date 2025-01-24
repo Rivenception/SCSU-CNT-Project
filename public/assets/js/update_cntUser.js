@@ -3,7 +3,7 @@ $(document).ready(function () {
     var tableContainer = $(".table-container");
 
     var entryId = $('#hidden-logId').text();
-    updating = true;
+    var updating = true;
 
     var userName = $('#hidden-studentName').text();
     var nameSelect = $('#inputGroupStudent');
@@ -171,5 +171,40 @@ $(document).ready(function () {
                 // window.location.href = "/eng/" + userName;
             });
     }
+    function updateForm() {
+        console.log("Attempting to update form");
+        var entryId = $("#hidden-logId").text();
+        var route = "/api/cntTimesheets/entries/" + entryId;
+        var inputDate = $("#date");
+        var studentInput = $("#inputGroupStudent");
+        var projectInput = $("#inputGroupProject");
+        var inputCategory = $("#inputGroupCategory");
+        var inputNote = $("#inputGroupNotes");
+        // For loop that gets all students and dynamically creates list in the html for the respective projects.
+        $.get(route, function (data) {
+            console.log(data);
 
+            let entryDate = data[0].date;
+            console.log(entryDate);
+            inputDate.val(entryDate);
+            let dropdownStudent = data[0].Student.student_id;
+            console.log(dropdownStudent);
+            studentInput.val(dropdownStudent);
+            let dropdownProject = data[0].projectName;
+            projectInput.val(dropdownProject);
+            console.log(dropdownProject);
+            let dropdownCategory = data[0].category;
+            inputCategory.val(dropdownCategory);
+            console.log(dropdownCategory);
+            let logNote = data[0].logNotes;
+            inputNote.val(logNote);
+            console.log(logNote);
+        })
+    };
+
+    var updating = $('#isUpdate').text();
+
+    if (updating === "true") {
+        updateForm() 
+    } 
 });
