@@ -276,4 +276,54 @@ $(document).ready(function () {
             });
     }
 
+      // Function to update the form with data from entry
+  function updateForm() {
+    console.log("Attempting to update form");
+    var entryId = $("#hidden-logId").text();
+    var route = "/api/task/entries/" + entryId;
+    var priorityInput = $("#inputGroupPriority");
+    var projectInput = $("#inputGroupProject");
+    var studentInput = $("#inputGroupStudent");
+    var requestorInput = $("#inputGroupRequestor");
+    var statusInput = $("#statusSelect");
+    var taskText = $("#inputGroupTask");
+    var taskNote = $("#inputGroupNotes");
+    var date = $("#date");
+    // For loop that gets all students and dynamically creates list in the html for the respective projects.
+      $.get(route, function (data) {
+
+        let dropdownPriority = data.priority;
+        priorityInput.val(dropdownPriority);
+        console.log(dropdownPriority);
+        let dropdownProject = data.projectName;
+        projectInput.val(dropdownProject);
+        console.log(dropdownProject);
+        let dropdownStudent = data.Student.student_id;
+        studentInput.val(dropdownStudent);
+        console.log(dropdownStudent);
+        // let dropdownRequestor = $("<option>").attr("value", data.requestor).text(data.requestor);
+        let dropdownRequestor = data.requestor;
+        console.log(dropdownRequestor);
+        requestorInput.val(dropdownRequestor);
+        let dropdownStatus = data.status;
+        console.log(dropdownStatus);
+        statusInput.val(dropdownStatus);
+        let task = data.task;
+        console.log(task);
+        taskText.val(task);
+        let comments = data.taskNotes;
+        console.log(comments);
+        taskNote.val(comments);
+        let taskDate = data.dueDate;
+        console.log(taskDate);
+        date.val(taskDate);
+      })
+    };
+
+    var updating = $('#isUpdate').text();
+
+    if (updating === "true") {
+        updateForm() 
+    } 
+
 });

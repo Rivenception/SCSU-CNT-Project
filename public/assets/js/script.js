@@ -22,7 +22,7 @@ $(document).ready(function () {
         console.log("fetching Project...");
         $.get("/api/drop/projects", function (data) {
         for (let i = 0; i < data.length; i++) {
-            let dropdown = $("<option>").attr("value", data[i]).text(data[i].projectName);
+            let dropdown = $("<option>").attr("value", data[i].projectName).text(data[i].projectName);
             $("#inputGroupProject").append(dropdown);
             }
         })
@@ -32,7 +32,7 @@ $(document).ready(function () {
         console.log("fetching Category...");
         $.get("/api/drop/category", function (data) {
         for (let i = 0; i < data.length; i++) {
-            let dropdown = $("<option>").attr("value", data[i]).text(data[i].category);
+            let dropdown = $("<option>").attr("value", data[i].category).text(data[i].category);
             $("#inputGroupCatetory").append(dropdown);
             }
         })

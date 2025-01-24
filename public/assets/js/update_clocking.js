@@ -161,4 +161,36 @@ $(document).ready(function () {
             });
     }
 
+    function updateForm() {
+        console.log("Attempting to update form");
+        var entryId = $("#hidden-logId").text();
+        var route = "/api/clocking/entries/" + entryId;
+        var studentInput = $("#inputGroupStudent");
+        var inputType = $("#in-out");
+        var inputTime = $("#timeInput");
+        var inputDate = $("#date");
+        // For loop that gets all students and dynamically creates list in the html for the respective projects.
+        $.get(route, function (data) {
+            console.log(data);
+
+            let entryDate = data[0].date;
+            console.log(entryDate);
+            inputDate.val(entryDate);
+            let entryTime = data[0].timeEntry;
+            console.log(entryTime);
+            inputTime.val(entryTime);
+            let dropdownStudent = data[0].Student.student_id;
+            console.log(dropdownStudent);
+            studentInput.val(dropdownStudent);
+            let inOut = data[0].timeType;
+            console.log(inOut);
+            inputType.val(inOut);
+        })
+    };
+
+    var updating = $('#isUpdate').text();
+
+    if (updating === "true") {
+        updateForm() 
+    } 
 });
