@@ -236,4 +236,78 @@ $(document).ready(function () {
         // window.location.href = "/update/" + currentEntry
     }
 
+        // On-click button and Function for requesting query and downloading to csv file
+        $(document).on("click", "#download2csv", download2csv);
+
+        function download2csv() {
+            if (userName.trim()) {
+                var route = "/api/task/stu/" + userName;
+            } else if (proj.trim()) {
+                var route = "/api/task/prj/" + projURL;
+            } else {
+                var route = "/api/task";
+            };
+            // Perform a GET request to the specified route
+            $.get(route, function (data) {
+                var transformedData = [];
+        
+                // Loop through the data and create new objects based on the specified fields
+                for (var i = 0; i < data.length; i++) {
+                    var newEntry = {
+                        id: data[i].task_id,
+                        priority: data[i].priority,
+                        due: data[i].dueDate,
+                        project_id: data[i].Project.project_id,
+                        project: data[i].projectName,
+                        task: data[i].task,
+                        assigned: data[i].assignedTo,
+                        student_id: data[i].Student.student_id,
+                        requestor: data[i].requestor,
+                        status: data[i].status,
+                        notes: data[i].taskNotes
+                    };
+                    transformedData.push(newEntry);
+                }
+        
+                // Now we will convert this transformed data into CSV format using a simple method
+        
+                var csv = 'id,priority,due,project_id,project,task,assigned,student_id,requestor,status,notes\n'; // CSV header
+                
+                // Loop through transformedData and create CSV rows
+                for (var j = 0; j < transformedData.length; j++) {
+                    var row = [
+                        transformedData[j].id,
+                        transformedData[j].priority,
+                        transformedData[j].due,
+                        transformedData[j].project_id,
+                        transformedData[j].project,
+                        transformedData[j].task,
+                        transformedData[j].assigned,
+                        transformedData[j].student_id,
+                        transformedData[j].requestor,
+                        transformedData[j].status,
+                        transformedData[j].notes
+                    ].join(","); // Join each field with a comma to create a row
+                    csv += row + "\n"; // Add the row to the CSV string
+                }
+        
+                // Create a Blob from the CSV data
+                var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        
+                // Create an object URL for the Blob
+                var url = URL.createObjectURL(blob);
+        
+                // Create a link element to trigger the download
+                var link = document.createElement("a");
+                link.setAttribute("href", url);
+                link.setAttribute("download", "tasks.csv");
+        
+                // Trigger a click event to download the file
+                link.click();
+        
+                // Optionally, revoke the object URL after the download
+                URL.revokeObjectURL(url);
+            });
+        }
+
 });
