@@ -74,4 +74,59 @@ $(document).ready(function () {
     var yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
 
+    // On-click button and Function for requesting query and downloading to csv file
+    $(document).on("click", "#download2csv", download2csv);
+
+    function download2csv() {
+        var route = "/api/prj";
+        
+        // Perform a GET request to the specified route
+        $.get(route, function (data) {
+            var transformedData = [];
+    
+            // Loop through the data and create new objects based on the specified fields
+            for (var i = 0; i < data.length; i++) {
+                var newEntry = {
+                    project_id: data[i].project_id,
+                    project: data[i].projectName,
+                    sponsor: data[i].projectSponsor,
+                    status: data[i].status,
+                };
+                transformedData.push(newEntry);
+            }
+    
+            // Now we will convert this transformed data into CSV format using a simple method
+    
+            var csv = 'project_id, project, sponsor, status\n'; // CSV header
+            
+            // Loop through transformedData and create CSV rows
+            for (var j = 0; j < transformedData.length; j++) {
+                var row = [
+                    transformedData[j].project_id,
+                    transformedData[j].project,
+                    transformedData[j].sponsor,
+                    transformedData[j].status,
+                ].join(","); // Join each field with a comma to create a row
+                csv += row + "\n"; // Add the row to the CSV string
+            }
+    
+            // Create a Blob from the CSV data
+            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    
+            // Create an object URL for the Blob
+            var url = URL.createObjectURL(blob);
+    
+            // Create a link element to trigger the download
+            var link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", "projects.csv");
+    
+            // Trigger a click event to download the file
+            link.click();
+    
+            // Optionally, revoke the object URL after the download
+            URL.revokeObjectURL(url);
+        });
+    }
+
 });

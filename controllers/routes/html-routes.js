@@ -114,10 +114,24 @@ module.exports = function (app) {
           model: db.Project,
           }],
       }).then(function (dbcntTimesheet) {
+        if (!dbcntTimesheet) {
+          // If no record is found, render the page with a message or default data
+          console.log("No record found for this project ID");
+          return res.render("prj", {
+            projectName: "No records found",
+            project_id: "none",
+            // Add any other default data you want to pass to the view
+            message: "No clocking record found for this student."
+          });
+        }
         res.render("prj", {
           projectName: dbcntTimesheet.projectName,
           project_id: dbcntTimesheet.Project.project_id,
         });
+      }).catch(function (err) {
+        // Handle any errors that occur during the database query
+        console.error(err);
+        res.status(500).send("An error occurred while retrieving data.");
       });
     });
 
@@ -223,14 +237,29 @@ module.exports = function (app) {
           student_id: req.params.user
       }}],
     }).then(function (dbClocking) {
+      if (!dbClocking) {
+        // If no record is found, render the page with a message or default data
+        console.log("No clocking record found for student with ID: " + req.params.user);
+        return res.render("clocking", {
+          cntUser: req.params.user,
+          studentName: "No clocking records found",
+          logId: null,
+          // Add any other default data you want to pass to the view
+          message: "No clocking record found for this student."
+        });
+      }
       console.log(dbClocking.Student.student_id);
       console.log(dbClocking.studentName);
       res.render("clocking", {
         cntUser: dbClocking.Student.student_id,
         studentName: dbClocking.studentName,
-        logId: dbClocking.clock_id,
+        // logId: dbClocking.clock_id,
         // dept: dbStudent.dept,
       });
+    }).catch(function (err) {
+      // Handle any errors that occur during the database query
+      console.error(err);
+      res.status(500).send("An error occurred while retrieving clocking data.");
     });
   });
 

@@ -231,4 +231,71 @@ $(document).ready(function () {
         // window.location.href = "/update/" + currentEntry
     }
 
+    // On-click button and Function for requesting query and downloading to csv file
+    $(document).on("click", "#download2csv", download2csv);
+
+    function download2csv() {
+        if (proj) {
+            var route = "/api/cntTimesheets/limit=50/prj/" + proj;
+        } else {
+            var route = "/api/cntTimesheets/limit=50"
+        };
+        
+        // Perform a GET request to the specified route
+        $.get(route, function (data) {
+            var transformedData = [];
+    
+            // Loop through the data and create new objects based on the specified fields
+            for (var i = 0; i < data.length; i++) {
+                var newEntry = {
+                    id: data[i].id,
+                    student_id: data[i].Student.student_id,
+                    project_id: data[i].Project.project_id,
+                    name: data[i].studentName,
+                    date: data[i].date,
+                    project: data[i].projectName,
+                    category: data[i].category,
+                    notes: data[i].logNotes,
+                };
+                transformedData.push(newEntry);
+            }
+    
+            // Now we will convert this transformed data into CSV format using a simple method
+    
+            var csv = 'id, student_id, project_id, name, date, project, category, notes\n'; // CSV header
+            
+            // Loop through transformedData and create CSV rows
+            for (var j = 0; j < transformedData.length; j++) {
+                var row = [
+                    transformedData[j].id,
+                    transformedData[j].student_id,
+                    transformedData[j].project_id,
+                    transformedData[j].name,
+                    transformedData[j].date,
+                    transformedData[j].project,
+                    transformedData[j].category,
+                    transformedData[j].notes,
+                ].join(","); // Join each field with a comma to create a row
+                csv += row + "\n"; // Add the row to the CSV string
+            }
+    
+            // Create a Blob from the CSV data
+            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    
+            // Create an object URL for the Blob
+            var url = URL.createObjectURL(blob);
+    
+            // Create a link element to trigger the download
+            var link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", "projects.csv");
+    
+            // Trigger a click event to download the file
+            link.click();
+    
+            // Optionally, revoke the object URL after the download
+            URL.revokeObjectURL(url);
+        });
+    }
+    
 });
